@@ -1,6 +1,7 @@
 import React from 'react';
 import './MapLeaflet.css';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 interface MapProps {
     children?: JSX.Element | JSX.Element[];
@@ -22,7 +23,7 @@ function MapLeaflet(props: MapProps): JSX.Element {
                 tileSize={512}
                 zoomOffset={-1} />
 
-            <ZoomControl position={'topright'} />
+            <ZoomControl position='bottomright' />
 
             {props.children}
         </MapContainer>
