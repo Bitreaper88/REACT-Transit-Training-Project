@@ -26,7 +26,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
     return (
         <MapContainer
             style={mapStyle}
-            center={{ lat: 60.47179, lng: 22.23259 }}
+            center={{ lat: 60.44994, lng: 22.26637 }}
             zoom={13}
             maxBounds={[[81.2, -74.3], [30.9, 121.2]]}
             doubleClickZoom={false}
