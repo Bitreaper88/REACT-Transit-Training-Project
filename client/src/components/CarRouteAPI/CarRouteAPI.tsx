@@ -1,43 +1,16 @@
-// Once the there is a clearer path, points could be props...
-import React, { useState } from 'react';
-import axios from 'axios';
-import { ICarRouteAPI } from './CarRouteAPI.d';
+/* eslint-disable react/prop-types */
+import React from 'react';
 
-const CarRouteAPI: React.FC = () => {
-  const [pointA, setPointA] = useState<string>('');
-  const [pointB, setPointB] = useState<string>('');
-  const [result, setResult] = useState<ICarRouteAPI>();
+interface IPoint {
+  pointA: string;
+  pointB: string;
+  submitQueryHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>,
+  getPointAValue: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  getPointBValue: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-  const getPointAValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPointA(e.currentTarget.value);
-  };
-
-  const getPointBValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPointB(e.currentTarget.value);
-  };
-
- const submitQueryHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Api call
-   try {
-     const res = await axios({
-       url: `https://api.mapbox.com/directions/v5/mapbox/driving/${pointA};${pointB}?alternatives=true&geometries=polyline&steps=true&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`,
-       method: 'GET',
-       headers: {
-         'Access-Control-Allow-Origin': '*',
-         'Content-type': 'application/json; charset=utf-8'
-       }
-     });
-     if (res.status === 200) {
-       setResult(res.data);
-       setTimeout(() => {
-         console.log(result);
-       }, 2000);
-     }
-   } catch (err) {
-     console.log(err);
-    }
-  };
+const CarRouteAPI: React.FC<IPoint> = props => {
+  const { pointA, pointB, submitQueryHandler, getPointAValue, getPointBValue } = props;
 
   return (
     <div>
@@ -59,3 +32,4 @@ const CarRouteAPI: React.FC = () => {
 };
 
 export default CarRouteAPI;
+
