@@ -4,7 +4,9 @@ import MapLeaflet from './MapLeaflet';
 
 function App(): JSX.Element {
   return (
-    <MapLeaflet />
+    <MapLeaflet>
+      {/* Custom components on top of the map can go here too */}
+    </MapLeaflet>
   );
 }
 

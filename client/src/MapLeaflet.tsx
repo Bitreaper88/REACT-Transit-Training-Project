@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MapLeaflet.css';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import Test from './Test';
+import Test from './devtools/Test';
 
-function MapLeaflet(): JSX.Element {
+interface IMapProps {
+    children?: JSX.Element | JSX.Element[];
+}
+
+function MapLeaflet(props: IMapProps): JSX.Element {
+    const [mapStyle, setMapStyle] = useState<React.CSSProperties>({
+        height: '100%',
+        width: '100%',
+        cursor: 'grab'
+    });
+
+    // Currently used only for testing
+    function changeCursor() {
+        if (mapStyle.cursor === 'grab') {
+            setMapStyle({ ...mapStyle, cursor: 'crosshair' });
+        }
+        else setMapStyle({ ...mapStyle, cursor: 'grab' });
+    }
 
     return (
         <MapContainer
-            style={{ height: '100%', width: '100%' }}
+            style={mapStyle}
             center={{ lat: 60.47179, lng: 22.23259 }}
             zoom={13}
             maxBounds={[[81.2, -74.3], [30.9, 121.2]]}
@@ -25,7 +42,11 @@ function MapLeaflet(): JSX.Element {
 
             <ZoomControl position='bottomright' />
 
-            <Test />
+            {/* Custom components */}
+            {props.children}
+
+            {/* Devtools */}
+            <Test cursor={changeCursor} />
         </MapContainer>
     );
 }
