@@ -42,7 +42,7 @@ function Test(props: ITestProps): JSX.Element {
                 paddingRight: '10px',
             }}>
             ZoomLevel:&nbsp;{zoomLevel}
-            &nbsp;{`| Coords: ${coords[0].toFixed(5)} ${coords[1].toFixed(5)}`}
+            &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
             {props.cursor && <span>
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
             </span>}
