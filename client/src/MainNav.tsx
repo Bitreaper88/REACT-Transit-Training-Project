@@ -10,8 +10,8 @@ const MainNav: React.FC = () => {
   const [sideBarStyle, setSidebarStyle] = useState(sideBaseStyle);
   const [sideBarStatus, setSidebarStatus] = useState(false);
 
-  const comparsionBaseStyle = 'absolute w-full mt-8 transition duration-500 ease-in-out transform ';
-  const negativeYTranslation = ' -translate-y-64';
+  const comparsionBaseStyle = 'md:ml-64 bg-black transition duration-500 ease-in-out transform ';
+  const negativeYTranslation = 'md:-translate-y-64 translate-y-64';
 
   const [comparisonStyle, setComparisonStyle] = useState(comparsionBaseStyle);
   const [comparisonStatus, setComparisonStatus] = useState(false);
@@ -23,10 +23,6 @@ const MainNav: React.FC = () => {
     setSidebarStatus(!sideBarStatus);
 
   }
-
-  useEffect(() => {
-    console.log('effect triggered');
-  }, []);
 
   function comparisonBtn(){
     console.log('comparisonStatus ' + comparisonStatus);
@@ -53,28 +49,25 @@ const MainNav: React.FC = () => {
         </div>
       </div>
 
-      <div className={comparisonStyle}>
-       <div className='ml-64 bg-black'> {/*  This needs to be made click through */}
-          <div className='md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:relative h-48 fixed bottom-0 left-0 w-screen'>
-          <h1>Transport comparison</h1>
+      <div className='md:absolute md:mt-8 md:bottom-auto fixed w-full bottom-0'>
+       <div className={comparisonStyle}> {/*  This needs to be made click through */}
+          <div className='md:h-58 shadow bg-white md:w-1/2 md:mx-auto h-40'>
+            <h1>Transport comparison</h1>
           </div>
         </div>
       </div>
 
       <div className='absolute grid grid-cols-3 gap-4 h-8 pl-64 w-screen bg-blue-500 shadow'>
-        <button className=' bg-white justify-self-star w-8'>car</button>
-        <button onClick={comparisonBtn} className=' bg-white justify-self-center'>Comparison
+        <button className='focus:outline-none ml-10 bg-white justify-self-star w-8'>car</button>
+        
+        <button onClick={comparisonBtn} className='focus:outline-none bg-white justify-self-center'>Comparison
         </button>
-        {/* <button className=' md:bg-white md:justify-self-center md:relative md:m-0 transition duration-500 ease-in-out bg-gray-500 fixed bottom-0 right-0 m-8'>Comparison</button> */}
         <button className='bg-green-500 justify-self-end'>Menu</button>
       </div>
-
 
       <div className='bg-orange-800 h-8 w-64 absolute top-0 left-0'>
         TopbarLogo
       </div>
-
-
     </>
   );
 };
