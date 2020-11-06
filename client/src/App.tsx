@@ -7,10 +7,10 @@ import './App.css';
 function App(): JSX.Element {
   return (
     <div className='h-screen w-screen bg-white'> {/* They gray here is for debuging */}
-      <MainNav />
-    <MapLeaflet>
-      {/* Custom components on top of the map can go here too */}
-    </MapLeaflet>
+        <MainNav />
+      <MapLeaflet>
+        {/* Custom components on top of the map can go here too */}
+      </MapLeaflet>
     </div>
   );
 }
