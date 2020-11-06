@@ -10,14 +10,14 @@ const MainNav: React.FC = () => {
   const [sideBarStyle, setSidebarStyle] = useState(sideBaseStyle);
   const [sideBarStatus, setSidebarStatus] = useState(false);
 
-  const comparsionBaseStyle = 'md:ml-64 pointer-events-none transition duration-500 ease-in-out transform ';
+  const comparsionBaseStyle = 'md:ml-64 transition duration-500 ease-in-out transform ';
   const YTranslation = 'md:-translate-y-64 translate-y-64';
 
   const [comparisonStyle, setComparisonStyle] = useState(comparsionBaseStyle);
   const [comparisonStatus, setComparisonStatus] = useState(false);
 
 
-  const carBaseStyle = 'ml-64 pointer-events-none transition duration-500 ease-in-out transform ';
+  const carBaseStyle = 'md:ml-64 transition duration-500 ease-in-out transform ';
   const negativeYTranslation = '-translate-y-64';
   
 
@@ -45,7 +45,7 @@ const MainNav: React.FC = () => {
   }
 
   return (
-    <>
+    <div className='grid'>
       <div className={sideBarStyle}>
         SideBar
         <div className='absolute pt-8 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
@@ -62,35 +62,37 @@ const MainNav: React.FC = () => {
         </div>
       </div>
 
-      <div className='md:absolute md:mt-8 md:bottom-auto fixed w-full bottom-0'>
+      <div className='md:absolute  md:mt-8 md:bottom-auto fixed w-full bottom-0'>
        <div className={comparisonStyle}>
-          <div className='md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b'>
+          <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b'>
             <h1>Transport comparison</h1>
           </div>
         </div>
       </div>
 
-      <div className='absolute mt-8 w-full'>
+      <div className='h-8 z-30 bg-blue-500 shadow w-full '>
+        <div className=' md:z-20 absolute grid md:grid-cols-3 gap-4 md:h-8 h-auto md:pl-64 md:w-screen  right-0 md:p-0 p-2 bg-blue-500'>
+          <button onClick={carBtn} className='focus:outline-none w-20 md:ml-10 bg-white md:justify-self-start '>car</button>
+          <button onClick={comparisonBtn} className='w-20 focus:outline-none md:ml-0 bg-white md:justify-self-center'>
+            Comparison
+          </button>
+          <button className='bg-green-500 md:ml-auto w-20 focus:outline-none'>Menu</button>
+        </div>
+      </div>
+
+
+      <div className='md:absolute md:z-20 z-40  md:mt-8 -mt-8 mx-auto'>
        <div className={carStyle}>
-          <div className='md:h-58 shadow bg-white md:w-1/5 w-1/2 ml-10 mr-auto md:rounded-none h-40 rounded-b'>
+          <div className='md:h-58 shadow bg-white w-48 md:ml-4 md:mr-auto  md:rounded-none h-40 rounded-b'>
             <h1>Car</h1>
           </div>
         </div>
       </div>
-
-      <div className='absolute grid grid-cols-3 gap-4 h-8 pl-64 w-screen bg-blue-500 shadow'>
-        <button onClick={carBtn} className='focus:outline-none ml-10 bg-white justify-self-star w-8'>car</button>
-        
-        <button onClick={comparisonBtn} className='focus:outline-none bg-white justify-self-center'>
-          Comparison
-        </button>
-        <button className='bg-green-500 justify-self-end'>Menu</button>
-      </div>
-
-      <div className='bg-orange-800 h-8 w-64 absolute top-0 left-0'>
+      
+      <div className='bg-pink-600 z-30 h-8 w-64 absolute top-0 left-0'>
         TopbarLogo
-      </div>
-    </>
+       </div>
+    </div>
   );
 };
 
