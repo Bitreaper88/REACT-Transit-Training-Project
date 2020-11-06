@@ -83,9 +83,9 @@ const MainNav: React.FC = () => {
       </div>
 
 
-      <div className='md:absolute md:z-20 z-40  md:mt-8 -mt-8 mx-auto'>
+      <div className='absolute md:z-20 z-40 w-full md:mt-8 no pointer-events-none'>
        <div className={carStyle}>
-          <div className='md:h-58 shadow bg-white w-48 md:ml-4 md:mr-auto  md:rounded-none h-40 rounded-b'>
+          <div className='md:h-58 shadow bg-white w-48 md:ml-4 md:mr-auto mx-auto md:rounded-none h-40 rounded-b'>
             <h1>Car</h1>
           </div>
         </div>
