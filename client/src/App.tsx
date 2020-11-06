@@ -5,12 +5,11 @@ import './App.css';
 
 
 function App(): JSX.Element {
-  return (
-    <div className='h-screen w-screen bg-white'> {/* They gray here is for debuging */}
-        <MainNav />
+  return ( 
+    <div className='h-screen w-screen'> {/* They gray here is for debuging */}      
       <MapLeaflet>
-        {/* Custom components on top of the map can go here too */}
       </MapLeaflet>
+      <MainNav />
     </div>
   );
 }

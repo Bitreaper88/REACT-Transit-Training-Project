@@ -1,5 +1,6 @@
 import React, {useState } from 'react';
 import './App.css';
+import MapLeaflet from './MapLeaflet';
 
 const MainNav: React.FC = () => {
 
@@ -45,7 +46,8 @@ const MainNav: React.FC = () => {
   }
 
   return (
-    <div className='grid'>
+    <div className='grid h-screen w-screen'>
+     
       <div className={sideBarStyle}>
         SideBar
         <div className='absolute pt-8 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
@@ -92,7 +94,10 @@ const MainNav: React.FC = () => {
       <div className='bg-pink-600 z-30 h-8 w-64 absolute top-0 left-0'>
         TopbarLogo
        </div>
+
+      
     </div>
+
   );
 };
 

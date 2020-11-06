@@ -16,6 +16,10 @@ function MapLeaflet(props: IMapProps): JSX.Element {
     const [mapStyle, setMapStyle] = useState<React.CSSProperties>({
         height: '100%',
         width: '100%',
+        padding: '0px',
+        position: 'fixed',
+        bottom: '0',
+        right: '0',
         cursor: 'grab'
     });
     // setGoogleLines will be needed later
