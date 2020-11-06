@@ -26,16 +26,23 @@ function MapLeaflet(props: IMapProps): JSX.Element {
         'e`enJow~uCNTJj@b@nA@LHf@VQP_A`@SNfALfAdAxHDdAPfAJbANfADf@d@hDHn@L|@Z`Cv@nGtA|JlAnGn@~CPf@oAzAa@^qBjAy@Ri@Dm@?k@OqAk@}A@]JKFaBnAq@h@_@j@c@d@u@~@e@r@cDtFs@zAs@~@~@fFT`BLfALrBJfCLzCn@zTPnKAzNAjAE~HI|DOtGU~Im@AYPo@^iB`@cANk@Dy@Rm@VcAl@s@p@g@l@i@z@_A~A{@~BMb@]pAwAjFOf@_ApBe@v@wCrCu@bAk@bAo@vAc@tAs@tCg@tBsAbF]vCOtAi@nFKt@Kz@Kr@a@dAi@x@uAx@cA^a@D{BBw@?uADE?H|BFjBEjB',
     ]);
     const [polylines, setPolylines] = useState<JSX.Element[]>([]);
+    const [mapBounds, setMapBounds] = useState<L.LatLngBounds>();
 
-    // Decode and create polyline elements
+    // Decode and generate polyline elements
     useEffect(() => {
         if (googleLines && googleLines.length && typeof googleLines[0] === 'string') {
-            const newPolylines = googleLines.map((line, index) => {
-                const decodedLine = PL.decode(line) as L.LatLngTuple[];
-                return (
-                    <Polyline key={index} positions={decodedLine} />
-                );
+            const decodedLines = googleLines.map((line) => {
+                return PL.decode(line) as L.LatLngTuple[];
             });
+
+            const newPolylines = decodedLines.map((line, index) => {
+                return <Polyline key={index} positions={line} />;
+            });
+
+            // little sketch, latlng.toBounds()?
+            const polylineBounds = L.polyline(decodedLines).getBounds();
+
+            setMapBounds(polylineBounds);
             setPolylines([...newPolylines]);
         }
     }, [googleLines]);
@@ -50,9 +57,11 @@ function MapLeaflet(props: IMapProps): JSX.Element {
 
     return (
         <MapContainer
+        
             style={mapStyle}
             center={{ lat: 60.44994, lng: 22.26637 }}
             zoom={13}
+            bounds={mapBounds}
             doubleClickZoom={false}
             zoomControl={false}>
 
@@ -67,7 +76,8 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             {/* Free for non-commercial use: https://carto.com/basemaps/ */}
             <TileLayer
                 url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>'
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors,&nbsp;
+                            &copy; <a href="https://carto.com/attribution">CARTO</a>'
                 maxZoom={7}
             />
 
