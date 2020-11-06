@@ -70,7 +70,7 @@ const MainNav: React.FC = () => {
         </div>
       </div>
 
-      <div className='h-8 z-30 bg-blue-500 shadow w-full '>
+      <div className='h-8 z-30 bg-blue-500 shadow w-full'>
         <div className=' md:z-20 absolute grid md:grid-cols-3 gap-4 md:h-8 h-auto md:pl-64 md:w-screen  right-0 md:p-0 p-2 bg-blue-500'>
           <button onClick={carBtn} className='focus:outline-none w-20 md:ml-10 bg-white md:justify-self-start '>car</button>
           <button onClick={comparisonBtn} className='w-20 focus:outline-none md:ml-0 bg-white md:justify-self-center'>
