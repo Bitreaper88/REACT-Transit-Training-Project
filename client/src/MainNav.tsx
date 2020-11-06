@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState } from 'react';
 import './App.css';
 
 const MainNav: React.FC = () => {
@@ -10,11 +10,19 @@ const MainNav: React.FC = () => {
   const [sideBarStyle, setSidebarStyle] = useState(sideBaseStyle);
   const [sideBarStatus, setSidebarStatus] = useState(false);
 
-  const comparsionBaseStyle = 'md:ml-64 bg-black transition duration-500 ease-in-out transform ';
-  const negativeYTranslation = 'md:-translate-y-64 translate-y-64';
+  const comparsionBaseStyle = 'md:ml-64 pointer-events-none transition duration-500 ease-in-out transform ';
+  const YTranslation = 'md:-translate-y-64 translate-y-64';
 
   const [comparisonStyle, setComparisonStyle] = useState(comparsionBaseStyle);
   const [comparisonStatus, setComparisonStatus] = useState(false);
+
+
+  const carBaseStyle = 'ml-64 pointer-events-none transition duration-500 ease-in-out transform ';
+  const negativeYTranslation = '-translate-y-64';
+  
+
+  const [carStyle, setCarStyle] = useState(carBaseStyle);
+  const [carStatus, setCarStatus] = useState(false);
 
 
   function translateSideBar() {
@@ -25,10 +33,15 @@ const MainNav: React.FC = () => {
   }
 
   function comparisonBtn(){
-    console.log('comparisonStatus ' + comparisonStatus);
     if (comparisonStatus) setComparisonStyle(comparsionBaseStyle);
-    else  setComparisonStyle(comparisonStyle+negativeYTranslation); 
+    else  setComparisonStyle(comparsionBaseStyle+YTranslation); 
     setComparisonStatus(!comparisonStatus);
+  }
+
+  function carBtn(){
+    if (carStatus) setCarStyle(carBaseStyle);
+    else  setCarStyle(carBaseStyle+negativeYTranslation); 
+    setCarStatus(!carStatus);
   }
 
   return (
@@ -50,17 +63,26 @@ const MainNav: React.FC = () => {
       </div>
 
       <div className='md:absolute md:mt-8 md:bottom-auto fixed w-full bottom-0'>
-       <div className={comparisonStyle}> {/*  This needs to be made click through */}
-          <div className='md:h-58 shadow bg-white md:w-1/2 md:mx-auto h-40'>
+       <div className={comparisonStyle}>
+          <div className='md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b'>
             <h1>Transport comparison</h1>
           </div>
         </div>
       </div>
 
+      <div className='absolute mt-8 w-full'>
+       <div className={carStyle}>
+          <div className='md:h-58 shadow bg-white md:w-1/5 w-1/2 ml-10 mr-auto md:rounded-none h-40 rounded-b'>
+            <h1>Car</h1>
+          </div>
+        </div>
+      </div>
+
       <div className='absolute grid grid-cols-3 gap-4 h-8 pl-64 w-screen bg-blue-500 shadow'>
-        <button className='focus:outline-none ml-10 bg-white justify-self-star w-8'>car</button>
+        <button onClick={carBtn} className='focus:outline-none ml-10 bg-white justify-self-star w-8'>car</button>
         
-        <button onClick={comparisonBtn} className='focus:outline-none bg-white justify-self-center'>Comparison
+        <button onClick={comparisonBtn} className='focus:outline-none bg-white justify-self-center'>
+          Comparison
         </button>
         <button className='bg-green-500 justify-self-end'>Menu</button>
       </div>
