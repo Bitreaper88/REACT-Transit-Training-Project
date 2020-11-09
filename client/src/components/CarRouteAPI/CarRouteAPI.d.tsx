@@ -1,6 +1,7 @@
 export type routes = {
   weight_name: string | null,
   weight: number | null,
+  geometry: string,
   duration: number,
   distance: number,
   location: number[]
