@@ -23,7 +23,6 @@ function MapLeaflet(props: IMapProps): JSX.Element {
         right: '0',
         cursor: 'grab'
     });
-    // eslint-disable-next-line
     const [googleLines, setGoogleLines] = useState<string[]>([]);
     const [polylines, setPolylines] = useState<JSX.Element[]>([]);
     const [currentBounds, setCurrentBounds] = useState<L.LatLngBounds>();
@@ -43,7 +42,6 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             setCurrentBounds(polylineBounds);
             setPolylines([...polylines, newPolyline]);
         }
-
     }, [googleLines]);
 
     // Currently used only for testing
@@ -78,8 +76,6 @@ function MapLeaflet(props: IMapProps): JSX.Element {
                 maxZoom={7} minZoom={5}
             />
 
-            <ZoomControl position='bottomright' />
-
             {/* Map elements generated from response data */}
             {polylines}
 
@@ -87,6 +83,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             {props.children}
 
             {/* Controllers */}
+            <ZoomControl position='bottomright' />
             <ZoomToNewLayer bounds={currentBounds} />
 
             {/* Devtools */}
