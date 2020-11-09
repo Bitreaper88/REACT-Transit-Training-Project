@@ -18,8 +18,14 @@ function Test(props: ITestProps): JSX.Element {
         if (divRef.current) L.DomEvent.disableClickPropagation(divRef.current);
     }, []);
 
-    const map = useMapEvent('zoomlevelschange', () => {
-        setZoomLevel(map.getZoom());
+    // conflict with map.setBounds();
+    // setTimeout() = hack solution but works for now
+    const map = useMapEvent('zoomend', () => {
+        (async () => {
+            setTimeout(() => {
+                setZoomLevel(map.getZoom());
+            }, 100);
+        })();
     });
 
     useMapEvent('dblclick', (event) => {
