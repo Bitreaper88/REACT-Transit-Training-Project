@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import CarRouteAPI from './components/CarRouteAPI/CarRouteAPI';
-import { routes, waypoints } from './components/CarRouteAPI/CarRouteAPI.d';
+import CarRouteAPI from './CarRouteAPI/CarRouteAPI';
+import { routes, waypoints } from './CarRouteAPI/CarRouteAPI.d';
 // import { ICarRouteAPI } from './components/CarRouteAPI/CarRouteAPI.d';
-import CarRouteInstance from './components/CarRouteAPI/CarRouteAPIAxiosConfig';
+import CarRouteInstance from './CarRouteAPI/CarRouteAPIAxiosConfig';
 
 const CarAPI: React.FC = () => {
   const [pointA, setPointA] = useState<string>('');

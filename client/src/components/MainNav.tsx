@@ -1,6 +1,5 @@
 import React, {useState } from 'react';
-import '../node_modules/material-design-icons/iconfont/material-icons.css';
-import './App.css';
+import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 

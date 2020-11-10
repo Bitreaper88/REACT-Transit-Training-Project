@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import * as Constants from "./constants";
+import * as Constants from "../constants";
 interface IAgency {
   gtfsId: string;
   name: string;

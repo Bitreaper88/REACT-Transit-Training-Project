@@ -1,6 +1,6 @@
 import React from 'react';
-import MapLeaflet from './MapLeaflet';
-import MainNav from './MainNav';
+import MapLeaflet from './components/MapLeaflet';
+import MainNav from './components/MainNav';
 
 function App(): JSX.Element {
   return ( 
