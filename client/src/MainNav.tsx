@@ -50,12 +50,12 @@ const MainNav: React.FC = () => {
   return (
     <div className='grid h-screen w-screen'>
       
-      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-0 w-64 absolute top-0 left-0 font-bold text-white'>
-        TopbarLogoHere
+      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-0 w-64 absolute top-0 left-0 font-bold p-2 text-white'>
+        <img className='object-contain h-8' src='../magenta_logo.png'/>
       </div>
       <div className={sideBarStyle}>
         SideBar
-        <div className=' absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
+        <div className='absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
          <button onClick={() => translateSideBar()}
           className='w-5 h-10 bg-white rounded-r shadow right-0 self-center flex-1
           transition duration-500 ease-in-out material-icons z-10
