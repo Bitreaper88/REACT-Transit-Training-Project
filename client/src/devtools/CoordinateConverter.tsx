@@ -18,6 +18,7 @@ function CoordinateConverter(array: number[][] | [number, number][]): [number, n
 function CoordinateConverter(array: number[][][] | [number, number][][]): [number, number][][];
 function CoordinateConverter(array: number[] | number[][] | number[][][] | [number, number] | [number, number][] | [number, number][][]): [number, number] | [number, number][] | [number, number][][] {
 
+    // eslint-disable-next-line
     function isNested(item: number[] | number[][] | number[][][] | [number, number] | [number, number][] | [number, number][][]): item is number[][] | number[][][] {
         if (Array.isArray(item)) {
             return Array.isArray(array[0]);

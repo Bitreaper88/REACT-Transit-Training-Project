@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './MapLeaflet.css';
 import { MapContainer, TileLayer, ZoomControl, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import Test from './devtools/Test';
+// import Test from './devtools/Test';
 import ZoomToNewLayer from './MapLeaflet.ZoomToNewLayer';
 
 // eslint-disable-next-line
@@ -23,6 +22,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
         right: '0',
         cursor: 'grab'
     });
+    // eslint-disable-next-line
     const [googleLines, setGoogleLines] = useState<string[]>([]);
     const [polylines, setPolylines] = useState<JSX.Element[]>([]);
     const [currentBounds, setCurrentBounds] = useState<L.LatLngBounds>();
@@ -45,6 +45,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
     }, [googleLines]);
 
     // Currently used only for testing
+    // eslint-disable-next-line
     function changeCursor() {
         if (mapStyle.cursor === 'grab') {
             setMapStyle({ ...mapStyle, cursor: 'crosshair' });
@@ -87,7 +88,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             <ZoomToNewLayer bounds={currentBounds} />
 
             {/* Devtools */}
-            <Test cursor={changeCursor} setGoogleLines={setGoogleLines} googleLines={googleLines} />
+            {/* <Test cursor={changeCursor} setGoogleLines={setGoogleLines} googleLines={googleLines} /> */}
         </MapContainer>
     );
 }
