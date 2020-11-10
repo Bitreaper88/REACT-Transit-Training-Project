@@ -14,6 +14,8 @@
     "@types/react-leaflet": "^2.5.2",
     "google-polyline": "^1.0.3",
     "leaflet": "^1.7.1",
+    "material-design-icons": "^3.0.1",
+    "npm-watch": "^0.7.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-leaflet": "^3.0.0",
@@ -23,11 +25,12 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start && npm run watch",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-css": "tailwindcss build src/styles.css -o public/styles.css"
+    "build-css": "tailwindcss build src/tailwind.css -o public/tailwind_compiled.css",
+    "watch": "watch 'npm run build-css' src/tailwind.css"
   },
   "eslintConfig": {
     "extends": [

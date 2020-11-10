@@ -22790,6 +22790,37 @@ video {
 
 @import './custom-utilities.css';
 
+/* this should get complied to tailwind_compiled.css in public */
+
+.material-icons.md-18 { font-size: 18px;
+}
+
+.material-icons.md-24 { font-size: 24px;
+}
+
+.material-icons.md-36 { font-size: 36px;
+}
+
+.material-icons.md-48 { font-size: 48px;
+}
+
+.w-fit{
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content
+}
+
+/* junk test code */
+
+.rotate-90{
+  transform: rotate(90deg);
+}
+
+.random-test{
+  background-color: green;
+  font-size: xx-large;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

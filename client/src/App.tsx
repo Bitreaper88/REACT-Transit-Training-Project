@@ -1,8 +1,6 @@
 import React from 'react';
 import MapLeaflet from './MapLeaflet';
 import MainNav from './MainNav';
-import './App.css';
-
 
 function App(): JSX.Element {
   return ( 
