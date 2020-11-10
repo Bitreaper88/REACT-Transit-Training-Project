@@ -1,4 +1,5 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
+import  RoutesWrapper from './AllRoutesWrapper';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
@@ -65,6 +66,7 @@ const MainNav: React.FC = () => {
 
         <div className='p-2 bg-white text-gray-800'>
           Sidebar components are loaded in here
+           <RoutesWrapper />
         </div>
       </div>
 
