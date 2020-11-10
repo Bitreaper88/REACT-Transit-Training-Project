@@ -42,7 +42,7 @@ interface ILeg {
   legGeometry: ILegGeometry;
 }
 
-interface IItinerary {
+export interface IItinerary {
   walkDistance: number;
   duration: number;
   legs: ILeg[];
