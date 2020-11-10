@@ -1,5 +1,4 @@
 /* eslint-disable quotes */
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as Constants from "./constants";
@@ -57,7 +56,7 @@ interface IData {
 const GetItneary = (props: { from: string; to: string }): JSX.Element => {
   console.log(props.from);
   console.log(props);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  // eslint-disable-next-line
   const [itenary, setItenary] = useState<IData>();
   const [leg, setLeg] = useState<Array<ILeg[]>>([]);
   const query = `{plan( fromPlace: "${props.from}", toPlace: "${props.to}",
@@ -134,7 +133,7 @@ const GetItneary = (props: { from: string; to: string }): JSX.Element => {
         {leg.map((eachleg, i) => (
           <>
             Legs:{i + 1}
-            {eachleg.map((property, i) => (
+            {eachleg.map((property) => (
               // eslint-disable-next-line react/jsx-key
               <ul>
                 <li key={property.startTime}>
