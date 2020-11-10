@@ -49,9 +49,10 @@ const MainNav: React.FC = () => {
 
   return (
     <div className='grid h-screen w-screen'>
-       <div className='bg-blue-500 h-12 w-64 z-40 absolute top-0 left-0 font-bold text-white'>
-        TopbarLogo
-      </div>  
+      
+      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-0 w-64 absolute top-0 left-0 font-bold text-white'>
+        TopbarLogoHere
+      </div>
       <div className={sideBarStyle}>
         SideBar
         <div className=' absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
@@ -69,7 +70,6 @@ const MainNav: React.FC = () => {
       </div>
 
       <div className='w-full'>
-
         <div className='md:z-30 h-12 shadow absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2'>
           
           <div className='md:mt-1 mt-2'>
@@ -89,8 +89,6 @@ const MainNav: React.FC = () => {
           </div>
           
           <div className='md:ml-12 md:mt-1 mt-2'>
-       
-
             <button onClick={carBtn} className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
                                                 rounded w-fit
                                                 material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'>
@@ -112,13 +110,14 @@ const MainNav: React.FC = () => {
         </div>
       </div>
 
-      <div className='md:absolute z-30 md:mt-12 md:bottom-auto w-full fixed bottom-0'>
+      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0'>
        <div className={comparisonStyle}>
           <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b'>
             <h1>Transport comparison</h1>
           </div>
         </div>
       </div>
+
 
     </div>
 
