@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
-import { ResponseContext } from '../components/ResponseContext';
 
 interface ITestProps {
     cursor?: () => void;
@@ -12,7 +11,6 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
-    const { cTest, setCTest } = useContext(ResponseContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -67,8 +65,6 @@ function Test(props: ITestProps): JSX.Element {
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
             </span>}
             &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
-            &nbsp;|&nbsp;<button onClick={() => setCTest('fooBar')}>Test Context</button>
-            &nbsp;|&nbsp;{cTest}
         </div>
     );
 }

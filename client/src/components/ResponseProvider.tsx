@@ -10,10 +10,9 @@ interface IProviderProps {
 function RepsonseProvider(props: IProviderProps): JSX.Element {
     const [publicRoute, setPublicRoute] = useState<IItinerary[]>();
     const [carRoute, setCarRoute] = useState<ICarRouteAPI>();
-    const [cTest, setCTest] = useState<string>('bar');
 
     return (
-        <ResponseContext.Provider value={{ publicRoute, setPublicRoute, carRoute, setCarRoute, cTest, setCTest }}>
+        <ResponseContext.Provider value={{ publicRoute, setPublicRoute, carRoute, setCarRoute }}>
             {props.children}
         </ResponseContext.Provider>
     );
