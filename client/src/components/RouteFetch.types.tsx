@@ -62,24 +62,24 @@ export interface IData {
 /* Car route response types */
 /****************************/
 
-export type routes = {
-    weight_name: string | null,
-    weight: number | null,
-    geometry: string,
-    duration: number,
-    distance: number,
-    location: number[]
-  };
-  
-  export type waypoints = {
-    distance: number,
-    name: string,
-    location: number[]
-  }
-  export interface ICarRouteAPI {
-    routes: routes[]
-    waypoints: waypoints[]
-    code: string,
-    uuid: string
-  }
-  
+export interface IRoutes {
+    weight_name: string | null;
+    weight: number | null;
+    geometry: string;
+    duration: number;
+    distance: number;
+    location: number[];
+}
+
+export interface IWaypoints {
+    distance: number;
+    name: string;
+    location: number[];
+}
+
+export interface ICarRouteAPI {
+    routes: IRoutes[];
+    waypoints: IWaypoints[];
+    code: string;
+    uuid: string;
+}
