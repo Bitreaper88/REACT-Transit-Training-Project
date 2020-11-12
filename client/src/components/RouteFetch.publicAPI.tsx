@@ -1,9 +1,5 @@
-
-export function getGraphQLRequest(): string {
-
-  return (
-    `query Itinaries($from: InputCoordinates, $to: InputCoordinates)
-      {plan(from: $from, to: $to) { 
+export const graphQLRequest = `query Itinaries($from: InputCoordinates, $to: InputCoordinates, $date: String, $time: String)
+      {plan(from: $from, to: $to, date: $date, time: $time) { 
         itineraries {
           walkDistance,
           duration,
@@ -37,6 +33,4 @@ export function getGraphQLRequest(): string {
             }
           }
         }  
-      }`
-  );
-}
+      }`;

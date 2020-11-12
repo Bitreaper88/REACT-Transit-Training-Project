@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { getGraphQLRequest } from './RouteFetch.publicAPI';
+import { graphQLRequest } from './RouteFetch.publicAPI';
 import * as Constants from '../constants';
 import * as Types from './RouteFetch.types';
 import { ResponseContext } from './ResponseContext';
+import moment from 'moment';
 
 export interface ICoordinates {
     lat: number;
@@ -30,7 +31,6 @@ function RouteFetch(): JSX.Element {
         if (!req.waypoints || !req.waypoints.length) {
 
             // Public transit API call
-            const publicQuery = getGraphQLRequest();
             const variables = {
                 from: {
                     lat: req.startPos.lat,
@@ -39,10 +39,12 @@ function RouteFetch(): JSX.Element {
                 to: {
                     lat: req.endPos.lat,
                     lon: req.endPos.lng
-                }
+                },
+                date: moment().format('YYYY-MM-DD'),
+                time: moment().format('h:mm:ss')
             };
 
-            console.log(publicQuery);
+            console.log(graphQLRequest);
 
             // calling graphQLAPI
             axios(Constants.URL_API, {
@@ -51,7 +53,7 @@ function RouteFetch(): JSX.Element {
                         'Content-Type': 'application/json',
                     },
                     data: JSON.stringify({
-                        query: publicQuery,
+                        query: graphQLRequest,
                         variables: variables
                     })
                 })
@@ -72,11 +74,11 @@ function RouteFetch(): JSX.Element {
     }, [req]);
 
     useEffect(() => {
-        console.log(publicRespArray);
-        //setPublicRoute([...publicRespArray]);
+        setPublicRoute([...publicRespArray]);
     }, [publicRespArray]);
 
     return (
+        // Dev Button
         <button onClick={() => setReq({
             startPos: {
                 lat: 60.45169,
