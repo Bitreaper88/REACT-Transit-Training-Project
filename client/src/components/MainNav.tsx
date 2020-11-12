@@ -127,10 +127,7 @@ const MainNav: React.FC = () => {
           </div>
         </div>
       </div>
-
-
     </div>
-
   );
 };
 
@@ -142,7 +139,7 @@ const CarSetup: React.FC = () => {
   const [fuelPrice, setfuelPrice] = useState<string>('0');
 
   return(
-          <>fuelEco {fuelEco}
+          <>
             <div className='p-1 flex items-stretch'>
               <span className='material-icons overflow-hidden text-blue-500 md-48'>directions_car</span>
               <span className='text-lg text-gray-700 font-bold mx-1 self-center flex-1 text-left border-b-2 border-blue-500'>
