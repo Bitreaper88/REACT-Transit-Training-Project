@@ -13,7 +13,7 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
-    const { publicRoute } = useContext(ResponseContext);
+    const { publicRoute, carRoute } = useContext(ResponseContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -52,9 +52,18 @@ function Test(props: ITestProps): JSX.Element {
     useEffect(() => {
         if (publicRoute) {
             if (!publicRoute.length) return;
-            console.log('From the context: ' + publicRoute);
+            console.log('Public route duration from the context: ');
+            console.log(publicRoute[0].plan.itineraries[0].duration);
         }
     }, [publicRoute]);
+
+    useEffect(() => {
+        if (carRoute) {
+            if (!carRoute.length) return;
+            console.log('Car route duration from the context: ');
+            console.log(carRoute[0].routes[0].duration);
+        }
+    }, [carRoute]);
 
     return (
         <div ref={divRef}
