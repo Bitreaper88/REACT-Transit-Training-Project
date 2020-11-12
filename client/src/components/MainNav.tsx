@@ -1,5 +1,7 @@
 import React, {useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 
@@ -49,9 +51,10 @@ const MainNav: React.FC = () => {
   // function test(){
   //   alert('test alert');
   // }   <button onClick={test} className='bg-red-700 absolute'>test</button>
-
+  const [selectedDate, handleDateChange] = React.useState<Date | null>(new Date());
+  
   return (
-    <div className='grid h-screen w-screen'>
+    <div className='grid h-screen w-screen absolute z-1000'>
       
       <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white'>
         <img className='object-contain h-8' src='../magenta_logo.png'/>
@@ -70,7 +73,10 @@ const MainNav: React.FC = () => {
         </div>
 
         <div className='p-2 bg-white text-gray-800 pointer-events-auto'>
-          Sidebar components are loaded in here
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          {/* <DateTimePicker value={selectedDate} onChange={handleDateChange} /> */}
+          <DateTimePicker value={selectedDate} onChange={newDate => handleDateChange(newDate)} />
+        </MuiPickersUtilsProvider>
           
         </div>
       </div>
