@@ -51,6 +51,8 @@ function Test(props: ITestProps): JSX.Element {
 
     useEffect(() => {
         if (publicRoute) {
+            if (!publicRoute.length) return;
+            alert('publicRoute Updated!');
             console.log(publicRoute);
         }
     }, [publicRoute]);
