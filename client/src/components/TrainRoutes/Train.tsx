@@ -1,27 +1,15 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrain, faGripLinesVertical} from '@fortawesome/free-solid-svg-icons';
+import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 
-const Train: React.FC = () => {
-   const fontStyleTrain: React.CSSProperties = {
-    fontSize: '1.5rem'
-  };
-  const fontStyledot: React.CSSProperties = {
-    fontSize: '2rem',
-    color: 'grey'
-  };
-  const mainStyle: React.CSSProperties= {
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    alignContent: 'center',
-    marginTop: '1.5rem',
-    marginBottom: '1.5rem'
-  };
+const Train: React.FC = () => { 
   return (
-    <div style={mainStyle}>
-      <div><FontAwesomeIcon icon={faTrain} style={fontStyleTrain} /></div>
-      <FontAwesomeIcon icon={faGripLinesVertical} style={fontStyledot}/>
-      <div>Train...</div>
+    <div className="flex h-12">
+      <i className="material-icons overflow-hidden text-blue-500">directions_train</i>
+      <div className="w-6 ml-12"><div className="w-1 h-12 bg-black"></div></div>
+       <div>
+        <div className="w-20 whitespace-no-wrap ml-3">Espoo, Finland</div>
+        <p className="w-20 whitespace-no-wrap ml-3 font-bold text-xs">Walk 70km</p>
+      </div>
     </div>
   );
 };
