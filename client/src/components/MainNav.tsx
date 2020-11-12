@@ -53,9 +53,8 @@ const MainNav: React.FC = () => {
   return (
     <div className='grid h-screen w-screen'>
       
-      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-0 w-64 absolute top-0 left-0 font-bold p-2 text-white'>
+      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white'>
         <img className='object-contain h-8' src='../magenta_logo.png'/>
-        
       </div>
       <div className={sideBarStyle}>
 
