@@ -154,7 +154,7 @@ const CarSetup: React.FC = () => {
                     </div>
                     <div className='w-1/5 mx-1'>
                       <input onChange={(event) => setFuelEco(event.target.value)}
-                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'/>
+                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>
                       <label className='block font-medium'>l/100km</label>
@@ -167,7 +167,7 @@ const CarSetup: React.FC = () => {
                     </div>
                     <div className='w-1/5 mx-1'>
                       <input onChange={(event) => setTankSize(event.target.value)}
-                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0" step="1" type='number'/>
+                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0" step="1" type='number'  min="0"/>
                     </div>
                     <div className=''>
                       <label className='block font-medium'>l</label>
@@ -180,7 +180,7 @@ const CarSetup: React.FC = () => {
                     </div>
                     <div className='w-1/5 mx-1'>
                       <input onChange={(event) => setfuelPrice(event.target.value)}
-                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'/>
+                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>
                       <label className='block font-medium'>€/l</label>
