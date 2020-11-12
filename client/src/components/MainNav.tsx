@@ -19,7 +19,7 @@ const MainNav: React.FC = () => {
   const [comparisonStatus, setComparisonStatus] = useState(false);
 
 
-  const carBaseStyle = 'md:ml-64 transition duration-500 ease-in-out transform ';
+  const carBaseStyle = 'md:ml-56 transition duration-500 ease-in-out transform ';
   const negativeYTranslation = '-translate-y-64';
   
 
@@ -109,10 +109,10 @@ const MainNav: React.FC = () => {
       </div>
 
 
-      <div className='absolute md:z-20 z-40 md:mt-12 pointer-events-none'>{/* pointer-events-none very importatn as this container covers part of the side bar*/}
+      <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        <div className={carStyle}>
           <div className='md:h-58 shadow bg-white w-64 md:ml-4 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-auto'>
-              <CarSetup/>
+          <CarSetup/>
           </div>
         </div>
       </div>
