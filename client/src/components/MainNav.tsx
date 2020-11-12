@@ -137,8 +137,8 @@ const MainNav: React.FC = () => {
 
 const CarSetup: React.FC = () => {
 
-  const [fuelEco, setFuelEco] = useState<string>('0');
-  const [tankSize, setTankSize] = useState<string>('0');
+  const [fuelEco, setFuelEco]     = useState<string>('0');
+  const [tankSize, setTankSize]   = useState<string>('0');
   const [fuelPrice, setfuelPrice] = useState<string>('0');
 
   return(
