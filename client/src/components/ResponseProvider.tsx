@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ICarRouteAPI } from './CarRouteAPI/CarRouteAPI.d';
-import { IItinerary } from './itenaryData';
+import { ICarRouteAPI } from './RouteFetch.types';
+import { IData } from './RouteFetch.types';
 import { ResponseContext } from './ResponseContext';
 
 interface IProviderProps {
@@ -8,8 +8,8 @@ interface IProviderProps {
 }
 
 function RepsonseProvider(props: IProviderProps): JSX.Element {
-    const [publicRoute, setPublicRoute] = useState<IItinerary[]>();
-    const [carRoute, setCarRoute] = useState<ICarRouteAPI>();
+    const [publicRoute, setPublicRoute] = useState<IData[]>();
+    const [carRoute, setCarRoute] = useState<ICarRouteAPI[]>();
 
     return (
         <ResponseContext.Provider value={{ publicRoute, setPublicRoute, carRoute, setCarRoute }}>
