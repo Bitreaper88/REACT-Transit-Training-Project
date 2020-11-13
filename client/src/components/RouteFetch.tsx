@@ -39,6 +39,7 @@ function RouteFetch(): JSX.Element {
                 try {
 
                     // Public transit API
+                    const reqVariables = (({from, to, date, time}) => ({from, to, date, time}))(req);
                     const publicPromise = axios(Constants.URL_API, {
                         method: 'POST',
                         headers: {
@@ -46,7 +47,7 @@ function RouteFetch(): JSX.Element {
                         },
                         data: JSON.stringify({
                             query: graphQLRequest,
-                            variables: req
+                            variables: reqVariables
                         })
                     });
 
