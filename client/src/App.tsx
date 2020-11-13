@@ -8,8 +8,8 @@ function App(): JSX.Element {
     <div className='h-screen w-screen'> {/* They gray here is for debuging */}
       <ResponseProvider>
         <MapLeaflet>
+          <MainNav />
         </MapLeaflet>
-        <MainNav />
       </ResponseProvider>
     </div>
   );

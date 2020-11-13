@@ -6,7 +6,9 @@ module.exports = {
   purge: [],
   theme: {
     extend: {
-
+      zIndex: {
+        '1000': 1000,
+      },
     },
   },
   variants: {},
