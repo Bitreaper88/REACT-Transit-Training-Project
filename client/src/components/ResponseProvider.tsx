@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
-import { ICarRouteAPI } from './RouteFetch.types';
-import { IData } from './RouteFetch.types';
+import React, { useEffect, useState } from 'react';
+import { IRawResponse } from './RouteFetch.types';
 import { ResponseContext } from './ResponseContext';
 
 interface IProviderProps {
     children?: React.ReactNode;
 }
 
+export interface IParsedResponse {
+    shutUpLint?: boolean;
+}
+
 function RepsonseProvider(props: IProviderProps): JSX.Element {
-    const [publicRoute, setPublicRoute] = useState<IData[]>();
-    const [carRoute, setCarRoute] = useState<ICarRouteAPI[]>();
+    const [raw, setRaw] = useState<IRawResponse>();
+    const [parsed, setParsed] = useState<IParsedResponse>();
+
+    // If multiple components need the same calculated values from the raw response it can be done here too
+    // Just remember to update IParsedResponse too
+    useEffect(() => {
+        setParsed({
+
+        });
+    }, [raw]);
 
     return (
-        <ResponseContext.Provider value={{ publicRoute, setPublicRoute, carRoute, setCarRoute }}>
+        <ResponseContext.Provider value={{ raw, setRaw, parsed }}>
             {props.children}
         </ResponseContext.Provider>
     );

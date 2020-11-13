@@ -25,67 +25,72 @@ function RouteFetch(): JSX.Element {
         date: moment().format('YYYY-MM-DD'),
         time: moment().format('h:mm:ss')
     });
-    const [publicRespArray, setPublicRespArray] = useState<Types.IData[]>([]);
-    const [carRespArray, setCarRespArray] = useState<Types.ICarRouteAPI[]>([]);
-    const { setPublicRoute, setCarRoute } = useContext(ResponseContext);
+    const { setRaw } = useContext(ResponseContext);
 
+    // When new request object is set
     useEffect(() => {
         if (!req.from || !req.to) return;
 
-        if (!req.waypoints || !req.waypoints.length) {
+        // If there are no waypoints in the middle
+        if (!req.waypoints || req.waypoints.length === 0) {
             (async () => {
 
-                // calling public transit API
-                axios(Constants.URL_API, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    data: JSON.stringify({
-                        query: graphQLRequest,
-                        variables: req
-                    })
-                }).then((response) => {
-                    if (response.status !== 200) {
-                        alert('Error fetching public transit route!');
-                        return;
-                    }
-                    if (response.data.data.plan.itineraries.length === 0) {
-                        alert('Could not find a public route from or to your destination.');
-                        return;
-                    }
+                // Call APIs
+                try {
 
-                    const result: Types.IData = response.data.data;
-                    setPublicRespArray([result]);
-                }).catch((err) => {
-                    alert('Error connecting to public transit API!');
+                    // Public transit API
+                    const publicPromise = axios(Constants.URL_API, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: JSON.stringify({
+                            query: graphQLRequest,
+                            variables: req
+                        })
+                    });
+
+                    // Car route API
+                    const carFrom = `${req.from?.lon},${req.from?.lat}`;
+                    const carTo = `${req.to?.lon},${req.to?.lat}`;
+                    const carPromise = carAPIcall(`/driving/${carFrom};${carTo}?alternatives=true&geometries=polyline&steps=true&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`);
+
+                    // Handle responses
+                    Promise.all([publicPromise, carPromise])
+                        .then(resp => {
+                            const publicResp = [resp[0].data.data as Types.IData];
+                            const carResp = [resp[1].data as Types.ICarRouteAPI];
+
+                            if (!carResp[0].routes.length) {
+                                alert('Could not find a car route from or to your destination.');
+                                return;
+                            }
+                            else if (publicResp[0].plan.itineraries.length === 0) {
+                                alert('Could not find a public route from or to your destination.');
+                                return;
+                            }
+
+                            // Push to context
+                            setRaw({
+                                public: publicResp,
+                                car: carResp
+                            });
+                        })
+                        .catch(err => {
+                            alert('Error! Could not connect to API.');
+                            console.log(err);
+                            return;
+                        });
+
+                }
+                catch (err) {
+                    alert('Error connecting to APIs!');
                     console.log(err);
                     return;
-                });
-
-                // calling car route API
-                const carFrom = `${req.from?.lon},${req.from?.lat}`;
-                const carTo = `${req.to?.lon},${req.to?.lat}`;
-                const carResp = await carAPIcall(`/driving/${carFrom};${carTo}?alternatives=true&geometries=polyline&steps=true&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`);
-                const carRespData = carResp.data as Types.ICarRouteAPI;
-                
-                if (!carRespData.routes.length) {
-                    alert('Could not find a car route from or to your destination.');
-                    return;
                 }
-
-                setCarRespArray([carRespData]);
             })();
         }
     }, [req]);
-
-    useEffect(() => {
-        setPublicRoute([...publicRespArray]);
-    }, [publicRespArray]);
-
-    useEffect(() => {
-        setCarRoute([...carRespArray]);
-    }, [carRespArray]);
 
     return (
         // Dev Button

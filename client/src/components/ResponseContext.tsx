@@ -1,22 +1,18 @@
 import React from 'react';
-import { IData } from './RouteFetch.types';
-import { ICarRouteAPI } from './RouteFetch.types';
+import { IRawResponse } from './RouteFetch.types';
+import { IParsedResponse } from './ResponseProvider';
 
 interface IResponseContext {
-    publicRoute: IData[] | undefined;
-    setPublicRoute: (newResponse: IData[]) => void;
-    carRoute: ICarRouteAPI[] | undefined;
-    setCarRoute: (newResponse: ICarRouteAPI[]) => void;
+    raw?: IRawResponse;
+    setRaw: (newResponse: IRawResponse) => void;
+    parsed?: IParsedResponse;
 }
 
 export const ResponseContext = React.createContext<IResponseContext>(
     {
-        publicRoute: undefined,
-        carRoute: undefined,
-        setPublicRoute: (newResponse: IData[]) => {
-            console.log(`Someone didn't set up the context properly!\n${newResponse}`);
-        },
-        setCarRoute: (newResponse: ICarRouteAPI[]) => {
+        parsed: undefined,
+        raw: undefined,
+        setRaw: (newResponse: IRawResponse) => {
             console.log(`Someone didn't set up the context properly!\n${newResponse}`);
         }
     }

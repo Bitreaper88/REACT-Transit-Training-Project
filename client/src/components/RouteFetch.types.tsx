@@ -1,3 +1,12 @@
+/**********************/
+/* Combined responses */
+/**********************/ 
+
+export interface IRawResponse {
+    public: IData[];
+    car: ICarRouteAPI[];
+}
+
 /*********************************/
 /* Public transit response types */
 /*********************************/
