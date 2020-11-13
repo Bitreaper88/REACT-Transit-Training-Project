@@ -15,9 +15,10 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
     const [parsed, setParsed] = useState<IParsedResponse>();
 
     useEffect(() => {
+        if (!raw) return;
+        
         // If multiple components need the same calculated values from the raw response it can be done here too
         // Just remember to update IParsedResponse too
-        
         setParsed({
 
         });
