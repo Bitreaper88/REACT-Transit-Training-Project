@@ -13,13 +13,27 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
-    const { publicRoute, carRoute } = useContext(ResponseContext);
+    const { raw, parsed } = useContext(ResponseContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (divRef.current) L.DomEvent.disableClickPropagation(divRef.current);
     }, []);
+
+    useEffect(() => {
+        if (raw) {
+            console.log('Public route duration from the context: ');
+            console.log(raw.public[0].plan.itineraries[0].duration);
+
+            console.log('Car route duration from the context: ');
+            console.log(raw.car[0].routes[0].duration);
+        }
+        if (parsed) {
+            console.log('From Parsed values:');
+            console.log(parsed);
+        }
+    }, [parsed]);
 
     // conflict with map.setBounds();
     // setTimeout() = hack solution but works for now
@@ -48,22 +62,6 @@ function Test(props: ITestProps): JSX.Element {
 
         if (props.setGoogleLines && props.googleLines && props.googleLines.length === 0) props.setGoogleLines(lines);
     }
-
-    useEffect(() => {
-        if (publicRoute) {
-            if (!publicRoute.length) return;
-            console.log('Public route duration from the context: ');
-            console.log(publicRoute[0].plan.itineraries[0].duration);
-        }
-    }, [publicRoute]);
-
-    useEffect(() => {
-        if (carRoute) {
-            if (!carRoute.length) return;
-            console.log('Car route duration from the context: ');
-            console.log(carRoute[0].routes[0].duration);
-        }
-    }, [carRoute]);
 
     return (
         <div ref={divRef}
