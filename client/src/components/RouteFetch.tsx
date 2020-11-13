@@ -95,7 +95,7 @@ function RouteFetch(): JSX.Element {
 
     return (
         // Dev Button
-        <button onClick={() => setReq({
+        <button style={{fontSize: '24px'}} onClick={() => setReq({
             ...req,
             from: {
                 lat: 60.45169,

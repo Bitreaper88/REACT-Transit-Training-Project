@@ -2,6 +2,7 @@ import React, {useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import RouteFetch from './RouteFetch';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 
@@ -77,6 +78,7 @@ const MainNav: React.FC = () => {
           {/* <DateTimePicker value={selectedDate} onChange={handleDateChange} /> */}
           <DateTimePicker value={selectedDate} onChange={newDate => handleDateChange(newDate)} />
         </MuiPickersUtilsProvider>
+        <RouteFetch />
           
         </div>
       </div>

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from '../components/ResponseContext';
-import RouteFetch from '../components/RouteFetch';
 
 interface ITestProps {
     cursor?: () => void;
@@ -82,7 +81,6 @@ function Test(props: ITestProps): JSX.Element {
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
             </span>}
             &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
-            &nbsp;|&nbsp;<RouteFetch />
         </div>
     );
 }
