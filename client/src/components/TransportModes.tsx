@@ -3,17 +3,17 @@ import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 export const ModeArray = [
     'AIRPLANE',
-    'BICYCLE',
+    // 'BICYCLE',
     'BUS',
     'CABLE_CAR',
-    'CAR',
+    // 'CAR',
     'FERRY',
     'FUNICULAR',
-    'GONDOLA',
+    // 'GONDOLA',
     'RAIL',
     'SUBWAY',
     'TRAM',
-    'WALK'
+    // 'WALK' // Requires special treatment: prefer no walk
 ] as const;
 
 export type Mode = typeof ModeArray[number];
@@ -31,6 +31,21 @@ export enum ModEnum {
     'SUBWAY' = 'subway',
     'TRAM' = 'tram', // goddamnit
     'WALK' = 'directions_walk'
+}
+
+export enum HoverText {
+    'AIRPLANE' = 'Airplane',
+    'BICYCLE' = 'Bicycle',
+    'BUS' = 'Bus',
+    'CABLE_CAR' = 'Cable car',
+    'CAR' = 'Car',
+    'FERRY' = 'Ferry',
+    'FUNICULAR' = 'Funicular',
+    'GONDOLA' = 'Gondola',
+    'RAIL' = 'Train',
+    'SUBWAY' = 'Subway',
+    'TRAM' = 'Tram',
+    'WALK' = 'Walk'
 }
 
 export interface ITransProps {
@@ -91,8 +106,8 @@ export function TransportButton(props: IButtonProps): JSX.Element {
     return (
         <button
             onClick={() => props.onClick(props.mode)}
-            className={`material-icons ${mutableStyles}`}
-            title={props.mode}>
+            className={`material-icons focus:outline-none ${mutableStyles}`}
+            title={HoverText[props.mode]}>
             {ModEnum[props.mode]}
         </button>
     );
