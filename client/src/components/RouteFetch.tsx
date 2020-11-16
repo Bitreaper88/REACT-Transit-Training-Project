@@ -6,6 +6,8 @@ import * as Types from './RouteFetch.types';
 import { graphQLRequest } from './RouteFetch.publicAPI';
 import carAPIcall from './RouteFetch.carAPI';
 import { ResponseContext } from './ResponseContext';
+import TransportModes from './TransportModes';
+import { ModeArray } from './TransportModes';
 
 export interface ICoordinates {
     lat: number;
@@ -25,7 +27,13 @@ function RouteFetch(): JSX.Element {
         date: moment().format('YYYY-MM-DD'),
         time: moment().format('h:mm:ss')
     });
+    const [modeOptions, setModeOptions] = useState([...ModeArray]);
     const { setRaw } = useContext(ResponseContext);
+
+    // dev
+    useEffect(() => {
+        console.log(modeOptions);
+    }, [modeOptions]);
 
     // When new request object is set
     useEffect(() => {
@@ -39,7 +47,7 @@ function RouteFetch(): JSX.Element {
                 try {
 
                     // Public transit API
-                    const reqVariables = (({from, to, date, time}) => ({from, to, date, time}))(req);
+                    const reqVariables = (({ from, to, date, time }) => ({ from, to, date, time }))(req);
                     const publicPromise = axios(Constants.URL_API, {
                         method: 'POST',
                         headers: {
@@ -94,20 +102,24 @@ function RouteFetch(): JSX.Element {
     }, [req]);
 
     return (
-        // Dev Button
-        <button style={{fontSize: '24px'}} onClick={() => setReq({
-            ...req,
-            from: {
-                lat: 60.45169,
-                lon: 22.26686
-            },
-            to: {
-                lat: 61.49774,
-                lon: 23.76129
-            }
-        })}>
-            devFetch
-        </button>
+        <div>
+            <TransportModes onChange={(selected) => setModeOptions(selected)} />
+
+            {/* Dev Button */}
+            <button style={{ fontSize: '24px' }} onClick={() => setReq({
+                ...req,
+                from: {
+                    lat: 60.45169,
+                    lon: 22.26686
+                },
+                to: {
+                    lat: 61.49774,
+                    lon: 23.76129
+                }
+            })}>
+                devFetch
+            </button>
+        </div>
     );
 }
 
