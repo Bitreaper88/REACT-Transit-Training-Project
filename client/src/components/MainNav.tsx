@@ -1,15 +1,32 @@
-import React, {useState } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import RouteFetch from './RouteFetch';
+import L from 'leaflet';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 
 const MainNav: React.FC = () => {
 
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const carRef = useRef<HTMLDivElement>(null);
+  const compRef = useRef<HTMLDivElement>(null);
+  
+  // Prevents the map from hogging all the clicks
+  useEffect(() => {
+    if (sidebarRef.current) {
+      L.DomEvent.disableClickPropagation(sidebarRef.current);
+    }
+    if (carRef.current) {
+      L.DomEvent.disableClickPropagation(carRef.current);
+    }
+    if (compRef.current) {
+      L.DomEvent.disableClickPropagation(compRef.current);
+    }
+  }, []);
 
-  const sideBaseStyle = 'absolute pt-12 inset-y-0 left-0 bg-gray-200 w-64 h-full shadow transition duration-500 ease-in-out transform ';
+  const sideBaseStyle = 'absolute pt-12 inset-y-0 left-0 bg-gray-200 w-64 h-full shadow transition duration-500 ease-in-out cursor-auto transform ';
   const xTranslation = ' -translate-x-64';
 
   const [sideBarStyle, setSidebarStyle] = useState(sideBaseStyle);
@@ -60,7 +77,8 @@ const MainNav: React.FC = () => {
       <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white'>
         <img className='object-contain h-8' src='../magenta_logo.png'/>
       </div>
-      <div className={sideBarStyle}>
+      <div className={sideBarStyle}
+          ref={sidebarRef}>
 
    
         SideBar
@@ -116,7 +134,9 @@ const MainNav: React.FC = () => {
       </div>
 
       {/* full widht aligment container */}
-      <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
+      {/* pointer-events-none very importatn as this container covers part of the side bar*/}
+      <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none cursor-auto' 
+          ref={carRef}>
        {/* drawer */}
        <div className={carStyle}>
           <div className='md:h-58 shadow bg-white w-64 md:ml-4 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-auto'>
@@ -126,7 +146,9 @@ const MainNav: React.FC = () => {
       </div>
 
       {/* full widht aligment container */}
-      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0  pointer-events-none'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
+      {/* pointer-events-none very importatn as this container covers part of the side bar*/}
+      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'
+          ref={compRef}> 
        {/* drawer */}
        <div className={comparisonStyle}>
           <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b pointer-events-auto'>
