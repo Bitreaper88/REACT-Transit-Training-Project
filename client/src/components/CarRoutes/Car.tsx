@@ -5,10 +5,10 @@ const Car: React.FC = () => {
   return (
     <div className="flex h-12">
       <i className="material-icons overflow-hidden text-blue-500">directions_car</i>
-      <div className="w-6 ml-12"><div className="w-1 h-12 bg-black"></div></div>
-       <div>
-        <div className="w-20 whitespace-no-wrap ml-3">Turku, Finland</div>
-        <p className="w-20 whitespace-no-wrap ml-3 font-bold text-xs">Travel 70km</p>
+      <div className="w-1 h-12 ml-8 pl-1"><div className="bg-black w-1 h-12"></div></div>
+       <div className="ml-4">
+        <div className="w-20 whitespace-no-wrap">Espoo, Finland</div>
+        <p className="w-20 whitespace-no-wrap font-bold text-xs">Travel 70km</p>
       </div>
     </div>
   );

@@ -13,16 +13,18 @@ const RoutesWrapper: React.FC = () => {
   return (
     <div className="overflow-auto h-64">
       <Start />
-      <DateIconLoc />
-      <Leg />
-      <DateIconLoc />
-      <Train />
-      <DateIconLoc />
-      <Car />
-      <DateIconLoc />
-      <Leg />
-      <DateIconLoc />
-      <Bus />
+      <div className="ml-4">
+        <DateIconLoc />
+        <Leg />
+        <DateIconLoc />
+        <Train />
+        <DateIconLoc />
+        <Car />
+        <DateIconLoc />
+        <Leg />
+        <DateIconLoc />
+        <Bus />
+      </div>
       <End />
     </div>
   );
