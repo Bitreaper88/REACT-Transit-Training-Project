@@ -62,27 +62,29 @@ function Test(props: ITestProps): JSX.Element {
         if (props.setGoogleLines && props.googleLines && props.googleLines.length === 0) props.setGoogleLines(lines);
     }
 
-    return (
-        <div ref={divRef}
-            style={{
-                position: 'absolute',
-                zIndex: 1000,
-                cursor: 'auto',
+    // return (
+    //     <div ref={divRef}
+    //         style={{
+    //             position: 'absolute',
+    //             zIndex: 1000,
+    //             cursor: 'auto',
 
-                bottom: '0px',
-                backgroundColor: 'white',
-                fontSize: 'xx-large',
-                paddingLeft: '10px',
-                paddingRight: '10px',
-            }}>
-            ZoomLevel:&nbsp;{zoomLevel}
-            &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
-            {props.cursor && <span>
-                &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
-            </span>}
-            &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
-        </div>
-    );
+    //             bottom: '0px',
+    //             backgroundColor: 'white',
+    //             fontSize: 'xx-large',
+    //             paddingLeft: '10px',
+    //             paddingRight: '10px',
+    //         }}>
+    //         ZoomLevel:&nbsp;{zoomLevel}
+    //         &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
+    //         {props.cursor && <span>
+    //             &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
+    //         </span>}
+    //         &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
+    //     </div>
+    // );
+
+    return <></>;
 }
 
 export default Test;
