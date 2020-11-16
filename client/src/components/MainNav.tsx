@@ -9,32 +9,15 @@ import L from 'leaflet';
 
 const MainNav: React.FC = () => {
 
-  const sidebarRef = useRef<HTMLDivElement>(null);
-  const carRef = useRef<HTMLDivElement>(null);
-  const compRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  
   // Prevents the map from hogging all the clicks
+  const uiRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (sidebarRef.current) {
-      L.DomEvent.disableClickPropagation(sidebarRef.current);
-    }
-    if (carRef.current) {
-      L.DomEvent.disableClickPropagation(carRef.current);
-    }
-    if (compRef.current) {
-      L.DomEvent.disableClickPropagation(compRef.current);
-    }
-    if (headerRef.current){
-      L.DomEvent.disableClickPropagation(headerRef.current);
-    }
-    if (logoRef.current){
-      L.DomEvent.disableClickPropagation(logoRef.current);
+    if (uiRef.current){
+      L.DomEvent.disableClickPropagation(uiRef.current);
     }
   }, []);
 
-  const sideBaseStyle = 'absolute pt-12 inset-y-0 left-0 bg-gray-200 w-64 h-full shadow transition duration-500 ease-in-out cursor-auto transform ';
+  const sideBaseStyle = 'absolute pt-12 inset-y-0 left-0 bg-gray-200 w-64 h-full shadow transition duration-500 ease-in-out cursor-auto pointer-events-auto transform ';
   const xTranslation = ' -translate-x-64';
 
   const [sideBarStyle, setSidebarStyle] = useState(sideBaseStyle);
@@ -80,15 +63,13 @@ const MainNav: React.FC = () => {
   const [selectedDate, handleDateChange] = React.useState<Date | null>(new Date());
   
   return (
-    <div className='grid h-screen w-screen absolute z-1000'>
+    <div className='grid h-screen w-screen absolute z-1000 pointer-events-none'
+        ref={uiRef}>
       
-      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white cursor-auto'
-          ref={logoRef}>
+      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white cursor-auto pointer-events-auto'>
         <img className='object-contain h-8' src='../magenta_logo.png'/>
       </div>
-      <div className={sideBarStyle}
-          ref={sidebarRef}>
-
+      <div className={sideBarStyle}>
    
         SideBar
         <div className='absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
@@ -111,9 +92,8 @@ const MainNav: React.FC = () => {
       </div>
 
       <div className='w-full'>
-        <div className='md:z-30 h-12 shadow absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2 cursor-auto'
-            ref={headerRef}>
-          
+        <div className='md:z-30 h-12 shadow absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between 
+                              md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2 cursor-auto pointer-events-auto'>        
           <div className='md:mt-1 mt-2'>
             <button className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
                               rounded w-fit
@@ -144,9 +124,7 @@ const MainNav: React.FC = () => {
       </div>
 
       {/* full widht aligment container */}
-      {/* pointer-events-none very importatn as this container covers part of the side bar*/}
-      <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none cursor-auto' 
-          ref={carRef}>
+      <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        {/* drawer */}
        <div className={carStyle}>
           <div className='md:h-58 shadow bg-white w-64 md:ml-4 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-auto'>
@@ -156,9 +134,7 @@ const MainNav: React.FC = () => {
       </div>
 
       {/* full widht aligment container */}
-      {/* pointer-events-none very importatn as this container covers part of the side bar*/}
-      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'
-          ref={compRef}> 
+      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        {/* drawer */}
        <div className={comparisonStyle}>
           <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b pointer-events-auto'>
