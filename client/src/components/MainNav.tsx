@@ -12,6 +12,8 @@ const MainNav: React.FC = () => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const carRef = useRef<HTMLDivElement>(null);
   const compRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
   
   // Prevents the map from hogging all the clicks
   useEffect(() => {
@@ -23,6 +25,12 @@ const MainNav: React.FC = () => {
     }
     if (compRef.current) {
       L.DomEvent.disableClickPropagation(compRef.current);
+    }
+    if (headerRef.current){
+      L.DomEvent.disableClickPropagation(headerRef.current);
+    }
+    if (logoRef.current){
+      L.DomEvent.disableClickPropagation(logoRef.current);
     }
   }, []);
 
@@ -74,7 +82,8 @@ const MainNav: React.FC = () => {
   return (
     <div className='grid h-screen w-screen absolute z-1000'>
       
-      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white'>
+      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white cursor-auto'
+          ref={logoRef}>
         <img className='object-contain h-8' src='../magenta_logo.png'/>
       </div>
       <div className={sideBarStyle}
@@ -102,7 +111,8 @@ const MainNav: React.FC = () => {
       </div>
 
       <div className='w-full'>
-        <div className='md:z-30 h-12 shadow absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2'>
+        <div className='md:z-30 h-12 shadow absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2 cursor-auto'
+            ref={headerRef}>
           
           <div className='md:mt-1 mt-2'>
             <button className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
