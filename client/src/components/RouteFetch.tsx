@@ -7,7 +7,7 @@ import { graphQLRequest } from './RouteFetch.publicAPI';
 import carAPIcall from './RouteFetch.carAPI';
 import { ResponseContext } from './ResponseContext';
 import TransportModes from './TransportModes';
-import { ModeArray } from './TransportModes';
+import { Selectable, Mode } from './TransportModes';
 
 export interface ICoordinates {
     lat: number;
@@ -27,7 +27,7 @@ function RouteFetch(): JSX.Element {
         date: moment().format('YYYY-MM-DD'),
         time: moment().format('h:mm:ss')
     });
-    const [modeOptions, setModeOptions] = useState([...ModeArray]);
+    const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as Mode[]);
     const { setRaw } = useContext(ResponseContext);
 
     // dev

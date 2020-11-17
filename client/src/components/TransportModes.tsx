@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
-export const ModeArray = [
+export const AllModes = [
     'AIRPLANE',
     // 'BICYCLE',
     'BUS',
@@ -13,12 +13,27 @@ export const ModeArray = [
     'RAIL',
     'SUBWAY',
     'TRAM',
-    // 'WALK' // Requires special treatment: prefer no walk
+    'WALK' // Requires special treatment: prioritize no walk
 ] as const;
 
-export type Mode = typeof ModeArray[number];
+export const Selectable = [
+    'AIRPLANE',
+    // 'BICYCLE',
+    'BUS',
+    'CABLE_CAR',
+    // 'CAR',
+    'FERRY',
+    // 'FUNICULAR',
+    // 'GONDOLA',
+    'RAIL',
+    'SUBWAY',
+    // 'TRAM',
+    // 'WALK' // Requires special treatment: prioritize no walk
+] as const;
 
-export enum ModEnum {
+export type Mode = typeof AllModes[number];
+
+export enum ModeIcon {
     'AIRPLANE' = 'flight',
     'BICYCLE' = 'directions_bike',
     'BUS' = 'directions_bus',
@@ -53,10 +68,12 @@ export interface ITransProps {
 }
 
 export default function TransportModes(props: ITransProps): JSX.Element {
-    const [selected, setSelected] = useState<Mode[]>([...ModeArray]);
+    const [selected, setSelected] = useState<Mode[]>([...Selectable]);
 
     useEffect(() => {
-        props.onChange(selected);
+        const fullSelection = [...selected, 'WALK'] as Mode[];
+        if (selected.includes('CABLE_CAR')) fullSelection.push('TRAM', 'FUNICULAR');
+        props.onChange(fullSelection);
     }, [selected]);
 
     function onButtonClick(mode: Mode) {
@@ -69,7 +86,7 @@ export default function TransportModes(props: ITransProps): JSX.Element {
     }
 
     function buttons() {
-        return ModeArray.map((mode) => {
+        return Selectable.map((mode) => {
             return (
                 <TransportButton
                     key={mode}
@@ -108,7 +125,7 @@ export function TransportButton(props: IButtonProps): JSX.Element {
             onClick={() => props.onClick(props.mode)}
             className={`material-icons focus:outline-none ${mutableStyles}`}
             title={HoverText[props.mode]}>
-            {ModEnum[props.mode]}
+            {ModeIcon[props.mode]}
         </button>
     );
 }
