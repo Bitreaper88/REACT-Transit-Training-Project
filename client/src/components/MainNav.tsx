@@ -2,11 +2,13 @@ import  RoutesWrapper from './AllRoutesWrapper';
 import React, { useEffect, useRef, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { createMuiTheme } from '@material-ui/core';
+// Due to deprication warning, change when Material UI Core V5 is released!
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
+
 
 //import { Overrides } from '@material-ui/core/styles/overrides';
 import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
