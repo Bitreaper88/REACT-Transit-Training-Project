@@ -2,12 +2,91 @@ import  RoutesWrapper from './AllRoutesWrapper';
 import React, { useEffect, useRef, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { createMuiTheme } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
 
-// Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
+//import { Overrides } from '@material-ui/core/styles/overrides';
+import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 
+type overridesNameToClassKey = {
+  [P in keyof MuiPickersOverrides]: keyof MuiPickersOverrides[P];
+};
+ /* eslint-disable */
+declare module '@material-ui/core/styles/overrides' {
+  export interface ComponentNameToClassKey extends overridesNameToClassKey {}
+}
+
+/** import our UI elements */
+import CarSetup from './CarSetup';
+
+const blue_100 = '#ebf8ff';
+const blue_200 = '#bee3f8';
+const blue_300 = '#90cdf4';
+const blue_400 = '#63b3ed';
+const blue_500 = '#4299e1';
+const blue_600 = '#3182ce';
+const blue_700 = '#2b6cb0';
+const blue_800 = '#2c5282';
+const blue_900 = '#2a4365';
+
+const materialTheme = createMuiTheme({
+
+  palette: {
+    primary: {
+      light:blue_500, //757ce8
+      main: blue_700, //3f50b5
+      dark: blue_900, //002884
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+  typography: {
+    //This wont work as it messe up the callender header
+    //htmlFontSize: 12,
+  },
+  overrides: {
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: blue_500, // blue-500
+      },
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+          // backgroundColor: blue_200,
+          // color: 'white',
+      },
+    },
+    MuiPickersDay: {
+      day: {
+        color: blue_700,
+      },
+      daySelected: {
+        backgroundColor: blue_500,
+      },
+      dayDisabled: {
+        color: blue_200,
+      },
+      current: {
+        color: blue_900,
+      },
+    },
+    MuiPickersModal: {
+      dialogAction: {
+        color:  '#000',
+      },
+    },
+  },
+});
+
+// Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 const MainNav: React.FC = () => {
 
   // Prevents the map from hogging all the clicks
@@ -84,8 +163,17 @@ const MainNav: React.FC = () => {
 
         <div className='p-2 bg-white text-gray-800 pointer-events-auto'>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          {/* <DateTimePicker value={selectedDate} onChange={handleDateChange} /> */}
-          <DateTimePicker value={selectedDate} onChange={newDate => handleDateChange(newDate)} />
+          <ThemeProvider theme={materialTheme}>
+            <DateTimePicker
+              label='Time of departure'
+              value={selectedDate}
+              onChange={newDate => handleDateChange(newDate)}
+              ampm={false}
+              disablePast={true}
+              fullWidth={true}
+              //format='string'       
+              />
+            </ThemeProvider>
         </MuiPickersUtilsProvider>
           <RoutesWrapper/>
         <RouteFetch />
@@ -147,68 +235,5 @@ const MainNav: React.FC = () => {
     </div>
   );
 };
-
-
-const CarSetup: React.FC = () => {
-
-  const [fuelEco, setFuelEco]     = useState<string>('0');
-  const [tankSize, setTankSize]   = useState<string>('0');
-  const [fuelPrice, setfuelPrice] = useState<string>('0');
-
-  return(
-          <>
-            <div className='p-1 flex items-stretch'>
-              <span className='material-icons overflow-hidden text-blue-500 md-48'>directions_car</span>
-              <span className='text-lg text-gray-700 font-bold mx-1 self-center flex-1 text-left border-b-2 border-blue-500'>
-                Setup your car
-              </span>
-            </div>
-            <form className='w-full mx-1'>
-              <div className='transform translate-x-4'>
-                <div  className='flex items-center pb-2'>
-                    <div className='w-2/5  text-right'>
-                      <label className='block font-medium'>Fuel economy</label>
-                    </div>
-                    <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setFuelEco(event.target.value)}
-                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
-                    </div>
-                    <div className=''>
-                      <label className='block font-medium'>l/100km</label>
-                    </div>
-                </div>
-
-                <div  className='flex items-center pb-2'> 
-                    <div className='w-2/5  text-right'>
-                      <label className='block font-medium'>Fuel tank size</label>
-                    </div>
-                    <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setTankSize(event.target.value)}
-                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0" step="1" type='number'  min="0"/>
-                    </div>
-                    <div className=''>
-                      <label className='block font-medium'>l</label>
-                    </div>
-                </div>
-                  
-                <div  className='flex items-center pb-2'>
-                    <div className='w-2/5 text-right'>
-                      <label className='block font-medium '>Fuel price</label>
-                    </div>
-                    <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setfuelPrice(event.target.value)}
-                      className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
-                    </div>
-                    <div className=''>
-                      <label className='block font-medium'>€/l</label>
-                    </div>
-                </div>
-              </div>
-            </form>
-          </>
-  );
-};
-
-
 
 export default MainNav;
