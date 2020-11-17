@@ -4,8 +4,11 @@ import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const CarSetup: React.FC = () => {
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fuelEco, setFuelEco]     = useState<string>('0');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [tankSize, setTankSize]   = useState<string>('0');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fuelPrice, setfuelPrice] = useState<string>('0');
 
   return(
