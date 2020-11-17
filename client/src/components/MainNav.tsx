@@ -96,6 +96,7 @@ const MainNav: React.FC = () => {
   useEffect(() => {
     if (uiRef.current){
       L.DomEvent.disableClickPropagation(uiRef.current);
+      L.DomEvent.disableScrollPropagation(uiRef.current);
     }
   }, []);
 
