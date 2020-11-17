@@ -28,7 +28,15 @@ function RouteFetch(): JSX.Element {
         time: moment().format('h:mm:ss')
     });
     const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as Mode[]);
+    const [queryModes, setQueryModes] = useState<{ mode: Mode }[]>([]);
     const { setRaw } = useContext(ResponseContext);
+
+    useEffect(() => {
+        const modes = modeOptions.map(mode => {
+            return { mode: mode };
+        });
+        setQueryModes(modes);
+    }, [modeOptions]);
 
     // dev
     useEffect(() => {
@@ -47,7 +55,13 @@ function RouteFetch(): JSX.Element {
                 try {
 
                     // Public transit API
-                    const reqVariables = (({ from, to, date, time }) => ({ from, to, date, time }))(req);
+                    const reqVariables = {
+                        ...(({ from, to, date, time }) => ({ from, to, date, time }))(req),
+                        modes: queryModes
+                    };
+                    
+                    console.log(reqVariables);
+
                     const publicPromise = axios(Constants.URL_API, {
                         method: 'POST',
                         headers: {

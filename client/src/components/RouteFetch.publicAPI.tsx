@@ -1,5 +1,5 @@
-export const graphQLRequest = `query Itinaries($from: InputCoordinates, $to: InputCoordinates, $date: String, $time: String)
-      {plan(from: $from, to: $to, date: $date, time: $time) { 
+export const graphQLRequest = `query Itinaries($from: InputCoordinates, $to: InputCoordinates, $date: String, $time: String, $modes: [TransportMode])
+      {plan(from: $from, to: $to, date: $date, time: $time, transportModes: $modes) { 
         itineraries {
           walkDistance,
           duration,
