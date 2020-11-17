@@ -38,11 +38,6 @@ function RouteFetch(): JSX.Element {
         setQueryModes(modes);
     }, [modeOptions]);
 
-    // dev
-    // useEffect(() => {
-    //     console.log(modeOptions);
-    // }, [modeOptions]);
-
     // When new request object is set
     useEffect(() => {
         if (!req.from || !req.to) return;
@@ -59,8 +54,6 @@ function RouteFetch(): JSX.Element {
                         ...(({ from, to, date, time }) => ({ from, to, date, time }))(req),
                         modes: queryModes
                     };
-                    
-                    console.log(reqVariables);
 
                     const publicPromise = axios(Constants.URL_API, {
                         method: 'POST',
