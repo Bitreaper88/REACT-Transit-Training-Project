@@ -37,14 +37,14 @@ export enum ModeIcon {
     'AIRPLANE' = 'flight',
     'BICYCLE' = 'directions_bike',
     'BUS' = 'directions_bus',
-    'CABLE_CAR' = 'tram', // correct?
+    'CABLE_CAR' = 'tram',
     'CAR' = 'directions_car',
     'FERRY' = 'directions_boat',
-    'FUNICULAR' = 'tram', // fuck
+    'FUNICULAR' = 'tram',
     'GONDOLA' = 'rowing',
     'RAIL' = 'train',
     'SUBWAY' = 'subway',
-    'TRAM' = 'tram', // goddamnit
+    'TRAM' = 'tram',
     'WALK' = 'directions_walk'
 }
 
