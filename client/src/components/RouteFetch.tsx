@@ -39,9 +39,9 @@ function RouteFetch(): JSX.Element {
     }, [modeOptions]);
 
     // dev
-    useEffect(() => {
-        console.log(modeOptions);
-    }, [modeOptions]);
+    // useEffect(() => {
+    //     console.log(modeOptions);
+    // }, [modeOptions]);
 
     // When new request object is set
     useEffect(() => {
