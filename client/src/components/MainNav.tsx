@@ -81,9 +81,9 @@ const materialTheme = createMuiTheme({
       },
     },
     MuiPickersModal: {
-      dialogAction: {
-        color:  '#000',
-      },
+      // dialogAction: {
+      //   color:  '#000',
+      // },
     },
   },
 });
