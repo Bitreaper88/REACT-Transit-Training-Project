@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IRawResponse } from './RouteFetch.types';
+import { IItinerary, IRawResponse } from './RouteFetch.types';
 import { ResponseContext } from './ResponseContext';
 
 interface IProviderProps {
@@ -7,7 +7,8 @@ interface IProviderProps {
 }
 
 export interface IParsedResponse {
-    shutUpLint?: boolean;
+    /** Default itinerary for public transit route (same as: raw.public[0].plan.itineraries[0]) */
+    pubDf?: IItinerary;
 }
 
 function RepsonseProvider(props: IProviderProps): JSX.Element {
@@ -19,8 +20,10 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
         
         // If multiple components need the same calculated values from the raw response it can be done here too
         // Just remember to update IParsedResponse too
-        setParsed({
+        const defaultPublicItinerary = raw.public[0].plan.itineraries[0];
 
+        setParsed({
+            pubDf: defaultPublicItinerary
         });
     }, [raw]);
 
