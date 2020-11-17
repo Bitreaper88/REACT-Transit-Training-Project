@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
+/** List of transport modes used by the app. */
 export const AllModes = [
     'AIRPLANE',
     // 'BICYCLE',
@@ -16,6 +17,7 @@ export const AllModes = [
     'WALK' // Requires special treatment: prioritize no walk
 ] as const;
 
+/** List of transport modes that can be toggled on or off. */
 export const Selectable = [
     'AIRPLANE',
     // 'BICYCLE',
