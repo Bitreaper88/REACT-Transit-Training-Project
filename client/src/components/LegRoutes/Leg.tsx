@@ -6,7 +6,7 @@ const Leg: React.FC = () => {
   const dots = 5;
   const dotArray = [];
   for (let index = 0; index < dots; index++) {
-    dotArray.push( <div className="self-center rounded-full bg-gray-600 w-2 h-2 mb-1 transform"></div>);
+    dotArray.push( <div key={'legDot'+index} className="self-center rounded-full bg-gray-600 w-2 h-2 mb-1 transform"></div>);
   }
 
   return (
