@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { IItinerary, IRawResponse } from './RouteFetch.types';
+import { IItinerary, IRawResponse, ICarRouteAPI } from './RouteFetch.types';
 import { ResponseContext } from './ResponseContext';
-import { ICarRouteAPI } from '../deprecated/CarRouteAPI/CarRouteAPI.d';
 
 interface IProviderProps {
     children?: React.ReactNode;
