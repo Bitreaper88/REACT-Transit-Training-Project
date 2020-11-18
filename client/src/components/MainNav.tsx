@@ -27,16 +27,16 @@ const MainNav: React.FC = () => {
   const comparsionBaseStyle = 'md:ml-64 transition duration-500 ease-in-out transform ';
   const YTranslation = 'md:-translate-y-64 translate-y-64';
 
-  const [comparisonStyle, setComparisonStyle] = useState(comparsionBaseStyle);
-  const [comparisonStatus, setComparisonStatus] = useState(false);
+  const [comparisonStyle, setComparisonStyle] = useState(comparsionBaseStyle+YTranslation);
+  const [comparisonStatus, setComparisonStatus] = useState(true);
 
 
   const carBaseStyle = 'md:ml-56 transition duration-500 ease-in-out transform ';
   const negativeYTranslation = '-translate-y-64';
   
 
-  const [carStyle, setCarStyle] = useState(carBaseStyle);
-  const [carStatus, setCarStatus] = useState(false);
+  const [carStyle, setCarStyle] = useState(carBaseStyle+YTranslation);
+  const [carStatus, setCarStatus] = useState(true);
 
 
   function translateSideBar() {
