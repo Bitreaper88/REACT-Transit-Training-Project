@@ -100,7 +100,7 @@ export default function TransportModes(props: ITransProps): JSX.Element {
     }
 
     return (
-        <div className=''>
+        <div className='flex justify-evenly m-2'>
             {buttons()}
         </div>
     );

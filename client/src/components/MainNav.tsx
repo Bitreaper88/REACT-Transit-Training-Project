@@ -9,8 +9,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
 
-
-//import { Overrides } from '@material-ui/core/styles/overrides';
 import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 
 type overridesNameToClassKey = {
@@ -38,9 +36,9 @@ const materialTheme = createMuiTheme({
 
   palette: {
     primary: {
-      light:blue_500, //757ce8
-      main: blue_700, //3f50b5
-      dark: blue_900, //002884
+      light:blue_500, //#bee3f8
+      main: blue_700, //#4299e1
+      dark: blue_900, //#2a4365
       contrastText: '#fff',
     },
     secondary: {
@@ -57,7 +55,7 @@ const materialTheme = createMuiTheme({
   overrides: {
     MuiPickersToolbar: {
       toolbar: {
-        backgroundColor: blue_500, // blue-500
+        backgroundColor: blue_500,
       },
     },
     MuiPickersCalendarHeader: {
@@ -178,8 +176,9 @@ const MainNav: React.FC = () => {
               />
             </ThemeProvider>
         </MuiPickersUtilsProvider>
+          <RouteFetch />
           <RoutesWrapper/>
-        <RouteFetch />
+       
           
         </div>
       </div>
@@ -216,7 +215,7 @@ const MainNav: React.FC = () => {
         </div>
       </div>
 
-      {/* full widht aligment container */}
+      {/* full width aligment container */}
       <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        {/* drawer */}
        <div className={carStyle}>
@@ -226,7 +225,7 @@ const MainNav: React.FC = () => {
         </div>
       </div>
 
-      {/* full widht aligment container */}
+      {/* full width aligment container */}
       <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        {/* drawer */}
        <div className={comparisonStyle}>

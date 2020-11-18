@@ -11,9 +11,9 @@ import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 const RoutesWrapper: React.FC = () => {
 
   return (
-    <div className="overflow-auto h-64">
+    <div className="overflow-visible h-full mt-5">
       <Start />
-      <div className="ml-4">
+    <div className="">  {/*  this should not be padded or margined in the x direction as it will miss aling the route lines */}
         <DateIconLoc />
         <Leg />
         <DateIconLoc />

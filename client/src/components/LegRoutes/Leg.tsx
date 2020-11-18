@@ -2,27 +2,34 @@ import React from 'react';
 import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const Leg: React.FC = () => { 
+
+  const dots = 5;
+  const dotArray = [];
+  for (let index = 0; index < dots; index++) {
+    dotArray.push( <div className="self-center rounded-full bg-gray-600 w-2 h-2 mb-1 transform"></div>);
+  }
+
   return (
-    <div className="flex h-12">
-      <i className="material-icons overflow-hidden text-blue-500">directions_walk</i>
-      <div className="flex flex-col ml-8 pl-1 w-1 h-12">
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
-        <div className="rounded-full bg-black w-1 h-1"></div>
+    <div className="flex flex-row h-16 my-1">
+      <div className="w-2/6 text-center flex items-stretch">
+        <i className="self-center flex-1 material-icons md-36 overflow-hidden text-blue-500">directions_walk</i>
+      </div> 
+      <div className="w-1/6 flex flex-col self-center">
+        {dotArray}
       </div>
-      <div className="ml-4">
-        <div className="w-20 whitespace-no-wrap">Turku, Finland</div>
-        <p className="w-20 whitespace-no-wrap font-bold text-xs">Walk 70km</p>
+
+      <div className="w-3/6 flex items-stretch">
+        <div className="self-center">
+          <div className="tooltip">
+          {/* Thees two should contain the same variable so that in the event of the
+          city name getting cut off it can still be read from the tool tip */}
+          <div className="truncate">Turku, Finland</div> 
+          <span className="tooltiptext p-1">Turku, Finland</span>
+        </div>
+          <div className="font-bold text-xs">Walk 70km</div>
+        </div>
       </div>
+
     </div>
   );
 };
