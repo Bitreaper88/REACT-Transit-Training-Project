@@ -1,10 +1,11 @@
 import React from 'react';
-import { Tooltip} from '@material-ui/core';
+import ReactTooltip from 'react-tooltip';
 import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const Start: React.FC = () => { 
 
   const d = new Date();
+  const TooltipID = 'someStartID';
   return (
     <div className="flex my-1">
 
@@ -17,9 +18,10 @@ const Start: React.FC = () => {
       </div>
 
       <div className="w-3/6">
-        <Tooltip title="Turku, Finland" arrow>  
-            <div className="truncate font-semibold">Turku, Finland</div>
-        </Tooltip>
+        <div data-tip data-for={TooltipID} className="truncate font-semibold">Turku, Finland</div>
+        <ReactTooltip id={TooltipID} place="right" type="light" effect="solid">
+            <div className="font-semibold">Turku, Finland</div>
+        </ReactTooltip>
       </div>
     </div>
   );

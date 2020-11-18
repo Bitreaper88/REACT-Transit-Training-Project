@@ -1,8 +1,11 @@
 import React from 'react';
-import { Tooltip} from '@material-ui/core';
+import ReactTooltip from 'react-tooltip';
 import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const Car: React.FC = () => { 
+
+  const TooltipID = 'someCarIDprop';
+
   return (
     <div className="flex flex-row h-16 my-1">
      
@@ -14,15 +17,18 @@ const Car: React.FC = () => {
           <div className="self-center bg-blue-500 w-2 h-full transform scale-x-75"></div>
       </div>
   
-      <div className="w-3/6 flex items-stretch">
-        <div className="self-center w-full ">
-          <Tooltip title="Turkusfjpsdjfpsdjfpsjfposdjfops, Finland" arrow>  
-            <div className="truncate">Turkusfjpsdjfpsdjfpsjfposdjfops, Finland</div>
-          </Tooltip>
+      <div  data-tip data-for={TooltipID} className="w-3/6 flex items-stretch">
+        <div  className="self-center w-full">
+
+          <ReactTooltip id={TooltipID} place="right" type="light" effect="solid">
+              <div className="font-semibold">Turku, Finland</div>
+          </ReactTooltip>
+     
+          <div className="truncate">Turku, Finland</div>
           <div className="font-bold text-xs">Walk 70km</div>
+  
         </div>
       </div>
-  
     </div>
   );
 };

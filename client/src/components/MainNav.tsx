@@ -71,8 +71,6 @@ const MainNav: React.FC = () => {
         <img className='object-contain h-8' src='../magenta_logo.png'/>
       </div>
       <div className={sideBarStyle}>
-   
-        SideBar
         <div className='absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
          <button onClick={() => translateSideBar()}
           className='w-5 h-10 bg-white rounded-r shadow right-0 self-center flex-1
@@ -82,10 +80,10 @@ const MainNav: React.FC = () => {
          </button>
         </div>
         
-        <div className='overflow-hidden  p-2 bg-white text-gray-800 pointer-events-auto'>    
+        <div className='p-2 bg-white text-gray-800 pointer-events-auto overflow-auto h-full md:pb-0 pb-48'>    
           <TimeDate/>
           <RouteFetch />
-          <RoutesWrapper/> 
+          <RoutesWrapper/>
         </div>
       </div>
 
