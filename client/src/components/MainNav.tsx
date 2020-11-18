@@ -1,90 +1,11 @@
 import  RoutesWrapper from './AllRoutesWrapper';
 import React, { useEffect, useRef, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-// Due to deprication warning, change when Material UI Core V5 is released!
-import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
-import DateFnsUtils from '@date-io/date-fns';
+
+import CarSetup from './CarSetup';
+import TimeDate from './TimeDate';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
-
-import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
-
-type overridesNameToClassKey = {
-  [P in keyof MuiPickersOverrides]: keyof MuiPickersOverrides[P];
-};
- /* eslint-disable */
-declare module '@material-ui/core/styles/overrides' {
-  export interface ComponentNameToClassKey extends overridesNameToClassKey {}
-}
-
-/** import our UI elements */
-import CarSetup from './CarSetup';
-
-const blue_100 = '#ebf8ff';
-const blue_200 = '#bee3f8';
-const blue_300 = '#90cdf4';
-const blue_400 = '#63b3ed';
-const blue_500 = '#4299e1';
-const blue_600 = '#3182ce';
-const blue_700 = '#2b6cb0';
-const blue_800 = '#2c5282';
-const blue_900 = '#2a4365';
-
-const materialTheme = createMuiTheme({
-
-  palette: {
-    primary: {
-      light:blue_500, //#bee3f8
-      main: blue_700, //#4299e1
-      dark: blue_900, //#2a4365
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
-  },
-  typography: {
-    //This wont work as it messe up the callender header
-    //htmlFontSize: 12,
-  },
-  overrides: {
-    MuiPickersToolbar: {
-      toolbar: {
-        backgroundColor: blue_500,
-      },
-    },
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-          // backgroundColor: blue_200,
-          // color: 'white',
-      },
-    },
-    MuiPickersDay: {
-      day: {
-        color: blue_700,
-      },
-      daySelected: {
-        backgroundColor: blue_500,
-      },
-      dayDisabled: {
-        color: blue_200,
-      },
-      current: {
-        color: blue_900,
-      },
-    },
-    MuiPickersModal: {
-      // dialogAction: {
-      //   color:  '#000',
-      // },
-    },
-  },
-});
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 const MainNav: React.FC = () => {
@@ -141,7 +62,7 @@ const MainNav: React.FC = () => {
   // function test(){
   //   alert('test alert');
   // }   <button onClick={test} className='bg-red-700 absolute'>test</button>
-  const [selectedDate, handleDateChange] = React.useState<Date | null>(new Date());
+ 
   
   return (
     <div className='grid h-screen w-screen absolute z-1000 pointer-events-none'
@@ -163,23 +84,9 @@ const MainNav: React.FC = () => {
         </div>
 
         <div className='p-2 bg-white text-gray-800 pointer-events-auto'>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <ThemeProvider theme={materialTheme}>
-            <DateTimePicker
-              label='Time of departure'
-              value={selectedDate}
-              onChange={newDate => handleDateChange(newDate)}
-              ampm={false}
-              disablePast={true}
-              fullWidth={true}
-              //format='string'       
-              />
-            </ThemeProvider>
-        </MuiPickersUtilsProvider>
+          <TimeDate/>
           <RouteFetch />
           <RoutesWrapper/>
-       
-          
         </div>
       </div>
 
