@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip} from '@material-ui/core';
 import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const Car: React.FC = () => { 
@@ -14,14 +15,11 @@ const Car: React.FC = () => {
       </div>
   
       <div className="w-3/6 flex items-stretch">
-        <div className="self-center">
-          <div className="tooltip">
-          {/* Thees two should contain the same variable so that in the event of the
-          city name getting cut off it can still be read from the tool tip */}
-          <div className="truncate">Espoo, Finland</div> 
-          <span className="tooltiptext p-1">Espoo, Finland</span>
-        </div>
-          <div className="font-bold text-xs">Travel 70km</div>
+        <div className="self-center w-full ">
+          <Tooltip title="Turkusfjpsdjfpsdjfpsjfposdjfops, Finland" arrow>  
+            <div className="truncate">Turkusfjpsdjfpsdjfpsjfposdjfops, Finland</div>
+          </Tooltip>
+          <div className="font-bold text-xs">Walk 70km</div>
         </div>
       </div>
   

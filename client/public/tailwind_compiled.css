@@ -22814,31 +22814,6 @@ video {
   width: fit-content
 }
 
-.tooltip {
-  position: relative;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  background-color: #738195;
-  color: #fff;
-  text-align: center;
-  border-radius: 0.25rem;
-  padding:  0.25rem 0.25rem;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: -5px;
-  left: 105%;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 /* junk test code */
 
 .rotate-90{

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip} from '@material-ui/core';
 import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const End: React.FC = () => { 
@@ -15,13 +16,10 @@ const End: React.FC = () => {
         <i className="self-center material-icons md-36 overflow-hidden text-green-600">location_on</i>  
       </div>
 
-      <div className="w-3/6 ">
-        <div className="tooltip">
-          {/* Thees two should contain the same variable so that in the event of the
-          city name getting cut off it can still be read from the tool tip */}
-          <div className="truncate font-semibold">Turkus, Finland</div> 
-          <span className="tooltiptext p-1">Turku, Finland</span>
-        </div>
+      <div className="w-3/6">
+        <Tooltip title="Turku, Finland" arrow>  
+            <div className="truncate font-semibold">Turku, Finland</div>
+        </Tooltip>
       </div>
 
     </div>

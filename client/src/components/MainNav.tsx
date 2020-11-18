@@ -1,7 +1,6 @@
 import  RoutesWrapper from './AllRoutesWrapper';
 import React, { useEffect, useRef, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
-
 import CarSetup from './CarSetup';
 import TimeDate from './TimeDate';
 import RouteFetch from './RouteFetch';
@@ -82,11 +81,11 @@ const MainNav: React.FC = () => {
           {sideBarStatus ? 'chevron_right' : 'chevron_left'}
          </button>
         </div>
-
-        <div className='p-2 bg-white text-gray-800 pointer-events-auto'>
+        
+        <div className='overflow-hidden  p-2 bg-white text-gray-800 pointer-events-auto'>    
           <TimeDate/>
           <RouteFetch />
-          <RoutesWrapper/>
+          <RoutesWrapper/> 
         </div>
       </div>
 
