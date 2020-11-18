@@ -9,6 +9,7 @@ interface IProviderProps {
 export interface IParsedResponse {
     /** Default itinerary for public transit route (same as: raw.public[0].plan.itineraries[0]) */
     pubDf?: IItinerary;
+    /** Default route for car (same as: raw.car[0]) */
     carDf?: ICarRouteAPI; 
 }
 
