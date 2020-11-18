@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+/* eslint-disable */
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
+import { ResponseContext } from '../components/ResponseContext';
 
 interface ITestProps {
     cursor?: () => void;
@@ -11,12 +13,27 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
+    const { raw, parsed } = useContext(ResponseContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (divRef.current) L.DomEvent.disableClickPropagation(divRef.current);
     }, []);
+
+    useEffect(() => {
+        if (raw) {
+            console.log('Public route duration from the context: ');
+            console.log(raw.public[0].plan.itineraries[0].duration);
+
+            console.log('Car route duration from the context: ');
+            console.log(raw.car[0].routes[0].duration);
+        }
+        if (parsed) {
+            console.log('From Parsed values:');
+            console.log(parsed);
+        }
+    }, [parsed]);
 
     // conflict with map.setBounds();
     // setTimeout() = hack solution but works for now
@@ -46,27 +63,29 @@ function Test(props: ITestProps): JSX.Element {
         if (props.setGoogleLines && props.googleLines && props.googleLines.length === 0) props.setGoogleLines(lines);
     }
 
-    return (
-        <div ref={divRef}
-            style={{
-                position: 'absolute',
-                zIndex: 1000,
-                cursor: 'auto',
+    // return (
+    //     <div ref={divRef}
+    //         style={{
+    //             position: 'absolute',
+    //             zIndex: 1000,
+    //             cursor: 'auto',
 
-                bottom: '0px',
-                backgroundColor: 'white',
-                fontSize: 'xx-large',
-                paddingLeft: '10px',
-                paddingRight: '10px',
-            }}>
-            ZoomLevel:&nbsp;{zoomLevel}
-            &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
-            {props.cursor && <span>
-                &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
-            </span>}
-            &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
-        </div>
-    );
+    //             bottom: '0px',
+    //             backgroundColor: 'white',
+    //             fontSize: 'xx-large',
+    //             paddingLeft: '10px',
+    //             paddingRight: '10px',
+    //         }}>
+    //         ZoomLevel:&nbsp;{zoomLevel}
+    //         &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
+    //         {props.cursor && <span>
+    //             &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
+    //         </span>}
+    //         &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
+    //     </div>
+    // );
+
+    return <></>;
 }
 
 export default Test;

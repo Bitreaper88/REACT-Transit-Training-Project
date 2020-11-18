@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, ZoomControl, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-// import Test from './devtools/Test';
+import Test from '../devtools/Test';
 import ZoomToNewLayer from './MapLeaflet.ZoomToNewLayer';
 
 // eslint-disable-next-line
@@ -88,7 +88,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             <ZoomToNewLayer bounds={currentBounds} />
 
             {/* Devtools */}
-            {/* <Test cursor={changeCursor} setGoogleLines={setGoogleLines} googleLines={googleLines} /> */}
+            <Test cursor={changeCursor} setGoogleLines={setGoogleLines} googleLines={googleLines} />
         </MapContainer>
     );
 }
