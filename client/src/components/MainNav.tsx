@@ -102,7 +102,7 @@ const MainNav: React.FC = () => {
             <button onClick={comparisonBtn} className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
                                                         rounded w-fit
                                                         material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'>
-              compare
+            compare_arrows
             </button>
           </div>
           
@@ -133,7 +133,7 @@ const MainNav: React.FC = () => {
       <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        {/* drawer */}
        <div className={comparisonStyle}>
-          <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b pointer-events-auto'>
+          <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:mx-auto md:rounded-none h-40 w-72 rounded-b pointer-events-auto'>
             <h1>Transport comparison</h1>
           </div>
         </div>
