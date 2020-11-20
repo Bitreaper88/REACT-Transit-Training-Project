@@ -1,17 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState} from 'react';
 import { ResponseContext } from './ResponseContext';
+import { ICarSetup } from './CarSetup';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
-const Comparison: React.FC = () => {
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelEco, setFuelEco]     = useState<string>('0');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [tankSize, setTankSize]   = useState<string>('0');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelPrice, setfuelPrice] = useState<string>('0');
-
+const Comparison: React.FC<ICarSetup> = (props) => {
   const { parsed } = useContext(ResponseContext);
+  // eslint-disable-next-line
+  const {fuel, tank, fuelPrice} = props;
+
+  let fuelCost = 0;
+
+  if (parsed?.carDf?.distance){
+    fuelCost = parsed.carDf.distance * fuelPrice;
+  }
 
 
   return (
@@ -25,7 +26,7 @@ const Comparison: React.FC = () => {
             Time:  {parsed?.carDf?.duration}
           </p>
           <p>
-            Fuel cost: €
+            Fuel cost: {fuelCost} €
           </p>
           <p>
             Refills: none

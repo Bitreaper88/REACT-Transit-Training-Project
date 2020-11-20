@@ -1,15 +1,23 @@
-import React, {useState } from 'react';
+import React from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
+//import PropTypes from 'prop-types';
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 
-const CarSetup: React.FC<any> = ({ props }) => {
 
-  const [fuelEco, setFuelEco] = props.fuel;
+export interface ICarSetup {
+  fuel: any
+  tank: any
+  fuelPrice: any
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [tankSize, setTankSize]   = useState<string>('0');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelPrice, setfuelPrice] = useState<string>('0');
+// eslint-disable-next-line
+const CarSetup: React.FC<ICarSetup> = (props) => {
+  // eslint-disable-next-line
+  const [fuelEco, setFuelEco]     = props.fuel;
+  // eslint-disable-next-line
+  const [tankSize, setTankSize]   = props.tank;
+  // eslint-disable-next-line
+  const [fuelPrice, setfuelPrice] = props.fuelPrice;
 
   return(
           <>
@@ -26,7 +34,7 @@ const CarSetup: React.FC<any> = ({ props }) => {
                       <label className='bloc'>Fuel economy</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setFuelEco(event.target.value)}
+                      <input onChange={(event) => setFuelEco(event.target.value)} value={fuelEco}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>
@@ -39,7 +47,7 @@ const CarSetup: React.FC<any> = ({ props }) => {
                       <label className='block'>Fuel tank size</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setTankSize(event.target.value)}
+                      <input onChange={(event) => setTankSize(event.target.value)} value={tankSize}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0" step="1" type='number'  min="0"/>
                     </div>
                     <div className=''>
@@ -52,7 +60,7 @@ const CarSetup: React.FC<any> = ({ props }) => {
                       <label className='block'>Fuel price</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setfuelPrice(event.target.value)}
+                      <input onChange={(event) => setfuelPrice(event.target.value)} value={fuelPrice}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>

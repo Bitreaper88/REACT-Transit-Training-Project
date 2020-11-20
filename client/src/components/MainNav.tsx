@@ -7,6 +7,7 @@ import TimeDate from './TimeDate';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
 
+
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 const MainNav: React.FC = () => {
 
@@ -59,18 +60,21 @@ const MainNav: React.FC = () => {
     setCarStatus(!carStatus);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelEco, setFuelEco]     = useState<string>('0');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [tankSize, setTankSize]   = useState<string>('0');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelPrice, setfuelPrice] = useState<string>('0');
-  
 
-  // function test(){
-  //   alert('test alert');
-  // }   <button onClick={test} className='bg-red-700 absolute'>test</button>
- 
+  const [carSetupStatus, setcarSetupStatus] = useState(false);
+  const [fuelEco, setFuelEco]     = useState<string>('0.0');
+  const [tankSize, setTankSize]   = useState<string>('0');
+  const [fuelPrice, setfuelPrice] = useState<string>('0.0');
+
+  useEffect(() => {
+    carSetupIcon();
+  }, [fuelEco, tankSize, fuelPrice]);
+
+  function carSetupIcon() {
+      if ( parseFloat(fuelEco) > 0 && parseFloat(tankSize) > 0 && parseFloat(fuelPrice) > 0)  {
+        setcarSetupStatus(true);
+      }else setcarSetupStatus(false);
+  }
   
   return (
     <div className='grid h-screen w-screen absolute z-1000 pointer-events-none'
@@ -120,9 +124,15 @@ const MainNav: React.FC = () => {
                                                 rounded w-fit
                                                 material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'>
               directions_car
-              <span className='md:mt-1 md:-ml-5 absolute w-6 top-0 -m-2 rounded-full bg-blue-500 inset-x-0
-                          material-icons overflow-hidden text-green-400 md-24'>
-            check_circle_outline</span>            
+              {carSetupStatus ?
+                <span className='md:mt-1 md:-ml-5 absolute w-6 top-0 -m-2 rounded-full bg-blue-500 inset-x-0
+                material-icons overflow-hidden text-green-400 md-24'>
+                check_circle_outline</span>
+              :
+                <span className='md:mt-1 md:-ml-5 absolute w-6 top-0 -m-2 rounded-full bg-blue-500 inset-x-0
+                material-icons overflow-hidden text-yellow-400 md-24'>
+                error_outline</span>
+              }
             </button>
           </div>
         </div>
@@ -133,7 +143,7 @@ const MainNav: React.FC = () => {
        {/* drawer */}
        <div className={comparisonStyle}>
           <div className='md:h-58 shadow bg-white  md:mx-auto md:rounded-none h-40 md:w-96 w-full rounded-b pointer-events-auto text-center'>
-            <Comparison/>
+            <Comparison fuel={[parseFloat(fuelEco)]} tank={[tankSize]} fuelPrice={[fuelPrice]}/>
           </div>
         </div>
       </div>
@@ -143,7 +153,8 @@ const MainNav: React.FC = () => {
        {/* drawer */}
        <div className={carStyle}>
           <div className='md:h-58 shadow bg-white w-56 md:ml-10 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-auto'>
-          <CarSetup fuel={[fuelEco, setFuelEco]}/>
+          fuel: {fuelEco}   tank: {tankSize}
+           <CarSetup fuel={[fuelEco, setFuelEco]} tank={[tankSize, setTankSize]} fuelPrice={[fuelPrice, setfuelPrice]}/>
           </div>
         </div>
       </div>
