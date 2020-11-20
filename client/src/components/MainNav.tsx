@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
+import Location from '../devtools/Location';
 import GetItneary from './itenaryData';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
@@ -67,7 +68,8 @@ const MainNav: React.FC = () => {
         </div>
         <div className='p-2 bg-white text-gray-800'>
           Sidebar components are loaded in here
-          <GetItneary from={from} to={to} />
+          <Location fieldName='Origin' />
+          <Location fieldName='Destination' />
         </div>
       </div>
 
@@ -115,15 +117,15 @@ const MainNav: React.FC = () => {
 
       <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none'>
         <div className={carStyle}>
-          <div className='md:h-58 shadow bg-white w-48 md:ml-4 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b'>
+          <div className='md:h-58 shadow bg-white w-48 md:ml-4 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-none'>
             <h1>Car</h1>
           </div>
         </div>
       </div>
 
-      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0'>
+      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0 pointer-events-none'>
         <div className={comparisonStyle}>
-          <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b'>
+          <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:w-1/2 md:mx-auto md:rounded-none h-40 rounded-b pointer-events-none'>
             <h1>Transport comparison</h1>
           </div>
         </div>
