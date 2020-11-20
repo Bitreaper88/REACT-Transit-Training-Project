@@ -2,10 +2,10 @@ import React, {useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 
-const CarSetup: React.FC = () => {
+const CarSetup: React.FC<any> = ({ props }) => {
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelEco, setFuelEco]     = useState<string>('0');
+  const [fuelEco, setFuelEco] = props.fuel;
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [tankSize, setTankSize]   = useState<string>('0');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
