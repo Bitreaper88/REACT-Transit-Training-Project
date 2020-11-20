@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Marker, MarkerProps } from 'react-leaflet';
 import L from 'leaflet';
+import axios from 'axios';
 import testMarker from '../../node_modules/material-design-icons/maps/svg/production/ic_place_48px.svg';
 
 interface IMapMarkerProps extends MarkerProps {
@@ -10,33 +11,38 @@ interface IMapMarkerProps extends MarkerProps {
 function MapMarker(props: IMapMarkerProps): JSX.Element | null {
     const [markerProps, setMarkerProps] = useState<MarkerProps>();
 
-    const marker = useMemo(() => {
-        const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48">
-        <path fill="${props.color}" d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
-        </svg>`;
-        // <path d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+    // const marker = useMemo(() => {
+    //     // const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48">
+    //     // <path fill="${props.color}" d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+    //     // </svg>`;
+    //     // // <path d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
 
-        return encodeURI('data:image/svg+xml,' + svgString).replace('#', '%23');
-    }, [props.color]);
+    // }, [props.color]);
 
     useEffect(() => {
-        // eslint-disable-next-line
-        const { color, ...mProps } = props;
+        (async () => {
+            const { color, ...mProps } = props;
 
-        const icon = L.icon({
-            iconUrl: marker,
-            iconSize: L.point(36, 36),
-            iconAnchor: L.point(18, 36),
-            popupAnchor: L.point(0, 24),    // Not accurate
-            tooltipAnchor: L.point(0, 24),   // Not accurate
-            className: 'fill-current text-green-600'
-        });
+            const svgString = await axios.get(testMarker).then((res) => {
+                const svgString = res.data as string;
+                const coloredSvgString = svgString.replace(/(?<=path)\s/, ` fill="${color}" `);
+                return encodeURI('data:image/svg+xml,' + coloredSvgString).replace('#', '%23');
+            }).catch((err) => { console.log(err); });
+            if (!svgString) return;
 
-        console.log(icon);
 
-        mProps.icon = icon;
+            const icon = L.icon({
+                iconUrl: svgString,
+                iconSize: L.point(36, 36),
+                iconAnchor: L.point(18, 36),
+                popupAnchor: L.point(0, 24),    // Not accurate
+                tooltipAnchor: L.point(0, 24),   // Not accurate
+            });
 
-        setMarkerProps(mProps);
+            mProps.icon = icon;
+
+            setMarkerProps(mProps);
+        })();
     }, [props]);
 
     function theReturn(): JSX.Element | null {
