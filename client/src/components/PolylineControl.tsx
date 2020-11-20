@@ -23,7 +23,10 @@ enum ILineColors {
 }
 
 interface IGoogleLines {
-    pub: string[];
+    pub: {
+        lines: string[];
+        mode: Mode[];
+    }
     car: string;
 }
 
@@ -35,7 +38,6 @@ function PolylineControl(props: IPLCProps): JSX.Element {
     const { parsed } = useContext(ResponseContext);
     const [googleLines, setGoogleLines] = useState<IGoogleLines>();
     const [polylines, setPolylines] = useState<JSX.Element[]>([]);
-    const [pubModes, setPubModes] = useState<Mode[]>([]);
 
     useEffect(() => {
         if (!parsed || !parsed.pubDf || !parsed.carDf) return;
@@ -50,9 +52,11 @@ function PolylineControl(props: IPLCProps): JSX.Element {
 
         const carGoogleLine = parsed.carDf.geometry;
 
-        setPubModes(newPubModes);
         setGoogleLines({
-            pub: pubGoogleLines,
+            pub: {
+                lines: pubGoogleLines,
+                mode: newPubModes
+            },
             car: carGoogleLine
         });
     }, [parsed]);
@@ -60,20 +64,19 @@ function PolylineControl(props: IPLCProps): JSX.Element {
     // Decode and generate polyline elements
     useEffect(() => {
         if (googleLines) {
-            const decodedPubLines = googleLines.pub.map((line) => {
+            const decodedPubLines = googleLines.pub.lines.map((line) => {
                 return PL.decode(line) as L.LatLngTuple[];
             });
             const decodedCarLine = PL.decode(googleLines.car) as L.LatLngTuple[];
 
             const newCarLine = <Polyline key={'carLine'} color={'red'} positions={decodedCarLine} />;
 
-            const time = Date.now();
             const newPubLines = decodedPubLines.map((line, ind) => {
                 return (
                     <Polyline
-                        key={time.toString() + ind}
-                        color={ILineColors[pubModes[ind]]}
-                        dashArray={pubModes[ind] === 'WALK' ? '4' : ''}
+                        key={googleLines.pub.mode[ind] + ind}
+                        color={ILineColors[googleLines.pub.mode[ind]]}
+                        dashArray={googleLines.pub.mode[ind] === 'WALK' ? '4' : ''}
                         positions={line} />
                 );
             });
