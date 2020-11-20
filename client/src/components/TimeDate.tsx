@@ -5,7 +5,6 @@ import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import DateFnsUtils from '@date-io/date-fns';
-
 import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 
 type overridesNameToClassKey = {
@@ -79,7 +78,7 @@ const materialTheme = createMuiTheme({
   },
 });
 
-// Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
+//https://material-ui-pickers.dev/getting-started/installation
 const DateTime: React.FC = () => {
   const [selectedDate, handleDateChange] = useState<Date | null>(new Date());
   return (
@@ -93,7 +92,8 @@ const DateTime: React.FC = () => {
               ampm={false}
               disablePast={true}
               fullWidth={true}
-              //format='string'       
+              //format='string'  
+             // dateRangeIcon={React.createElement('span', {className:'material-icons'}, 'schedule')}
               />
             </ThemeProvider>
         </MuiPickersUtilsProvider>

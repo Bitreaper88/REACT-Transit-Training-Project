@@ -35,7 +35,7 @@ const MainNav: React.FC = () => {
   const negativeYTranslation = '-translate-y-64';
   
 
-  const [carStyle, setCarStyle] = useState(carBaseStyle+YTranslation);
+  const [carStyle, setCarStyle] = useState(carBaseStyle+negativeYTranslation);
   const [carStatus, setCarStatus] = useState(true);
 
 
@@ -120,26 +120,79 @@ const MainNav: React.FC = () => {
       </div>
 
       {/* full width aligment container */}
-      <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
+      <div className='md:absolute z-20 md:mt-12 md:pl-9 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        {/* drawer */}
-       <div className={carStyle}>
-          <div className='md:h-58 shadow bg-white w-64 md:ml-4 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-auto'>
-          <CarSetup/>
+       <div className={comparisonStyle}>
+          <div className='md:h-58 shadow bg-white  md:mx-auto md:rounded-none h-40 md:w-96 w-full rounded-b pointer-events-auto text-center'>
+            <Comparison/>
           </div>
         </div>
       </div>
 
       {/* full width aligment container */}
-      <div className='md:absolute z-20 md:mt-12 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
+      <div className='absolute md:z-20 z-40 w-full md:mt-12 no pointer-events-none cursor-auto'> {/* pointer-events-none very importatn as this container covers part of the side bar*/}
        {/* drawer */}
-       <div className={comparisonStyle}>
-          <div className='transform xl:translate-x-0 md:translate-x-24 md:h-58 shadow bg-white md:mx-auto md:rounded-none h-40 w-72 rounded-b pointer-events-auto'>
-            <h1>Transport comparison</h1>
+       <div className={carStyle}>
+          <div className='md:h-58 shadow bg-white w-56 md:ml-10 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-auto'>
+          <CarSetup/>
           </div>
         </div>
       </div>
+
     </div>
   );
 };
 
 export default MainNav;
+
+const Comparison: React.FC = () => {
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [fuelEco, setFuelEco]     = useState<string>('0');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [tankSize, setTankSize]   = useState<string>('0');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [fuelPrice, setfuelPrice] = useState<string>('0');
+
+  return (
+    <div className='flex pt-3 h-full p-1 font-semibold'>
+        <div className='w-1/2'>
+          <span className='text-lg text-blue-500 font-bold'>Personal vehicle</span>
+          <p>
+            Distance: km
+          </p>
+          <p>
+            Time:
+          </p>
+          <p>
+            Fuel cost: €
+          </p>
+          <p>
+            Refills: none
+          </p>
+          <p>
+            Total needed fuel: 10.0 l
+          </p>
+        </div>
+        <div className='bg-blue-500 w-1 my-2 transform scale-x-75'/>
+        <div className='w-1/2'>
+          <span className='text-lg text-purple-500 font-bold'>Publiic transit</span>
+          <p>
+            Distance: km
+          </p>
+          <p>
+            Time:
+          </p>
+          <p>
+            Fuel cost: €
+          </p>
+          <p>
+            Refills: none
+          </p>
+          <p>
+            Total needed fuel: 10.0 l
+          </p>
+        </div>
+    </div>
+  );
+};

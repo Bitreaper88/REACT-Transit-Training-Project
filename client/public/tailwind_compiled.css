@@ -32106,6 +32106,10 @@ video {
   width: fit-content
 }
 
+.w-160{
+  width: 40rem;
+}
+
 /* junk test code */
 
 .rotate-90{
