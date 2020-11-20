@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from '../components/ResponseContext';
+import MapMarker from '../components/MapMarker';
 
 interface ITestProps {
     cursor?: () => void;
@@ -63,29 +64,31 @@ function Test(props: ITestProps): JSX.Element {
         if (props.setGoogleLines && props.googleLines && props.googleLines.length === 0) props.setGoogleLines(lines);
     }
 
-    // return (
-    //     <div ref={divRef}
-    //         style={{
-    //             position: 'absolute',
-    //             zIndex: 1000,
-    //             cursor: 'auto',
+    // &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
+    // ZoomLevel:&nbsp;{zoomLevel}
 
-    //             bottom: '0px',
-    //             backgroundColor: 'white',
-    //             fontSize: 'xx-large',
-    //             paddingLeft: '10px',
-    //             paddingRight: '10px',
-    //         }}>
-    //         ZoomLevel:&nbsp;{zoomLevel}
-    //         &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
-    //         {props.cursor && <span>
-    //             &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
-    //         </span>}
-    //         &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
-    //     </div>
-    // );
+    return (
+        <div ref={divRef}
+            style={{
+                position: 'absolute',
+                zIndex: 1000,
+                cursor: 'auto',
 
-    return <></>;
+                bottom: '0px',
+                backgroundColor: 'white',
+                fontSize: 'xx-large',
+                paddingLeft: '10px',
+                paddingRight: '10px',
+            }}>
+            &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
+            {props.cursor && <span>
+                &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
+            </span>}
+            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' />
+        </div>
+    );
+
+    // return <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' />;
 }
 
 export default Test;
