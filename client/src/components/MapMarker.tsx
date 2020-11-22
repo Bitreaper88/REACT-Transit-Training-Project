@@ -20,10 +20,10 @@ function MapMarker(props: IMapMarkerProps): JSX.Element | null {
 
             const icon = L.icon({
                 iconUrl: svgString,
-                iconSize: L.point(37, 37),
-                iconAnchor: L.point(19, 35),
-                popupAnchor: L.point(0, -21),
-                tooltipAnchor: L.point(0, -21)
+                iconSize: L.point(36, 36),
+                iconAnchor: L.point(18, 34),
+                popupAnchor: L.point(0, -26),
+                tooltipAnchor: L.point(0, -26)
             });
 
             mProps.icon = icon;
