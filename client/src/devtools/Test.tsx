@@ -84,7 +84,7 @@ function Test(props: ITestProps): JSX.Element {
             {props.cursor && <span>
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
             </span>}
-            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='#f542ec' >
+            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' >
                 <Popup>
                     Hello, World!
                 </Popup>
