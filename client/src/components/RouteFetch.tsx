@@ -6,8 +6,8 @@ import * as Types from './RouteFetch.types';
 import { graphQLRequest } from './RouteFetch.publicAPI';
 import carAPIcall from './RouteFetch.carAPI';
 import { ResponseContext } from './ResponseContext';
-import TransportModes from './TransportModes';
-import { Selectable, Mode } from './TransportModes';
+import TransportModes, { Selectable } from './TransportModes';
+import { TransitMode } from './TransitTypes';
 
 export interface ICoordinates {
     lat: number;
@@ -27,8 +27,8 @@ function RouteFetch(): JSX.Element {
         date: moment().format('YYYY-MM-DD'),
         time: moment().format('h:mm:ss')
     });
-    const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as Mode[]);
-    const [queryModes, setQueryModes] = useState<{ mode: Mode }[]>([]);
+    const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
+    const [queryModes, setQueryModes] = useState<{ mode: TransitMode }[]>([]);
     const { setRaw } = useContext(ResponseContext);
 
     useEffect(() => {

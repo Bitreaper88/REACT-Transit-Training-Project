@@ -2,30 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from './ResponseContext';
-import { Mode } from './TransportModes';
+import { TransitMode, ModeColor } from './TransitTypes';
 
 // eslint-disable-next-line
 const PL = require('google-polyline');
 
-enum ILineColors {
-    'AIRPLANE' = 'fuchsia',
-    'BICYCLE' = 'green',
-    'BUS' = 'blue',
-    'CABLE_CAR' = 'black',
-    'CAR' = 'grey',
-    'FERRY' = 'lightblue',
-    'FUNICULAR' = 'teal',
-    'GONDOLA' = 'brown',
-    'RAIL' = 'yellow',
-    'SUBWAY' = 'white',
-    'TRAM' = 'lightbrown',
-    'WALK' = 'blueviolet'
-}
-
 interface IGoogleLines {
     pub: {
         lines: string[];
-        mode: Mode[];
+        mode: TransitMode[];
     }
     car: string;
 }
@@ -36,7 +21,7 @@ interface IPLCProps {
 
 function PolylineControl(props: IPLCProps): JSX.Element {
     const { parsed } = useContext(ResponseContext);
-    const [googleLines, setGoogleLines] = useState<IGoogleLines>();
+    const [legs, setLegs] = useState<IGoogleLines>();
     const [polylines, setPolylines] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
@@ -46,16 +31,16 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             return leg.legGeometry.points;
         });
 
-        const newPubModes = parsed.pubDf.legs.map(leg => {
+        const pubModes = parsed.pubDf.legs.map(leg => {
             return leg.mode;
         });
 
         const carGoogleLine = parsed.carDf.geometry;
 
-        setGoogleLines({
+        setLegs({
             pub: {
                 lines: pubGoogleLines,
-                mode: newPubModes
+                mode: pubModes
             },
             car: carGoogleLine
         });
@@ -63,20 +48,20 @@ function PolylineControl(props: IPLCProps): JSX.Element {
 
     // Decode and generate polyline elements
     useEffect(() => {
-        if (googleLines) {
-            const decodedPubLines = googleLines.pub.lines.map((line) => {
+        if (legs) {
+            const decodedPubLines = legs.pub.lines.map((line) => {
                 return PL.decode(line) as L.LatLngTuple[];
             });
-            const decodedCarLine = PL.decode(googleLines.car) as L.LatLngTuple[];
+            const decodedCarLine = PL.decode(legs.car) as L.LatLngTuple[];
 
-            const newCarLine = <Polyline key={'carLine'} color={'red'} positions={decodedCarLine} />;
+            const newCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedCarLine} />;
 
             const newPubLines = decodedPubLines.map((line, ind) => {
                 return (
                     <Polyline
-                        key={googleLines.pub.mode[ind] + ind}
-                        color={ILineColors[googleLines.pub.mode[ind]]}
-                        dashArray={googleLines.pub.mode[ind] === 'WALK' ? '4' : ''}
+                        key={legs.pub.mode[ind] + ind}
+                        color={ModeColor[legs.pub.mode[ind]]}
+                        dashArray={legs.pub.mode[ind] === 'WALK' ? '4' : ''}
                         positions={line} />
                 );
             });
@@ -86,7 +71,7 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             const polylineBounds = L.polyline(decodedCarLine).getBounds();
             props.zoomBounds(polylineBounds);
         }
-    }, [googleLines]);
+    }, [legs]);
 
     return (
         <div>

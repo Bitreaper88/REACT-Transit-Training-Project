@@ -1,4 +1,4 @@
-import { Mode } from './TransportModes';
+import { TransitMode } from './TransitTypes';
 
 /**********************/
 /* Combined responses */
@@ -36,7 +36,7 @@ export interface IItinerary {
 
 export interface ILeg {
     /** The mode (e.g. WALK) used when traversing this leg. */
-    mode: Mode;
+    mode: TransitMode;
     // | 'AIRPLANE'
     // // | 'BICYCLE'
     // | 'BUS'
