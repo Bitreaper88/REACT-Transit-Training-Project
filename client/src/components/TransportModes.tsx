@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import { TransitMode, ModeIcon, ModeHover } from './TransitTypes';
 
-/** List of transport modes that can be toggled on or off. */
+/** 
+ * List of transport modes that can be toggled on or off.
+ * CABLE_CAR also toggles tram and funicular. 
+ */
 export const Selectable = [
     'AIRPLANE',
     // 'BICYCLE',
@@ -25,12 +28,14 @@ export interface ITransProps {
 export default function TransportModes(props: ITransProps): JSX.Element {
     const [selected, setSelected] = useState<TransitMode[]>([...Selectable]);
 
+    // Add in untoggleable transit modes and send selection upstream.
     useEffect(() => {
         const fullSelection = [...selected, 'WALK'] as TransitMode[];
         if (selected.includes('CABLE_CAR')) fullSelection.push('TRAM', 'FUNICULAR');
         props.onChange(fullSelection);
     }, [selected]);
 
+    /** Toggle selected/unselected */
     function onButtonClick(mode: TransitMode) {
         if (selected.includes(mode)) {
             setSelected(selected.filter(selected => {
@@ -40,6 +45,7 @@ export default function TransportModes(props: ITransProps): JSX.Element {
         else setSelected([...selected, mode]);
     }
 
+    /** Generate toggleable button for each selectable mode */
     function buttons() {
         return Selectable.map((mode) => {
             return (
@@ -68,6 +74,7 @@ interface IButtonProps {
 export function TransportButton(props: IButtonProps): JSX.Element {
     const [mutableStyles, setMutableStyles] = useState<string>('text-blue-500');
 
+    // Toggle selected/unselected
     useEffect(() => {
         if (props.selected) {
             setMutableStyles('text-blue-500');
