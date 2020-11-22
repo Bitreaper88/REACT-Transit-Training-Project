@@ -7,7 +7,7 @@ import { TransitMode, ModeColor } from './TransitTypes';
 // eslint-disable-next-line
 const PL = require('google-polyline');
 
-interface IGoogleLines {
+interface ILegs {
     pub: {
         lines: string[];
         mode: TransitMode[];
@@ -30,12 +30,12 @@ interface IPLCProps {
 
 function PolylineControl(props: IPLCProps): JSX.Element {
     const { parsed } = useContext(ResponseContext);
-    const [legs, setLegs] = useState<IGoogleLines>();
     const [polylines, setPolylines] = useState<IPolylines>();
 
     useEffect(() => {
         if (!parsed || !parsed.pubDf || !parsed.carDf) return;
 
+        // Further parse the data.
         const pubGoogleLines = parsed.pubDf.legs.map(leg => {
             return leg.legGeometry.points;
         });
@@ -49,7 +49,7 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             return leg.steps.map((step) => (step.geometry));
         });
 
-        setLegs({
+        const legs: ILegs = {
             pub: {
                 lines: pubGoogleLines,
                 mode: pubModes
@@ -58,48 +58,44 @@ function PolylineControl(props: IPLCProps): JSX.Element {
                 lowres: carLowResLine,
                 hires: carHiResLine
             }
-        });
-    }, [parsed]);
+        };
 
-    // Decode and generate polyline elements
-    useEffect(() => {
-        if (legs) {
-            console.log('foo');
-            const decodedPubLines = legs.pub.lines.map((line) => {
+        // Decode and generate polyline elements
+        const decodedPubLines = legs.pub.lines.map((line) => {
+            return PL.decode(line) as L.LatLngTuple[];
+        });
+        const decodedLowResCarLine = PL.decode(legs.car.lowres) as L.LatLngTuple[];
+        const decodedHiResCarLine = legs.car.hires.map(step => {
+            return step.map(line => {
                 return PL.decode(line) as L.LatLngTuple[];
             });
-            const decodedLowResCarLine = PL.decode(legs.car.lowres) as L.LatLngTuple[];
-            const decodedHiResCarLine = legs.car.hires.map(step => {
-                return step.map(line => {
-                    return PL.decode(line) as L.LatLngTuple[];
-                });
-            });
+        });
 
-            const newLowResCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedLowResCarLine} />;
-            const newHiResCarLine = decodedHiResCarLine.map(((line, ind) => {
-                return <Polyline key={ind} color={ModeColor['CAR']} positions={line} />;
-            }));
+        const newLowResCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedLowResCarLine} />;
+        const newHiResCarLine = decodedHiResCarLine.map(((line, ind) => {
+            return <Polyline key={ind} color={ModeColor['CAR']} positions={line} />;
+        }));
 
-            const newPubLines = decodedPubLines.map((line, ind) => {
-                return (
-                    <Polyline
-                        key={legs.pub.mode[ind] + ind}
-                        color={ModeColor[legs.pub.mode[ind]]}
-                        dashArray={legs.pub.mode[ind] === 'WALK' ? '4' : ''}
-                        positions={line} />
-                );
-            });
+        const newPubLines = decodedPubLines.map((line, ind) => {
+            return (
+                <Polyline
+                    key={legs.pub.mode[ind] + ind}
+                    color={ModeColor[legs.pub.mode[ind]]}
+                    dashArray={legs.pub.mode[ind] === 'WALK' ? '4' : ''}
+                    positions={line} />
+            );
+        });
 
-            setPolylines({
-                pub: newPubLines,
-                lowcar: newLowResCarLine,
-                hicar: newHiResCarLine
-            });
+        setPolylines({
+            pub: newPubLines,
+            lowcar: newLowResCarLine,
+            hicar: newHiResCarLine
+        });
 
-            const polylineBounds = L.polyline([decodedLowResCarLine, ...decodedPubLines]).getBounds();
-            props.zoomBounds(polylineBounds);
-        }
-    }, [legs]);
+        const polylineBounds = L.polyline([decodedLowResCarLine, ...decodedPubLines]).getBounds();
+        props.zoomBounds(polylineBounds);
+
+    }, [parsed]);
 
     return (
         <div>
