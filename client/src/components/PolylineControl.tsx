@@ -25,17 +25,20 @@ interface IPolylines {
 }
 
 interface IPLCProps {
-    zoomBounds: (bounds: L.LatLngBounds) => void;
+    zoomBounds?: (bounds: L.LatLngBounds) => void;
 }
 
 function PolylineControl(props: IPLCProps): JSX.Element {
     const { parsed } = useContext(ResponseContext);
     const [polylines, setPolylines] = useState<IPolylines>();
 
+    // When new data is fetched from APIs.
     useEffect(() => {
+
+        // Return if no data is found.
         if (!parsed || !parsed.pubDf || !parsed.carDf) return;
 
-        // Further parse the data.
+        // Further parse the API responses.
         const pubGoogleLines = parsed.pubDf.legs.map(leg => {
             return leg.legGeometry.points;
         });
@@ -60,7 +63,7 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             }
         };
 
-        // Decode and generate polyline elements
+        // Decode and generate polyline elements.
         const decodedPubLines = legs.pub.lines.map((line) => {
             return PL.decode(line) as L.LatLngTuple[];
         });
@@ -86,14 +89,18 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             );
         });
 
+        // Insert Polyline components into state. 
         setPolylines({
             pub: newPubLines,
             lowcar: newLowResCarLine,
             hicar: newHiResCarLine
         });
 
-        const polylineBounds = L.polyline([decodedLowResCarLine, ...decodedPubLines]).getBounds();
-        props.zoomBounds(polylineBounds);
+        // Optionally set zoom level.
+        if (props.zoomBounds) {
+            const polylineBounds = L.polyline([decodedLowResCarLine, ...decodedPubLines]).getBounds();
+            props.zoomBounds(polylineBounds);
+        }
 
     }, [parsed]);
 
