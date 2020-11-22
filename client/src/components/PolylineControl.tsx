@@ -12,7 +12,16 @@ interface IGoogleLines {
         lines: string[];
         mode: TransitMode[];
     }
-    car: string;
+    car: {
+        lowres: string;
+        hires: string[][];
+    };
+}
+
+interface IPolylines {
+    pub: JSX.Element[],
+    lowcar: JSX.Element,
+    hicar: JSX.Element[]
 }
 
 interface IPLCProps {
@@ -22,7 +31,7 @@ interface IPLCProps {
 function PolylineControl(props: IPLCProps): JSX.Element {
     const { parsed } = useContext(ResponseContext);
     const [legs, setLegs] = useState<IGoogleLines>();
-    const [polylines, setPolylines] = useState<JSX.Element[]>([]);
+    const [polylines, setPolylines] = useState<IPolylines>();
 
     useEffect(() => {
         if (!parsed || !parsed.pubDf || !parsed.carDf) return;
@@ -35,26 +44,41 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             return leg.mode;
         });
 
-        const carGoogleLine = parsed.carDf.geometry;
+        const carLowResLine = parsed.carDf.geometry;
+        const carHiResLine = parsed.carDf.legs.map((leg) => {
+            return leg.steps.map((step) => (step.geometry));
+        });
 
         setLegs({
             pub: {
                 lines: pubGoogleLines,
                 mode: pubModes
             },
-            car: carGoogleLine
+            car: {
+                lowres: carLowResLine,
+                hires: carHiResLine
+            }
         });
     }, [parsed]);
 
     // Decode and generate polyline elements
     useEffect(() => {
         if (legs) {
+            console.log('foo');
             const decodedPubLines = legs.pub.lines.map((line) => {
                 return PL.decode(line) as L.LatLngTuple[];
             });
-            const decodedCarLine = PL.decode(legs.car) as L.LatLngTuple[];
+            const decodedLowResCarLine = PL.decode(legs.car.lowres) as L.LatLngTuple[];
+            const decodedHiResCarLine = legs.car.hires.map(step => {
+                return step.map(line => {
+                    return PL.decode(line) as L.LatLngTuple[];
+                });
+            });
 
-            const newCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedCarLine} />;
+            const newLowResCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedLowResCarLine} />;
+            const newHiResCarLine = decodedHiResCarLine.map(((line, ind) => {
+                return <Polyline key={ind} color={ModeColor['CAR']} positions={line} />;
+            }));
 
             const newPubLines = decodedPubLines.map((line, ind) => {
                 return (
@@ -66,16 +90,22 @@ function PolylineControl(props: IPLCProps): JSX.Element {
                 );
             });
 
-            setPolylines([...newPubLines, newCarLine]);
+            setPolylines({
+                pub: newPubLines,
+                lowcar: newLowResCarLine,
+                hicar: newHiResCarLine
+            });
 
-            const polylineBounds = L.polyline(decodedCarLine).getBounds();
+            const polylineBounds = L.polyline([decodedLowResCarLine, ...decodedPubLines]).getBounds();
             props.zoomBounds(polylineBounds);
         }
     }, [legs]);
 
     return (
         <div>
-            {polylines}
+            {console.log('bar')}
+            {polylines?.pub}
+            {polylines?.hicar}
         </div>
     );
 }

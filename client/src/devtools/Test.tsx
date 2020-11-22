@@ -65,7 +65,6 @@ function Test(props: ITestProps): JSX.Element {
     }
 
     // &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
-    // ZoomLevel:&nbsp;{zoomLevel}
 
     return (
         <div ref={divRef}
@@ -80,6 +79,7 @@ function Test(props: ITestProps): JSX.Element {
                 paddingLeft: '10px',
                 paddingRight: '10px',
             }}>
+            ZoomLevel:&nbsp;{zoomLevel}
             &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
             {props.cursor && <span>
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
