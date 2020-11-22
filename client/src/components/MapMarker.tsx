@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Marker, MarkerProps } from 'react-leaflet';
 import L from 'leaflet';
-import axios from 'axios';
-import testMarker from '../../node_modules/material-design-icons/maps/svg/production/ic_place_48px.svg';
 
 interface IMapMarkerProps extends MarkerProps {
     color: string;
@@ -11,25 +9,14 @@ interface IMapMarkerProps extends MarkerProps {
 function MapMarker(props: IMapMarkerProps): JSX.Element | null {
     const [markerProps, setMarkerProps] = useState<MarkerProps>();
 
-    // const marker = useMemo(() => {
-    //     // const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48">
-    //     // <path fill="${props.color}" d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
-    //     // </svg>`;
-    //     // // <path d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
-
-    // }, [props.color]);
-
     useEffect(() => {
         (async () => {
             const { color, ...mProps } = props;
 
-            const svgString = await axios.get(testMarker).then((res) => {
-                const svgString = res.data as string;
-                const coloredSvgString = svgString.replace(/(?<=path)\s/, ` fill="${color}" `);
-                return encodeURI('data:image/svg+xml,' + coloredSvgString).replace('#', '%23');
-            }).catch((err) => { console.log(err); });
-            if (!svgString) return;
-
+            const colorString = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48">
+            <path fill="${color}" d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+            </svg>`;
+            const svgString = encodeURI('data:image/svg+xml,' + colorString).replace('#', '%23');
 
             const icon = L.icon({
                 iconUrl: svgString,
