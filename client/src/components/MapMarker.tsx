@@ -6,6 +6,10 @@ interface IMapMarkerProps extends MarkerProps {
     color?: string;
 }
 
+/** 
+ * Wrapper for React Leaflet's Marker component. 
+ * Overrides any custom icons but allows changing color of it's default marker by using the 'color' prop.
+*/
 function MapMarker(props: IMapMarkerProps): JSX.Element | null {
     const [markerProps, setMarkerProps] = useState<MarkerProps>();
 
@@ -32,14 +36,12 @@ function MapMarker(props: IMapMarkerProps): JSX.Element | null {
         })();
     }, [props]);
 
-    function theReturn(): JSX.Element | null {
-        if (markerProps && markerProps.position) {
-            return <Marker {...markerProps} >{props.children}</Marker>;
-        }
-        else return null;
-    }
-
-    return theReturn();
+    return (
+        <div>
+            {markerProps && markerProps.position ?
+                <Marker {...markerProps} >{props.children}</Marker> : null}
+        </div>
+    );
 }
 
 export default MapMarker;
