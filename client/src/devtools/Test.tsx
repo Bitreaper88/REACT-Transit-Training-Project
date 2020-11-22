@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useMapEvent } from 'react-leaflet';
+import { Popup, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from '../components/ResponseContext';
 import MapMarker from '../components/MapMarker';
@@ -84,7 +84,11 @@ function Test(props: ITestProps): JSX.Element {
             {props.cursor && <span>
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
             </span>}
-            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='#f542ec' />
+            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='#f542ec' >
+                <Popup>
+                    Hello, World!
+                </Popup>
+            </MapMarker>
         </div>
     );
 

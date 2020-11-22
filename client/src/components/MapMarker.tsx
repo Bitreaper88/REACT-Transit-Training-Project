@@ -13,17 +13,17 @@ function MapMarker(props: IMapMarkerProps): JSX.Element | null {
         (async () => {
             const { color, ...mProps } = props;
 
-            const colorString = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 48 48">
+            const colorString = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
             <path fill="${color}" d="M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
             </svg>`;
             const svgString = encodeURI('data:image/svg+xml,' + colorString).replace('#', '%23');
 
             const icon = L.icon({
                 iconUrl: svgString,
-                iconSize: L.point(36, 36),
-                iconAnchor: L.point(18, 36),
-                popupAnchor: L.point(0, 24),     // Not accurate
-                tooltipAnchor: L.point(0, 24),   // Not accurate
+                iconSize: L.point(37, 37),
+                iconAnchor: L.point(19, 35),
+                popupAnchor: L.point(0, -21),
+                tooltipAnchor: L.point(0, -21)
             });
 
             mProps.icon = icon;
