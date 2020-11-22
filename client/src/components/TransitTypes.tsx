@@ -11,7 +11,8 @@ export const AppModes = [
     'RAIL',
     'SUBWAY',
     'TRAM',
-    'WALK' // Requires special treatment: prioritize no walk
+    // 'TRANSIT', // Special type that includes all public transit options
+    'WALK'        // Requires special treatment: prioritize no walk
 ] as const;
 
 /** All the modes currently used by the app. */

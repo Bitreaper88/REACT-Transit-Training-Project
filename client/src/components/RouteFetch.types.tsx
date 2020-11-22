@@ -37,19 +37,6 @@ export interface IItinerary {
 export interface ILeg {
     /** The mode (e.g. WALK) used when traversing this leg. */
     mode: TransitMode;
-    // | 'AIRPLANE'
-    // // | 'BICYCLE'
-    // | 'BUS'
-    // | 'CABLE_CAR'
-    // | 'CAR'
-    // | 'FERRY'
-    // | 'FUNICULAR'
-    // // | 'GONDOLA'
-    // | 'RAIL'
-    // | 'SUBWAY'
-    // | 'TRAM'
-    // // | 'TRANSIT'
-    // | 'WALK';
     /** The date and time when this leg begins. Format: Unix timestamp in milliseconds. */
     startTime: number;
     /** The date and time when this leg ends. Format: Unix timestamp in milliseconds. */
