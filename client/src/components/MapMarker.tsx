@@ -22,7 +22,7 @@ function MapMarker(props: IMapMarkerProps): JSX.Element | null {
                 iconUrl: svgString,
                 iconSize: L.point(36, 36),
                 iconAnchor: L.point(18, 36),
-                popupAnchor: L.point(0, 24),    // Not accurate
+                popupAnchor: L.point(0, 24),     // Not accurate
                 tooltipAnchor: L.point(0, 24),   // Not accurate
             });
 
@@ -34,7 +34,7 @@ function MapMarker(props: IMapMarkerProps): JSX.Element | null {
 
     function theReturn(): JSX.Element | null {
         if (markerProps && markerProps.position) {
-            return <Marker {...markerProps} />;
+            return <Marker {...markerProps} >{props.children}</Marker>;
         }
         else return null;
     }
