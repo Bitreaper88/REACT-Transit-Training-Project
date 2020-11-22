@@ -99,9 +99,8 @@ function PolylineControl(props: IPLCProps): JSX.Element {
 
     return (
         <div>
-            {console.log('bar')}
-            {polylines?.pub}
-            {polylines?.hicar}
+            {polylines && polylines.pub}
+            {polylines && polylines.hicar}
         </div>
     );
 }
