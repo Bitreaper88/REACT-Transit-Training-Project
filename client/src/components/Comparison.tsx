@@ -1,4 +1,4 @@
-import React, { useContext, useState} from 'react';
+import React, { useContext } from 'react';
 import { ResponseContext } from './ResponseContext';
 import { ICarSetup } from './CarSetup';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
@@ -11,7 +11,7 @@ const Comparison: React.FC<ICarSetup> = (props) => {
   let fuelCost = 0;
 
   if (parsed?.carDf?.distance){
-    fuelCost = parsed.carDf.distance * fuelPrice;
+    fuelCost = parsed.carDf.distance * parseFloat(fuelPrice[0]);
   }
 
 

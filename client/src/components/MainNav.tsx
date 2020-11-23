@@ -143,7 +143,7 @@ const MainNav: React.FC = () => {
        {/* drawer */}
        <div className={comparisonStyle}>
           <div className='md:h-58 shadow bg-white  md:mx-auto md:rounded-none h-40 md:w-96 w-full rounded-b pointer-events-auto text-center'>
-            <Comparison fuel={[parseFloat(fuelEco)]} tank={[tankSize]} fuelPrice={[fuelPrice]}/>
+            <Comparison  fuel={[fuelEco, setFuelEco]} tank={[tankSize, setTankSize]} fuelPrice={[fuelPrice, setfuelPrice]}/> 
           </div>
         </div>
       </div>

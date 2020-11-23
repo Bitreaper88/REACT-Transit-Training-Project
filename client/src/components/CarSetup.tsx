@@ -1,22 +1,19 @@
 import React from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
-//import PropTypes from 'prop-types';
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 
 
 export interface ICarSetup {
-  fuel: any
-  tank: any
-  fuelPrice: any
+  fuel:       [string, React.Dispatch<React.SetStateAction<string>>]
+  tank:       [string, React.Dispatch<React.SetStateAction<string>>]
+  fuelPrice:  [string, React.Dispatch<React.SetStateAction<string>>]
 }
 
-// eslint-disable-next-line
-const CarSetup: React.FC<ICarSetup> = (props) => {
-  // eslint-disable-next-line
+
+const CarSetup: React.FC<ICarSetup> = (props: ICarSetup) => {
+
   const [fuelEco, setFuelEco]     = props.fuel;
-  // eslint-disable-next-line
   const [tankSize, setTankSize]   = props.tank;
-  // eslint-disable-next-line
   const [fuelPrice, setfuelPrice] = props.fuelPrice;
 
   return(
