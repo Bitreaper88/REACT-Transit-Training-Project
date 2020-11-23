@@ -12,7 +12,7 @@
 /build
 
 # misc
-/backup
+/local_backup
 .env
 .DS_Store
 .env.local
