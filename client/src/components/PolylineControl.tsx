@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Polyline } from 'react-leaflet';
+import { Polyline, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from './ResponseContext';
-import { TransitMode, ModeColor } from './TransitTypes';
+import { TransitMode, ModeColor, ModeHover } from './TransitTypes';
 
 // eslint-disable-next-line
 const PL = require('google-polyline');
@@ -76,7 +76,16 @@ function PolylineControl(props: IPLCProps): JSX.Element {
 
         const newLowResCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedLowResCarLine} />;
         const newHiResCarLine = decodedHiResCarLine.map(((line, ind) => {
-            return <Polyline key={ind} color={ModeColor['CAR']} positions={line} />;
+            return (
+                <Polyline
+                    key={ind}
+                    color={ModeColor['CAR']}
+                    positions={line} >
+                    <Tooltip>
+                        {ModeHover['CAR']}
+                    </Tooltip>
+                </Polyline>
+            );
         }));
 
         const newPubLines = decodedPubLines.map((line, ind) => {
@@ -85,7 +94,12 @@ function PolylineControl(props: IPLCProps): JSX.Element {
                     key={legs.pub.mode[ind] + ind}
                     color={ModeColor[legs.pub.mode[ind]]}
                     dashArray={legs.pub.mode[ind] === 'WALK' ? '4' : ''}
-                    positions={line} />
+                    positions={line}
+                    interactive={true} >
+                    <Tooltip>
+                        {ModeHover[legs.pub.mode[ind]]}
+                    </Tooltip>
+                </Polyline>
             );
         });
 
