@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Marker, MarkerProps } from 'react-leaflet';
 import L from 'leaflet';
 
-interface IMapMarkerProps extends MarkerProps {
+export interface IMapMarkerProps extends MarkerProps {
     color?: string;
 }
 

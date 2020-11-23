@@ -1,9 +1,10 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Popup, useMapEvent } from 'react-leaflet';
+import { Popup, Tooltip, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from '../components/ResponseContext';
 import MapMarker from '../components/MapMarker';
+import MapMarkerDraggable from '../components/MapMarkerDraggable';
 
 interface ITestProps {
     cursor?: () => void;
@@ -84,11 +85,16 @@ function Test(props: ITestProps): JSX.Element {
             {props.cursor && <span>
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
             </span>}
-            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' >
+            {/* <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' >
+                <Tooltip>
+                    Hello,
+                </Tooltip>
                 <Popup>
-                    Hello, World!
+                    World!
                 </Popup>
-            </MapMarker>
+            </MapMarker> */}
+            <MapMarkerDraggable position={{ lat: 60.45169, lng: 22.26686 }} color='red' />
+            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='blue' />
         </div>
     );
 
