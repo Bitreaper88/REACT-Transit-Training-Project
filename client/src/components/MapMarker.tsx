@@ -37,10 +37,8 @@ function MapMarker(props: IMapMarkerProps): JSX.Element | null {
     }, [props]);
 
     return (
-        <div>
-            {markerProps && markerProps.position ?
-                <Marker {...markerProps} >{props.children}</Marker> : null}
-        </div>
+        markerProps && markerProps.position ?
+            <Marker {...markerProps} >{props.children}</Marker> : null
     );
 }
 
