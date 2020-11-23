@@ -81,9 +81,6 @@ function PolylineControl(props: IPLCProps): JSX.Element {
                     key={ind}
                     color={ModeColor['CAR']}
                     positions={line} >
-                    <Tooltip>
-                        {ModeHover['CAR']}
-                    </Tooltip>
                 </Polyline>
             );
         }));
