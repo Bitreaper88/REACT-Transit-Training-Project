@@ -1,15 +1,20 @@
-import React, {useState } from 'react';
+import React from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 
-const CarSetup: React.FC = () => {
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelEco, setFuelEco]     = useState<string>('0');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [tankSize, setTankSize]   = useState<string>('0');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fuelPrice, setfuelPrice] = useState<string>('0');
+export interface ICarSetup {
+  fuel:       [string, React.Dispatch<React.SetStateAction<string>>]
+  tank:       [string, React.Dispatch<React.SetStateAction<string>>]
+  fuelPrice:  [string, React.Dispatch<React.SetStateAction<string>>]
+}
+
+
+const CarSetup: React.FC<ICarSetup> = (props: ICarSetup) => {
+
+  const [fuelEco, setFuelEco]     = props.fuel;
+  const [tankSize, setTankSize]   = props.tank;
+  const [fuelPrice, setfuelPrice] = props.fuelPrice;
 
   return(
           <>
@@ -19,44 +24,44 @@ const CarSetup: React.FC = () => {
                 Setup your car
               </span>
             </div>
-            <form className='w-full mx-1'>
+            <form className='w-full mx-1 font-semibold'>
               <div className='transform translate-x-4'>
                 <div  className='flex items-center pb-2'>
                     <div className='w-2/5  text-right'>
-                      <label className='block font-medium'>Fuel economy</label>
+                      <label className='bloc'>Fuel economy</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setFuelEco(event.target.value)}
+                      <input onChange={(event) => setFuelEco(event.target.value)} value={fuelEco}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>
-                      <label className='block font-medium'>l/100km</label>
+                      <label className='block'>l/100km</label>
                     </div>
                 </div>
 
                 <div  className='flex items-center pb-2'> 
                     <div className='w-2/5  text-right'>
-                      <label className='block font-medium'>Fuel tank size</label>
+                      <label className='block'>Fuel tank size</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setTankSize(event.target.value)}
+                      <input onChange={(event) => setTankSize(event.target.value)} value={tankSize}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0" step="1" type='number'  min="0"/>
                     </div>
                     <div className=''>
-                      <label className='block font-medium'>l</label>
+                      <label className='block'>l</label>
                     </div>
                 </div>
                   
                 <div  className='flex items-center pb-2'>
                     <div className='w-2/5 text-right'>
-                      <label className='block font-medium '>Fuel price</label>
+                      <label className='block'>Fuel price</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setfuelPrice(event.target.value)}
+                      <input onChange={(event) => setfuelPrice(event.target.value)} value={fuelPrice}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>
-                      <label className='block font-medium'>€/l</label>
+                      <label className='block'>€/l</label>
                     </div>
                 </div>
               </div>
