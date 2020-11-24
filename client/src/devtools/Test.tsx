@@ -15,7 +15,7 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
-    const { raw, parsed } = useContext(ResponseContext);
+    const { raw, parsed, itinerary, setItinerary } = useContext(ResponseContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +30,8 @@ function Test(props: ITestProps): JSX.Element {
 
             console.log('Car route duration from the context: ');
             console.log(raw.car[0].routes[0].duration);
+
+            console.log('Current itinerary: ' + itinerary);
         }
         if (parsed) {
             console.log('From Parsed values:');
@@ -65,8 +67,6 @@ function Test(props: ITestProps): JSX.Element {
         if (props.setGoogleLines && props.googleLines && props.googleLines.length === 0) props.setGoogleLines(lines);
     }
 
-    // &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
-
     return (
         <div ref={divRef}
             style={{
@@ -95,6 +95,14 @@ function Test(props: ITestProps): JSX.Element {
             </MapMarker> */}
             <MapMarkerDraggable position={{ lat: 60.45169, lng: 22.26686 }} color='red' />
             <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='blue' />
+            &nbsp;|&nbsp;<button
+                onClick={() => {
+                    if (raw && itinerary + 1 !== raw.public[0].plan.itineraries.length) {
+                        setItinerary(itinerary + 1);
+                    }
+                    else setItinerary(0);
+                }}
+            >Change Itinerary</button>
         </div>
     );
 
