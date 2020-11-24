@@ -11,6 +11,8 @@ export interface IParsedResponse {
     pubDf?: IItinerary;
     /** Default route for car (same as: raw.car[0].routes[0]) */
     carDf?: IRoutes;
+    /** Number of itineraries returned by public transit API */
+    pubItineraryCount?: number;
 }
 
 function RepsonseProvider(props: IProviderProps): JSX.Element {
@@ -23,13 +25,15 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
 
         // If multiple components need the same calculated values from the raw response it can be done here too
         // Just remember to update IParsedResponse too
-        const currentPublicItinerary = raw.public[0].plan.itineraries[itinerary];
+        const currentPublicItinerary = raw.public[0].plan.itineraries[0];
         const defaultCarRoute = raw.car[0].routes[0];
 
         setParsed({
             pubDf: currentPublicItinerary,
             carDf: defaultCarRoute,
+            pubItineraryCount: raw.public[0].plan.itineraries.length
         });
+        setItinerary(0);
     }, [raw]);
 
     useEffect(() => {
