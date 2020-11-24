@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MapMarker, { IMapMarkerProps } from './MapMarker';
 
 enum OnTop {
@@ -9,17 +9,21 @@ enum OnTop {
 function MapMarkerDraggable(props: IMapMarkerProps): JSX.Element {
     // eslint-disable-next-line
     const [onTop, setOnTop] = useState<number>(OnTop.true);
+    const [pos, setPos] = useState<L.LatLngExpression>(props.position);
 
     return (
         <MapMarker
             {...props}
-            riseOnHover={true}
-            riseOffset={10000}
+            position={pos}
+            autoPan={true}
             draggable={true}
-            zIndexOffset={onTop}
+            zIndexOffset={1}
             eventHandlers={{
                 baselayerchange: () => {
                     console.log('foo');
+                },
+                moveend: (event) => {
+                    setPos(event.sourceTarget._latlng as L.LatLngLiteral);
                 }
             }}>
             {props.children}
