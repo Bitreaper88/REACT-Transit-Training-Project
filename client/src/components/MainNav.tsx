@@ -5,7 +5,7 @@ import CarSetup from './CarSetup';
 import Comparison from './Comparison';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
-
+import Location from './Location';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 const MainNav: React.FC = () => {
@@ -25,7 +25,8 @@ const MainNav: React.FC = () => {
   const [sideBarStyle, setSidebarStyle] = useState(sideBaseStyle);
   const [sideBarStatus, setSidebarStatus] = useState(false);
 
-  const comparsionBaseStyle = 'md:ml-64 transition duration-500 ease-in-out transform ';
+  const comparsionBaseStyle =
+    'md:ml-64 transition duration-500 ease-in-out transform ';
   const YTranslation = 'md:-translate-y-64 translate-y-64';
 
   const [comparisonStyle, setComparisonStyle] = useState(comparsionBaseStyle+YTranslation);
@@ -34,28 +35,25 @@ const MainNav: React.FC = () => {
 
   const carBaseStyle = 'md:ml-56 transition duration-500 ease-in-out transform ';
   const negativeYTranslation = '-translate-y-64';
-  
 
   const [carStyle, setCarStyle] = useState(carBaseStyle+negativeYTranslation);
   const [carStatus, setCarStatus] = useState(true);
 
-
   function translateSideBar() {
     if (sideBarStatus) setSidebarStyle(sideBaseStyle);
-    else  setSidebarStyle(sideBaseStyle+xTranslation);
+    else setSidebarStyle(sideBaseStyle + xTranslation);
     setSidebarStatus(!sideBarStatus);
-
   }
 
-  function comparisonBtn(){
+  function comparisonBtn() {
     if (comparisonStatus) setComparisonStyle(comparsionBaseStyle);
-    else  setComparisonStyle(comparsionBaseStyle+YTranslation); 
+    else setComparisonStyle(comparsionBaseStyle + YTranslation);
     setComparisonStatus(!comparisonStatus);
   }
 
-  function carBtn(){
+  function carBtn() {
     if (carStatus) setCarStyle(carBaseStyle);
-    else  setCarStyle(carBaseStyle+negativeYTranslation); 
+    else setCarStyle(carBaseStyle + negativeYTranslation);
     setCarStatus(!carStatus);
   }
 
@@ -84,15 +82,19 @@ const MainNav: React.FC = () => {
       </div>
       <div className={sideBarStyle}>
         <div className='absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
-         <button onClick={() => translateSideBar()}
-          className='w-5 h-10 bg-white rounded-r shadow right-0 self-center flex-1
+          <button
+            onClick={() => translateSideBar()}
+            className='w-5 h-10 bg-white rounded-r shadow right-0 self-center flex-1
           transition duration-500 ease-in-out material-icons z-10
-          transform hover:scale-x-125 focus:outline-none'>
-          {sideBarStatus ? 'chevron_right' : 'chevron_left'}
-         </button>
+          transform hover:scale-x-125 focus:outline-none'
+          >
+            {sideBarStatus ? 'chevron_right' : 'chevron_left'}
+          </button>
         </div>
         
         <div className='p-2 bg-white text-gray-800 pointer-events-auto overflow-auto h-full md:pb-0 pb-48'>    
+          <Location key ='origin' fieldName='Origin' />
+          <Location key='destination' fieldName='Destination' />
           <RouteFetch />
           <RoutesWrapper/>
         </div>
@@ -102,25 +104,32 @@ const MainNav: React.FC = () => {
         <div className='md:z-30 h-12 shadow absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between 
                               md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2 cursor-auto pointer-events-auto'>        
           <div className='md:mt-1 mt-2'>
-            <button className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
+            <button
+              className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
                               rounded w-fit
-                              material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'>
-            menu
+                              material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'
+            >
+              menu
             </button>
           </div>
- 
+
           <div className='md:mt-1 mt-2'>
-            <button onClick={comparisonBtn} className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
+            <button
+              onClick={comparisonBtn}
+              className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
                                                         rounded w-fit
                                                         material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'>
             compare_arrows
             </button>
           </div>
-          
+
           <div className='md:ml-12 md:mt-1 mt-2'>
-            <button onClick={carBtn} className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
+            <button
+              onClick={carBtn}
+              className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
                                                 rounded w-fit
-                                                material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'>
+                                                material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'
+            >
               directions_car
               {carSetupStatus ?
                 <span className='md:mt-1 md:-ml-5 absolute w-6 top-0 -m-2 rounded-full bg-blue-500 inset-x-0
