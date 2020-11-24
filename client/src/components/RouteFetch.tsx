@@ -8,6 +8,7 @@ import carAPIcall from './RouteFetch.carAPI';
 import { ResponseContext } from './ResponseContext';
 import TransportModes, { Selectable } from './TransportModes';
 import { TransitMode } from './TransitTypes';
+import DateTime from './TimeDate';
 
 export interface ICoordinates {
     lat: number;
@@ -18,15 +19,11 @@ export interface IRouteRequest {
     from?: ICoordinates;
     to?: ICoordinates;
     waypoints?: ICoordinates[];
-    date: string;
-    time: string;
 }
 
 function RouteFetch(): JSX.Element {
-    const [req, setReq] = useState<IRouteRequest>({
-        date: moment().format('YYYY-MM-DD'),
-        time: moment().format('h:mm:ss')
-    });
+    const [req, setReq] = useState<IRouteRequest>();
+    const [dateTime, setDateTime] = useState<Date | null>(new Date());
     const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
     const [queryModes, setQueryModes] = useState<{ mode: TransitMode }[]>([]);
     const { setRaw } = useContext(ResponseContext);
@@ -40,7 +37,7 @@ function RouteFetch(): JSX.Element {
 
     // When new request object is set
     useEffect(() => {
-        if (!req.from || !req.to) return;
+        if (! req || !req.from || !req.to) return;
 
         // If there are no waypoints in the middle
         if (!req.waypoints || req.waypoints.length === 0) {
@@ -51,8 +48,10 @@ function RouteFetch(): JSX.Element {
 
                     // Public transit API
                     const reqVariables = {
-                        ...(({ from, to, date, time }) => ({ from, to, date, time }))(req),
-                        modes: queryModes
+                        ...(({ from, to }) => ({ from, to }))(req),
+                        modes: queryModes,
+                        date: moment(dateTime).format('YYYY-MM-DD'),
+                        time: moment(dateTime).format('hh:mm:ss')
                     };
 
                     const publicPromise = axios(Constants.URL_API, {
@@ -110,6 +109,7 @@ function RouteFetch(): JSX.Element {
 
     return (
         <div>
+            <DateTime dt={{dateTime, setDateTime}} />
             <TransportModes onChange={(selected) => setModeOptions(selected)} />
 
             {/* Dev Button */}

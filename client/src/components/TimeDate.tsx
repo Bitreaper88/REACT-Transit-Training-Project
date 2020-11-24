@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 // Due to deprication warning, change when Material UI Core V5 is released!
@@ -78,9 +78,19 @@ const materialTheme = createMuiTheme({
   },
 });
 
+interface IDateTime {
+  dt: {
+    dateTime: Date | null;
+    setDateTime: React.Dispatch<React.SetStateAction<Date | null>>;
+  }
+}
+
 //https://material-ui-pickers.dev/getting-started/installation
-const DateTime: React.FC = () => {
-  const [selectedDate, handleDateChange] = useState<Date | null>(new Date());
+const DateTime: React.FC<IDateTime> = (props: IDateTime) => {
+  // const [selectedDate, handleDateChange] = useState<Date | null>(new Date());
+  const selectedDate = props.dt.dateTime;
+  const handleDateChange = props.dt.setDateTime;
+
   return (
     <>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

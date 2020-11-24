@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import CarSetup from './CarSetup';
 import Comparison from './Comparison';
-import TimeDate from './TimeDate';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
 
@@ -94,7 +93,6 @@ const MainNav: React.FC = () => {
         </div>
         
         <div className='p-2 bg-white text-gray-800 pointer-events-auto overflow-auto h-full md:pb-0 pb-48'>    
-          <TimeDate/>
           <RouteFetch />
           <RoutesWrapper/>
         </div>
