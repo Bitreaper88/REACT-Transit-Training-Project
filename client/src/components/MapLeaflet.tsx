@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+// eslint-disable-next-line
 import Test from '../devtools/Test';
 import ZoomToNewLayer from './MapLeaflet.ZoomToNewLayer';
 import PolylineControl from './PolylineControl';
@@ -65,7 +66,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             <ZoomControl position='bottomright' />
 
             {/* Devtools */}
-            <Test cursor={changeCursor} />
+            {/* <Test cursor={changeCursor} /> */}
         </MapContainer>
     );
 }
