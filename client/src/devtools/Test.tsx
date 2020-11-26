@@ -1,6 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useMapEvent } from 'react-leaflet';
+/* eslint-disable */
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Popup, Tooltip, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
+import { ResponseContext } from '../components/ResponseContext';
+import MapMarker from '../components/MapMarker';
+import MapMarkerDraggable from '../components/MapMarkerDraggable';
 
 interface ITestProps {
     cursor?: () => void;
@@ -11,12 +15,29 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
+    const { raw, parsed, itinerary, setItinerary } = useContext(ResponseContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (divRef.current) L.DomEvent.disableClickPropagation(divRef.current);
     }, []);
+
+    useEffect(() => {
+        if (raw) {
+            console.log('Public route duration from the context: ');
+            console.log(raw.public[0].plan.itineraries[0].duration);
+
+            console.log('Car route duration from the context: ');
+            console.log(raw.car[0].routes[0].duration);
+
+            console.log('Current itinerary: ' + itinerary);
+        }
+        if (parsed) {
+            console.log('From Parsed values:');
+            console.log(parsed);
+        }
+    }, [parsed]);
 
     // conflict with map.setBounds();
     // setTimeout() = hack solution but works for now
@@ -64,9 +85,28 @@ function Test(props: ITestProps): JSX.Element {
             {props.cursor && <span>
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
             </span>}
-            &nbsp;|&nbsp;<button onClick={addLines}>Add Lines</button>
+            {/* <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' >
+                <Tooltip>
+                    Hello,
+                </Tooltip>
+                <Popup>
+                    World!
+                </Popup>
+            </MapMarker> */}
+            <MapMarkerDraggable position={{ lat: 60.45169, lng: 22.26686 }} color='red' />
+            <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='blue' />
+            &nbsp;|&nbsp;<button
+                onClick={() => {
+                    if (raw && itinerary + 1 !== raw.public[0].plan.itineraries.length) {
+                        setItinerary(itinerary + 1);
+                    }
+                    else setItinerary(0);
+                }}
+            >Change Itinerary</button>
         </div>
     );
+
+    // return <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' />;
 }
 
 export default Test;

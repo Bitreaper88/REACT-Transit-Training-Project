@@ -15,14 +15,16 @@
 
 .w-fit{
     width: fit-content
-  }
-
+}
+.w-160{
+    width: 40rem;
+}
 /* junk test code */
 .rotate-90{
     transform: rotate(90deg);
 }
 
 .random-test{
-    background-color: green;
+    background-color: red;
     font-size: xx-large;
 }
