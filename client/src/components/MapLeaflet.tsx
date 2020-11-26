@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, ZoomControl, Polyline } from 'react-leaflet';
+import React, { useState } from 'react';
+import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-// import Test from './devtools/Test';
-import ZoomToNewLayer from './MapLeaflet.ZoomToNewLayer';
-
 // eslint-disable-next-line
-const PL = require('google-polyline');
+import Test from '../devtools/Test';
+import ZoomToNewLayer from './MapLeaflet.ZoomToNewLayer';
+import PolylineControl from './PolylineControl';
 
 interface IMapProps {
     children?: JSX.Element | JSX.Element[];
@@ -22,27 +21,8 @@ function MapLeaflet(props: IMapProps): JSX.Element {
         right: '0',
         cursor: 'grab'
     });
-    // eslint-disable-next-line
-    const [googleLines, setGoogleLines] = useState<string[]>([]);
-    const [polylines, setPolylines] = useState<JSX.Element[]>([]);
+
     const [currentBounds, setCurrentBounds] = useState<L.LatLngBounds>();
-
-    // Decode and generate polyline elements
-    useEffect(() => {
-        if (googleLines && googleLines.length && typeof googleLines[0] === 'string') {
-            const decodedLines = googleLines.map((line) => {
-                return PL.decode(line) as L.LatLngTuple[];
-            });
-
-            const newPolyline = <Polyline key={decodedLines.length + 10000} positions={decodedLines} />;
-
-            // little sketch, L.latLngBounds()?
-            const polylineBounds = L.polyline(decodedLines).getBounds();
-
-            setCurrentBounds(polylineBounds);
-            setPolylines([...polylines, newPolyline]);
-        }
-    }, [googleLines]);
 
     // Currently used only for testing
     // eslint-disable-next-line
@@ -77,18 +57,16 @@ function MapLeaflet(props: IMapProps): JSX.Element {
                 maxZoom={7} minZoom={5}
             />
 
-            {/* Map elements generated from response data */}
-            {polylines}
-
             {/* Custom components */}
             {props.children}
 
             {/* Controllers */}
-            <ZoomControl position='bottomright' />
+            <PolylineControl zoomBounds={setCurrentBounds}/>
             <ZoomToNewLayer bounds={currentBounds} />
+            <ZoomControl position='bottomright' />
 
             {/* Devtools */}
-            {/* <Test cursor={changeCursor} setGoogleLines={setGoogleLines} googleLines={googleLines} /> */}
+            {/* <Test cursor={changeCursor} /> */}
         </MapContainer>
     );
 }
