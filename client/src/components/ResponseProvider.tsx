@@ -7,48 +7,54 @@ interface IProviderProps {
 }
 
 export interface IParsedResponse {
-    /** Currently selected itinerary for public transit route (default '0': raw.public[0].plan.itineraries[0]) */
-    pubDf?: IItinerary;
+    /** Array of all the public transit itineraries (1-3 itineraries) */
+    pubItins: IItinerary[];
     /** Default route for car (same as: raw.car[0].routes[0]) */
-    carDf?: IRoutes;
-    /** Number of itineraries returned by public transit API */
-    pubItineraryCount?: number;
+    carRoute: IRoutes;
+}
+
+export interface ICurrent {
+    /** Currently selected itinerary for public transit route (same as raw.public[0].plan.itineraries[currentPubItin]) */
+    pubDf: IItinerary;
+    /** Default route for car (same as: raw.car[0].routes[0]) */
+    carDf: IRoutes;
 }
 
 function RepsonseProvider(props: IProviderProps): JSX.Element {
     const [raw, setRaw] = useState<IRawResponse>();
     const [parsed, setParsed] = useState<IParsedResponse>();
-    const [itinerary, setItinerary] = useState<number>(0);
+    const [current, setCurrent] = useState<ICurrent>();
+    const [currentPubItin, setCurrentPubItin] = useState<number>(0);
 
     useEffect(() => {
         if (!raw) return;
 
-        // If multiple components need the same calculated values from the raw response it can be done here too
-        // Just remember to update IParsedResponse too
-        const currentPublicItinerary = raw.public[0].plan.itineraries[0];
+        // Parsed should only contain values that are calculated once per API response!
+        const pubItineraries = raw.public[0].plan.itineraries;
         const defaultCarRoute = raw.car[0].routes[0];
 
         setParsed({
-            pubDf: currentPublicItinerary,
-            carDf: defaultCarRoute,
-            pubItineraryCount: raw.public[0].plan.itineraries.length
+            pubItins: pubItineraries,
+            carRoute: defaultCarRoute,
         });
-        setItinerary(0);
+        setCurrentPubItin(0);
     }, [raw]);
 
     useEffect(() => {
-        if (!raw) return;
+        if (!parsed) return;
 
-        const currentPublicItinerary = raw.public[0].plan.itineraries[itinerary];
+        // Currently selected routes, updates any time a new itinerary is selected.
+        const currentPublicItinerary = parsed.pubItins[currentPubItin];
+        const currentCarRoute = parsed.carRoute;
 
-        setParsed({
-            ...parsed,
-            pubDf: currentPublicItinerary
+        setCurrent({
+            pubDf: currentPublicItinerary,
+            carDf: currentCarRoute
         });
-    }, [itinerary]);
+    }, [currentPubItin, parsed]);
 
     return (
-        <ResponseContext.Provider value={{ raw, setRaw, parsed, itinerary, setItinerary }}>
+        <ResponseContext.Provider value={{ raw, setRaw, parsed, currentPubItin, setCurrentPubItin, current }}>
             {props.children}
         </ResponseContext.Provider>
     );

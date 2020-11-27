@@ -29,26 +29,26 @@ interface IPLCProps {
 }
 
 function PolylineControl(props: IPLCProps): JSX.Element {
-    const { parsed } = useContext(ResponseContext);
+    const { current } = useContext(ResponseContext);
     const [polylines, setPolylines] = useState<IPolylines>();
 
     // When new data is fetched from APIs.
     useEffect(() => {
 
         // Return if no data is found.
-        if (!parsed || !parsed.pubDf || !parsed.carDf) return;
+        if (!current) return;
 
         // Further parse the API responses.
-        const pubGoogleLines = parsed.pubDf.legs.map(leg => {
+        const pubGoogleLines = current.pubDf.legs.map(leg => {
             return leg.legGeometry.points;
         });
 
-        const pubModes = parsed.pubDf.legs.map(leg => {
+        const pubModes = current.pubDf.legs.map(leg => {
             return leg.mode;
         });
 
-        const carLowResLine = parsed.carDf.geometry;
-        const carHiResLine = parsed.carDf.legs.map((leg) => {
+        const carLowResLine = current.carDf.geometry;
+        const carHiResLine = current.carDf.legs.map((leg) => {
             return leg.steps.map((step) => (step.geometry));
         });
 
@@ -113,7 +113,7 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             props.zoomBounds(polylineBounds);
         }
 
-    }, [parsed]);
+    }, [current]);
 
     return (
         <div>

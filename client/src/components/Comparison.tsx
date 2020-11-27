@@ -4,7 +4,7 @@ import { ICarSetup } from './CarSetup';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const Comparison: React.FC<ICarSetup> = (props) => {
-  const { parsed } = useContext(ResponseContext);
+  const { current } = useContext(ResponseContext);
   // eslint-disable-next-line
   const {fuelEco, tank, fuelPrice} = props;
 
@@ -14,10 +14,10 @@ const Comparison: React.FC<ICarSetup> = (props) => {
   let totalFuel =  0;
   let reFills =  '';
 
-  if (parsed?.carDf?.distance && parsed?.carDf?.duration){
-    carDistance = parsed.carDf.distance / 1000;
+  if (current?.carDf?.distance && current?.carDf?.duration){
+    carDistance = current.carDf.distance / 1000;
     fuelCost = carDistance * fuelEco[0] * fuelPrice[0] /100;
-    carDuration = parsed.carDf.duration /60;
+    carDuration = current.carDf.duration /60;
     totalFuel = carDistance * fuelEco[0] /100;
     
     if (tank[0] > totalFuel){
@@ -35,12 +35,12 @@ const Comparison: React.FC<ICarSetup> = (props) => {
   let walkingDistance  = 0;
   let transfers = 0;
 
-  if (parsed?.pubDf?.legs && parsed?.pubDf?.duration){
-    pubDuration = parsed.pubDf.duration / 60; // This is in minutes now?
-    parsed.pubDf.legs.forEach(legs => pubDistance = pubDistance + legs.distance);
+  if (current?.pubDf?.legs && current?.pubDf?.duration){
+    pubDuration = current.pubDf.duration / 60; // This is in minutes now?
+    current.pubDf.legs.forEach(legs => pubDistance = pubDistance + legs.distance);
     pubDistance = pubDistance / 1000;
-    walkingDistance = parsed.pubDf.walkDistance / 1000;
-    transfers = parsed.pubDf.legs.length - 2;
+    walkingDistance = current.pubDf.walkDistance / 1000;
+    transfers = current.pubDf.legs.length - 2;
   }
 
   return (
