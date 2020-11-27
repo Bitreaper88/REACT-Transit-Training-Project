@@ -36,7 +36,7 @@ function PolylineControl(props: IPLCProps): JSX.Element {
     useEffect(() => {
 
         // Return if no data is found.
-        if (!current || !current.pubDf || !current.carDf) return;
+        if (!current) return;
 
         // Further parse the API responses.
         const pubGoogleLines = current.pubDf.legs.map(leg => {
