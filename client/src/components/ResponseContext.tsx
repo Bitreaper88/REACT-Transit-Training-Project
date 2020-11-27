@@ -1,13 +1,20 @@
 import React from 'react';
 import { IRawResponse } from './RouteFetch.types';
-import { IParsedResponse } from './ResponseProvider';
+import { ICurrent, IParsedResponse } from './ResponseProvider';
 
 interface IResponseContext {
+    /** Raw response data, should only be used internally in the context to calculate parsed values */
     raw?: IRawResponse;
+    /** To set API response into the context */
     setRaw: (newResponse: IRawResponse) => void;
+    /** Parsed values that are calculated only once whenever new raw data is received */
     parsed?: IParsedResponse;
-    itinerary: number;
-    setItinerary: (i: number) => void;
+    /** Currently selected itineraries, recalculated every time a new itinerary is selected */
+    current?: ICurrent;
+    /** Currently selected public itinerary (array index of parsed.pubItins) */
+    currentPubItin: number;
+    /** Change currently selected itinerary (MUST be a valid array index of parsed.pubItins) */
+    setCurrentPubItin: (i: number) => void;
 }
 
 export const ResponseContext = React.createContext<IResponseContext>(
@@ -17,8 +24,8 @@ export const ResponseContext = React.createContext<IResponseContext>(
         setRaw: (newResponse: IRawResponse) => {
             console.log(`Someone didn't set up the context properly!\n${newResponse}`);
         },
-        itinerary: 0,
-        setItinerary: (i: number) => {
+        currentPubItin: 0,
+        setCurrentPubItin: (i: number) => {
             console.log(`Someone didn't set up the context properly!\n${i}`);
         }
     }

@@ -4,7 +4,7 @@ import { ICarSetup } from './CarSetup';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 const Comparison: React.FC<ICarSetup> = (props) => {
-  const { parsed } = useContext(ResponseContext);
+  const { current: parsed } = useContext(ResponseContext);
   // eslint-disable-next-line
   const {fuel, tank, fuelPrice} = props;
 
