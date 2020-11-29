@@ -43,15 +43,24 @@ const Comparison: React.FC<ICarSetup> = (props) => {
     transfers = current.pubDf.legs.length - 2;
   }
 
+  function timeConvert(n: number) {
+    const num = n;
+    const hours = (num / 60);
+    const rhours = Math.floor(hours);
+    const minutes = (hours - rhours) * 60;
+    const rminutes = Math.round(minutes);
+    return rhours + ' hours ' + rminutes + ' minutes';
+  }
+
   return (
     <div className='flex pt-3 h-full p-1 font-semibold'>
         <div className='w-1/2'>
           <span className='text-lg text-blue-500 font-bold'>Personal vehicle</span>
-          <p>
+          <p className={`box ${carDistance > pubDistance ? 'text-red-600' : 'text-green-600'}`} >
             Distance: {carDistance.toFixed(2)} km
           </p>
-          <p>
-            Time: {carDuration.toFixed(2)}
+          <p className={`box ${carDuration > pubDuration ? 'text-red-600' : 'text-green-600'}`} >
+            Time: {timeConvert(carDuration)} 
           </p>
           <p>
             Fuel cost: {fuelCost.toFixed(2)} €
@@ -66,11 +75,11 @@ const Comparison: React.FC<ICarSetup> = (props) => {
         <div className='bg-blue-500 w-1 my-2 transform scale-x-75'/>
         <div className='w-1/2'>
           <span className='text-lg text-purple-500 font-bold'>Public transit</span>
-          <p>
+          <p className={`box ${carDistance < pubDuration ? 'text-red-600' : 'text-green-600'}`} >
             Distance: {pubDistance.toFixed(2)} km
           </p>
-          <p>
-            Time: {pubDuration.toFixed(2)}
+          <p className={`box ${carDuration < pubDuration ? 'text-red-600' : 'text-green-600'}`} >
+            Time: {timeConvert(pubDuration)}
           </p>
           <p>
             Ticket cost: we don´t have €

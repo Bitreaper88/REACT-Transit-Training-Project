@@ -1,12 +1,13 @@
 import React from 'react';
+import { IItinerary } from '../AllRoutesWrapper';
 import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 
-const DateIconLoc: React.FC = () => { 
-  const d = new Date();
+const DateIconLoc: React.FC<IItinerary> = (props: IItinerary) => { 
+  const {time, place} = props;
   return (
     <div className="flex my-1">
       <div className="w-2/6">
-        <h4 className="ml-1 w-full">{`${d.getHours()} : ${d.getMinutes()}`}</h4>
+        <h4 className="ml-1 w-full">{time}</h4>
       </div>
 
       <div className="w-1/6 flex flex-col">
@@ -14,7 +15,7 @@ const DateIconLoc: React.FC = () => {
       </div>
 
       <div className="w-2/5">
-       <div className="w-20 whitespace-no-wrap">This way is...</div>
+       <div className="w-20 whitespace-no-wrap">{place}</div>
       </div>
     </div>
   );
