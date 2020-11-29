@@ -6,6 +6,7 @@ import End from './Duration/End';
 import Car from './CarRoutes/Car';
 import DateIconLoc from './Duration/DateIconLoc';
 import Bus from './BusRoutes/Bus';
+import { TransitMode} from './TransitTypes';
 import { ResponseContext } from './ResponseContext';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
@@ -19,7 +20,7 @@ export interface ILeg {
   time:  string,
   agency: string,
   distance: number,
-  mode: string,
+  mode: TransitMode,
 }
 
 

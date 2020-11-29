@@ -44,7 +44,7 @@ export enum ModeColor {
     'FERRY' = 'black',
     'FUNICULAR' = 'white',
     'GONDOLA' = 'purple',
-    'RAIL' = 'teal',
+    'RAIL' = 'indigo',
     'SUBWAY' = 'gray',
     'TRAM' = 'pink',
     'WALK' = 'brown'
