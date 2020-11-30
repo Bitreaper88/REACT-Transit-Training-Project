@@ -5,6 +5,7 @@ import L from 'leaflet';
 import { ResponseContext } from '../components/ResponseContext';
 import MapMarker from '../components/MapMarker';
 import MapMarkerDraggable from '../components/MapMarkerDraggable';
+import LocationMarker, { LocationHandler } from './DragTest';
 
 interface ITestProps {
     cursor?: () => void;
@@ -16,6 +17,7 @@ function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
     const { parsed, currentPubItin, setCurrentPubItin } = useContext(ResponseContext);
+    const [pos, setPos] = useState<[number, number] | undefined>();
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +29,7 @@ function Test(props: ITestProps): JSX.Element {
         if (parsed) {
             console.log('Public route duration from the context: ');
             console.log(parsed.pubItins[currentPubItin].duration);
-            
+
 
             console.log('Car route duration from the context: ');
             console.log(parsed.carRoute.duration);
@@ -69,10 +71,10 @@ function Test(props: ITestProps): JSX.Element {
     }
 
     function typeTesting() {
-        const asdf: number[] = [1,2];
+        const asdf: number[] = [1, 2];
         const fdsa: number[] = new Array(asdf.length);
         fdsa[10];
- 
+
     }
 
     return (
@@ -111,6 +113,7 @@ function Test(props: ITestProps): JSX.Element {
                     else setCurrentPubItin(0);
                 }}
             >Change Itinerary</button>
+            &nbsp;|&nbsp;<LocationHandler />
         </div>
     );
 
