@@ -35,6 +35,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
 
     return (
         <MapContainer
+            className='theMap'
             style={mapStyle}
             center={{ lat: 60.44994, lng: 22.26637 }}
             zoom={13}
@@ -61,7 +62,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             {props.children}
 
             {/* Controllers */}
-            <PolylineControl zoomBounds={setCurrentBounds}/>
+            <PolylineControl zoomBounds={setCurrentBounds} />
             <ZoomToNewLayer bounds={currentBounds} />
             <ZoomControl position='bottomright' />
 
