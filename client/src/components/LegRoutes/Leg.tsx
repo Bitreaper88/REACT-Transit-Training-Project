@@ -22,7 +22,7 @@ const Leg: React.FC<ILeg> = (props: ILeg) => {
   return (
     <div className="flex flex-row h-16 my-1">
       <div className="w-2/6 text-center flex items-stretch">
-        <i className={'self-center flex-1 material-icons md-36 overflow-hidden text-'+color+'-500'}>{ModeIcon[mode]}</i> 
+        <i className={'self-center flex-1 material-icons md-36 overflow-hidden text-'+color}>{ModeIcon[mode]}</i> 
       </div>
 
       {mode == 'WALK' ?  
@@ -30,7 +30,7 @@ const Leg: React.FC<ILeg> = (props: ILeg) => {
           {dotsArray}
         </div>
       : <div className="w-1/6 flex flex-col h-14">
-          <div className={'self-center w-2 h-full transform scale-x-75 bg-'+color+'-400'}></div>
+          <div className={'self-center w-2 h-full transform scale-x-75 bg-'+color}></div>
         </div>}
 
       <div  data-tip data-for={TooltipID} className="w-3/6 flex items-stretch">

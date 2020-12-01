@@ -38,13 +38,13 @@ export enum ModeIcon {
 export enum ModeColor {
     'AIRPLANE' = 'blue',
     'BICYCLE' = 'red',
-    'BUS' = 'yellow',
+    'BUS' = 'buss_magenta',
     'CABLE_CAR' = 'orange',
     'CAR' = 'green',
     'FERRY' = 'black',
     'FUNICULAR' = 'white',
     'GONDOLA' = 'purple',
-    'RAIL' = 'indigo',
+    'RAIL' = 'train_teal',
     'SUBWAY' = 'gray',
     'TRAM' = 'pink',
     'WALK' = 'brown'
