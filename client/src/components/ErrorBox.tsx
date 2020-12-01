@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
+import { ErrorContext } from './ErrorContext';
+import L from 'leaflet';
 
-interface IError {
-    msg: string | undefined;
-    clear: (m: string | undefined) => void;
-}
+function ErrorBox(): JSX.Element | null {
 
-function ErrorBox(props: IError): JSX.Element | null {
+    const { msg, showError: clear } = useContext(ErrorContext);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (msg && ref.current) {
+            L.DomEvent.disableClickPropagation(ref.current);
+            L.DomEvent.disableScrollPropagation(ref.current);
+        }
+    }, [msg]);
 
     return (
-        props.msg ?
-            <div className='fixed top-0 left-0 w-64 p-2 shadow bg-yellow-400 text-base text-center align-middle pointer-events-auto'
-                style={{ zIndex: 9999 }}>
-                <div>{props.msg}</div>
+        msg ?
+            <div className='fixed top-0 left-0 w-64 p-2 shadow bg-yellow-400 text-base text-center align-middle pointer-events-auto cursor-auto'
+                style={{ zIndex: 9999 }}
+                ref={ref}>
+                <div>
+                    {msg}
+                </div>
                 <button className='text-sm hover:underline text-red-700 p-3'
-                    onClick={() => props.clear(undefined)}>
+                    onClick={() => clear(undefined)}>
                     CLOSE MESSAGE
                 </button>
             </div> : null

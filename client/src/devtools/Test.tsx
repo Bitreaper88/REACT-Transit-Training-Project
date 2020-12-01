@@ -116,7 +116,7 @@ function Test(props: ITestProps): JSX.Element {
                 }}
             >Change Itinerary</button>
             &nbsp;|&nbsp;<LocationHandler />
-            <ErrorBox msg={errorMsg} clear={setErrorMsg} />
+            <ErrorBox />
             &nbsp;|&nbsp;<button onClick={() => setErrorMsg('a really really long error message from a programmer who wants to be very specific about the error and give a dump to the user for some reason')}>Error</button>
         </div>
     );
