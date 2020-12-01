@@ -14,7 +14,7 @@ function ErrorBox(props: IError): JSX.Element | null {
                 <div>{props.msg}</div>
                 <button className='text-sm hover:underline text-red-700 p-3'
                     onClick={() => props.clear(undefined)}>
-                    close message
+                    CLOSE MESSAGE
                 </button>
             </div> : null
     );
