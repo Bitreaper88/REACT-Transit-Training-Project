@@ -29,15 +29,28 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
     /** When marker is no longer being dragged */
     function onStop(this: HTMLDivElement, e: MouseEvent) {
 
-        console.log(document.querySelectorAll(':hover'));
+        console.log(document.elementFromPoint(e.clientX, e.clientY + 16));
+        console.log(document.elementFromPoint(e.clientX, e.clientY + 16));
 
-        const isOnMap = document.querySelectorAll(':hover .theMap').length;
-        // const elementAtDropPoint = document.elementFromPoint(e.clientX, e.clientY);
-        const containerPoint = L.point(e.clientX, e.clientY);
+        this.style.pointerEvents = 'none';
+        const elementUnderMarker = document.elementFromPoint(e.clientX, e.clientY);
+        this.style.pointerEvents = 'auto';
+
+        // const isOnMap = document.querySelectorAll(':hover .theMap').length;
+        const containerPoint = L.point(e.clientX, e.clientY + 16);
 
         // Send position upstream
-        if (mapRef.current && isOnMap) {
+        if (mapRef.current && elementUnderMarker && elementUnderMarker.classList.contains('theMap')) {
             props.setPosition(mapRef.current.containerPointToLatLng(containerPoint));
+        }
+        else {
+            this.style.position = '';
+            this.style.zIndex = '';
+
+            // Set styles
+            this.style.cursor = 'pointer';
+            this.classList.remove('md-36');
+            setIsBeingDragged(false);
         }
 
         // Clean up afterwards
@@ -52,10 +65,12 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
         e.preventDefault();
         setIsBeingDragged(true);
 
-        // Put marker on top & set style while being dragged
+        // Put marker on top
         e.currentTarget.style.position = 'fixed';
         e.currentTarget.style.zIndex = '9999';
 
+        // Set styles
+        e.currentTarget.style.cursor = 'grabbing';
         e.currentTarget.classList.add('md-36');
 
         // Move marker to mouse position
@@ -67,18 +82,6 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
         e.currentTarget.addEventListener('mouseout', onMove);
         e.currentTarget.addEventListener('mouseup', onStop);
     }
-
-    // function onDrop(e: React.DragEvent<HTMLDivElement>, map: L.Map) {
-    //     e.preventDefault();
-
-    //     const containerPoint = L.point(e.clientX, e.clientY);
-    //     const elementAtDropPoint = document.elementFromPoint(e.clientX, e.clientY);
-
-    //     // Center map if marker is dropeed outside current view
-    //     if (elementAtDropPoint && elementAtDropPoint.className.includes('theMap')) {
-    //         props.setPosition(map.containerPointToLatLng(containerPoint));
-    //     }
-    // }
 
     return (
         <span>
@@ -94,10 +97,8 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
                         mapRef.current = map;
 
                         return (
-                            <div key={props.id} className='material-icons select-none'
+                            <div key={props.id} className='material-icons select-none theMarker'
                                 onMouseDownCapture={(e) => onStart(e)}
-                                // onMouseUpCapture={() => console.log('foo')}
-                                // onMouseOutCapture={() => console.log('foo')}
                                 style={{ color: props.color, cursor: 'pointer' }}>
                                 place
                             </div>
