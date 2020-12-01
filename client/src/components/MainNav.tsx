@@ -1,27 +1,17 @@
-import RoutesWrapper from './AllRoutesWrapper';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
-import CarSetup from './CarSetup';
+import Location from '../devtools/Location';
 import Comparison from './Comparison';
-import RouteFetch from './RouteFetch';
-import L from 'leaflet';
-import Location from './Location';
-
-import Loader from './Loader';
+import CarSetup from './CarSetup';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 const MainNav: React.FC = () => {
-  // Prevents the map from hogging all the clicks
-  const uiRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (uiRef.current) {
-      L.DomEvent.disableClickPropagation(uiRef.current);
-      L.DomEvent.disableScrollPropagation(uiRef.current);
-    }
-  }, []);
+  const from = 'Kamppi, Helsinki::60.168992,24.932366';
+
+  const to = 'Pisa, Espoo::60.175294,24.684855';
 
   const sideBaseStyle =
-    'absolute pt-12 inset-y-0 left-0 bg-gray-200 w-64 h-full shadow transition duration-500 ease-in-out cursor-auto pointer-events-auto transform ';
+    'absolute pt-12 inset-y-0 left-0 bg-gray-200 w-64 h-full shadow transition duration-500 ease-in-out transform ';
   const xTranslation = ' -translate-x-64';
 
   const [sideBarStyle, setSidebarStyle] = useState(sideBaseStyle);
@@ -31,17 +21,15 @@ const MainNav: React.FC = () => {
     'md:ml-64 transition duration-500 ease-in-out transform ';
   const YTranslation = 'md:-translate-y-64 translate-y-64';
 
-  const [comparisonStyle, setComparisonStyle] = useState(
-    comparsionBaseStyle + YTranslation
-  );
-  const [comparisonStatus, setComparisonStatus] = useState(true);
+  const [comparisonStyle, setComparisonStyle] = useState(comparsionBaseStyle);
+  const [comparisonStatus, setComparisonStatus] = useState(false);
 
   const carBaseStyle =
-    'md:ml-56 transition duration-500 ease-in-out transform ';
+    'md:ml-64 transition duration-500 ease-in-out transform ';
   const negativeYTranslation = '-translate-y-64';
 
-  const [carStyle, setCarStyle] = useState(carBaseStyle + negativeYTranslation);
-  const [carStatus, setCarStatus] = useState(true);
+  const [carStyle, setCarStyle] = useState(carBaseStyle);
+  const [carStatus, setCarStatus] = useState(false);
 
   function translateSideBar() {
     if (sideBarStatus) setSidebarStyle(sideBaseStyle);
@@ -81,11 +69,8 @@ const MainNav: React.FC = () => {
   }
 
   return (
-    <div
-      className='grid h-screen w-screen absolute z-1000 pointer-events-none'
-      ref={uiRef}
-    >
-      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white cursor-auto pointer-events-auto'>
+    <div className='grid h-screen w-screen'>
+      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-0 w-64 absolute top-0 left-0 font-bold p-2 text-white'>
         <img className='object-contain h-8' src='../magenta_logo.png' />
       </div>
       <div className={sideBarStyle}>
@@ -99,14 +84,10 @@ const MainNav: React.FC = () => {
             {sideBarStatus ? 'chevron_right' : 'chevron_left'}
           </button>
         </div>
-
-        <div className='p-2 bg-white text-gray-800 pointer-events-auto overflow-auto h-full md:pb-0 pb-48'>
-          <Location key='origin' fieldName='Origin' />
-          <Location key='destination' fieldName='Destination' />
-
-          <Loader />
-          <RouteFetch />
-          <RoutesWrapper />
+        <div className='p-2 bg-white text-gray-800'>
+          Sidebar components are loaded in here
+          <Location fieldName='Origin' />
+          <Location fieldName='Destination' />
         </div>
       </div>
 
