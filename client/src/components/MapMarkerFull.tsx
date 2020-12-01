@@ -29,14 +29,10 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
     /** When marker is no longer being dragged */
     function onStop(this: HTMLDivElement, e: MouseEvent) {
 
-        console.log(document.elementFromPoint(e.clientX, e.clientY + 16));
-        console.log(document.elementFromPoint(e.clientX, e.clientY + 16));
-
         this.style.pointerEvents = 'none';
         const elementUnderMarker = document.elementFromPoint(e.clientX, e.clientY);
         this.style.pointerEvents = 'auto';
 
-        // const isOnMap = document.querySelectorAll(':hover .theMap').length;
         const containerPoint = L.point(e.clientX, e.clientY + 16);
 
         // Send position upstream
@@ -44,10 +40,9 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
             props.setPosition(mapRef.current.containerPointToLatLng(containerPoint));
         }
         else {
+            // Reset dragging styles
             this.style.position = '';
             this.style.zIndex = '';
-
-            // Set styles
             this.style.cursor = 'pointer';
             this.classList.remove('md-36');
             setIsBeingDragged(false);
