@@ -15,6 +15,7 @@ const Location = (props: IProps): JSX.Element => {
   const [search, setSearch] = useState<string>('');
   // eslint-disable-next-line
   const [address, setAddress] = useState<string>('');
+  const [coordinates, setCoordinates] = useState<number[]>([]);
   const [options, setOptions] = useState<IAddress[]>([]);
   const [display, setDisplay] = useState(false);
 
@@ -30,7 +31,6 @@ const Location = (props: IProps): JSX.Element => {
         `https://api.digitransit.fi/geocoding/v1/autocomplete?text=${search}&layers=address`
       );
       const body = await response.data.features;
-      console.log('Data Body', body);
       // eslint-disable-next-line
       body.map((a: any) => {
         const c: IAddress = {
@@ -39,23 +39,27 @@ const Location = (props: IProps): JSX.Element => {
         };
         return location.push(c);
       });
-      console.log('this is b', location);
       setOptions(location);
-      console.log('This is option', options);
     }
     getLocation();
   }, [search]);
 
-  const setAddressLabel = (label: string) => {
+  const setAddressLabel = (
+    label: string,
+    coordinates: React.SetStateAction<number[]>
+  ) => {
     setAddress(label);
+    setSearch(label);
+    setCoordinates(coordinates);
     setDisplay(false);
   };
-  // console.log(address);
   return (
     <form action='' className='w-full'>
-      {props.fieldName}
+      <span className=' inline-block text-left, text-blue-700 text-base  w-20 ml-0 mb-2 '>
+        {props.fieldName}
+      </span>
       <input
-        className='border-2 focus:outline-none, focus:border-blue'
+        className='border-2 focus:outline-none, focus:border-blue ml-4'
         type='text'
         onClick={() => setDisplay(!display)}
         placeholder='Type to Search Origin'
@@ -65,11 +69,14 @@ const Location = (props: IProps): JSX.Element => {
       {display && (
         <div className='absolute left-0 mt-1 py-1 rounded-sm bg'>
           {options
-            .filter(({ label }) => label.indexOf(search.toLowerCase()) > -1)
+            .filter(
+              ({ label }) =>
+                label.toLowerCase().indexOf(search.toLowerCase()) > -1
+            )
             .map((v, i) => {
               return (
                 <div
-                  onClick={() => setAddressLabel(v.label)}
+                  onClick={() => setAddressLabel(v.label, v.coordinates)}
                   tabIndex={0}
                   key={i}
                   className='bg-white rounded-lg p-1 w-65'
