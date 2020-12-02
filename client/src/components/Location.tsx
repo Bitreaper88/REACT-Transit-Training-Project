@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ICoordinates } from './RouteFetch';
 interface IAddress {
   label: string;
   coordinates: [number, number];
 }
 interface IProps {
   fieldName: string;
+  coordinates: {
+    position: ICoordinates | undefined;
+    setPosition: React.Dispatch<React.SetStateAction<ICoordinates | undefined>>;
+  };
 }
 
 // const data: IAddress = { label: 'Hello', coordinates: [23.23, 234.4] };
@@ -30,52 +35,58 @@ const Location = (props: IProps): JSX.Element => {
         `https://api.digitransit.fi/geocoding/v1/autocomplete?text=${search}&layers=address`
       );
       const body = await response.data.features;
-      console.log('Data Body', body);
       // eslint-disable-next-line
       body.map((a: any) => {
         const c: IAddress = {
           label: a.properties.label,
-          coordinates: a.geometry.coordinates,
+          coordinates: a.geometry.coordinates as [number, number],
         };
         return location.push(c);
       });
-      console.log('this is b', location);
       setOptions(location);
-      console.log('This is option', options);
     }
     getLocation();
   }, [search]);
 
-  const setAddressLabel = (label: string) => {
+  const setAddressLabel = (label: string, coordinates: [number, number]) => {
     setAddress(label);
+    setSearch(label);
+    props.coordinates.setPosition({ lat: coordinates[1], lon: coordinates[0] });
+    // setCoordinates(coordinates);
     setDisplay(false);
   };
-  // console.log(address);
+
   return (
     <form action='' className='w-full'>
-      {props.fieldName}
+      <span className=' inline-block text-left, text-blue-700 text-base  w-20 ml-0 mb-2 '>
+        {props.fieldName}
+      </span>
       <input
-        className='border-2 focus:outline-none, focus:border-blue'
+        className='border-2 focus:outline-none, focus:border-blue ml-4'
         type='text'
-        onClick={() => setDisplay(!display)}
+        onFocus={() => setDisplay(true)}
+        onBlur={() => setDisplay(false)}
         placeholder='Type to Search Origin'
         onChange={(event) => setSearch(event.target.value)}
         value={search}
       ></input>
       {display && (
-        <div className='absolute left-0 mt-1 py-1 rounded-sm bg'>
+        <div className='absolute left-0 mt-1 py-1 rounded-sm bg-white'>
           {options
-            .filter(({ label }) => label.indexOf(search.toLowerCase()) > -1)
+            .filter(
+              ({ label }) =>
+                label.toLowerCase().indexOf(search.toLowerCase()) > -1
+            )
             .map((v, i) => {
               return (
                 <div
-                  onClick={() => setAddressLabel(v.label)}
+                  onClick={() => setAddressLabel(v.label, v.coordinates)}
                   tabIndex={0}
                   key={i}
                   className='bg-white rounded-lg p-1 w-65'
                 >
                   <span
-                    className='block border-white px-2 py-1 hover:border-white hover:bg-indigo-500 hover:text-white'
+                    className='bg-white block border-white px-2 py-1 hover:border-white hover:bg-indigo-500 hover:text-white'
                     key={i}
                   >
                     {v.label}
