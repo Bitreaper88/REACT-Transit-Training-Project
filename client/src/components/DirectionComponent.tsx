@@ -15,8 +15,6 @@ const DirectionCoordinates: React.FC<IDirectionProps> = (
   useEffect(() => {
     if (!origin || !destination) return;
     props.setReq({ from: origin, to: destination });
-    console.log(origin);
-    console.log(destination);
   }, [origin, destination]);
 
   return (
