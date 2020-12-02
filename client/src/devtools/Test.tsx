@@ -7,6 +7,7 @@ import MapMarker from '../components/MapMarker';
 import MapMarkerDraggable from '../components/MapMarkerDraggable';
 import LocationMarker, { LocationHandler } from './DragTest';
 import ErrorBox from '../components/ErrorBox';
+import { ErrorContext } from '../components/ErrorContext';
 
 interface ITestProps {
     cursor?: () => void;
@@ -19,7 +20,7 @@ function Test(props: ITestProps): JSX.Element {
     const [coords, setCoords] = useState([0, 0]);
     const { parsed, currentPubItin, setCurrentPubItin } = useContext(ResponseContext);
     const [pos, setPos] = useState<[number, number] | undefined>();
-    const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
+    const { showError } = useContext(ErrorContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -117,7 +118,7 @@ function Test(props: ITestProps): JSX.Element {
             >Change Itinerary</button>
             &nbsp;|&nbsp;<LocationHandler />
             <ErrorBox />
-            &nbsp;|&nbsp;<button onClick={() => setErrorMsg('a really really long error message from a programmer who wants to be very specific about the error and give a dump to the user for some reason')}>Error</button>
+            &nbsp;|&nbsp;<button onClick={() => showError('a really really long error message from a programmer who wants to be very specific about the error and give a dump to the user for some reason')}>Error</button>
         </div>
     );
 
