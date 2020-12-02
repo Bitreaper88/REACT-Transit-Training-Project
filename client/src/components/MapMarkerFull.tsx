@@ -34,7 +34,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
     }
     function isMouseEvent(e: MouseEvent | TouchEvent):
         e is MouseEvent {
-        return e.type === 'mousedown' || e.type === 'mousemove' || e.type === 'mouseout' || e.type === 'mouseup';
+        return e.type === 'mousedown' || e.type === 'mousemove' || e.type === 'mouseleave' || e.type === 'mouseup';
     }
     function isTouchEvent(e: MouseEvent | TouchEvent):
         e is TouchEvent {
@@ -62,7 +62,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
 
             // Set up mouse listeners
             document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseout', onOut);
+            document.addEventListener('mouseleave', onOut);
             e.currentTarget.addEventListener('mouseup', onStop);
 
         }
@@ -95,6 +95,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
 
     /** Reset marker if mouse is dragged outside current window */
     function onOut(this: Document) {
+        console.log('foo');
         if (divRef.current) {
             divRef.current.style.position = '';
             divRef.current.style.zIndex = '';
@@ -105,7 +106,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
         }
 
         document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseout', onOut);
+        document.removeEventListener('mouseleave', onOut);
         setIsBeingDragged(false);
     }
 
@@ -148,7 +149,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
         // Clean up afterwards
         if (isMouseEvent(e)) {
             document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseout', onOut);
+            document.removeEventListener('mouseleave', onOut);
             this.removeEventListener('mouseup', onStop);
             setIsBeingDragged(false);
         }
