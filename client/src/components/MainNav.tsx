@@ -5,7 +5,6 @@ import CarSetup from './CarSetup';
 import Comparison from './Comparison';
 import RouteFetch from './RouteFetch';
 import L from 'leaflet';
-import Location from './Location';
 
 // Available iocons easyly searched for in https://material.io/resources/icons/?style=baseline
 const MainNav: React.FC = () => {
@@ -99,8 +98,6 @@ const MainNav: React.FC = () => {
         </div>
 
         <div className='p-2 bg-white text-gray-800 pointer-events-auto overflow-auto h-full md:pb-0 pb-48'>
-          <Location key='origin' fieldName='Origin' />
-          <Location key='destination' fieldName='Destination' />
           <RouteFetch />
           <RoutesWrapper />
         </div>

@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ICoordinates } from './RouteFetch';
 interface IAddress {
   label: string;
   coordinates: [number, number];
 }
 interface IProps {
   fieldName: string;
+  coordinates: {
+    position: ICoordinates | undefined;
+    setPosition: React.Dispatch<React.SetStateAction<ICoordinates | undefined>>;
+  };
 }
 
 // const data: IAddress = { label: 'Hello', coordinates: [23.23, 234.4] };
@@ -15,7 +20,7 @@ const Location = (props: IProps): JSX.Element => {
   const [search, setSearch] = useState<string>('');
   // eslint-disable-next-line
   const [address, setAddress] = useState<string>('');
-  const [coordinates, setCoordinates] = useState<number[]>([]);
+  const [coordinates, setCoordinates] = useState<[]>([]);
   const [options, setOptions] = useState<IAddress[]>([]);
   const [display, setDisplay] = useState(false);
 
@@ -35,7 +40,7 @@ const Location = (props: IProps): JSX.Element => {
       body.map((a: any) => {
         const c: IAddress = {
           label: a.properties.label,
-          coordinates: a.geometry.coordinates,
+          coordinates: a.geometry.coordinates as [number, number],
         };
         return location.push(c);
       });
@@ -44,15 +49,14 @@ const Location = (props: IProps): JSX.Element => {
     getLocation();
   }, [search]);
 
-  const setAddressLabel = (
-    label: string,
-    coordinates: React.SetStateAction<number[]>
-  ) => {
+  const setAddressLabel = (label: string, coordinates: [number, number]) => {
     setAddress(label);
     setSearch(label);
-    setCoordinates(coordinates);
+    props.coordinates.setPosition({ lat: coordinates[1], lon: coordinates[0] });
+    // setCoordinates(coordinates);
     setDisplay(false);
   };
+
   return (
     <form action='' className='w-full'>
       <span className=' inline-block text-left, text-blue-700 text-base  w-20 ml-0 mb-2 '>
@@ -67,7 +71,7 @@ const Location = (props: IProps): JSX.Element => {
         value={search}
       ></input>
       {display && (
-        <div className='absolute left-0 mt-1 py-1 rounded-sm bg'>
+        <div className='absolute left-0 mt-1 py-1 rounded-sm bg-white'>
           {options
             .filter(
               ({ label }) =>
@@ -82,7 +86,7 @@ const Location = (props: IProps): JSX.Element => {
                   className='bg-white rounded-lg p-1 w-65'
                 >
                   <span
-                    className='block border-white px-2 py-1 hover:border-white hover:bg-indigo-500 hover:text-white'
+                    className='bg-white block border-white px-2 py-1 hover:border-white hover:bg-indigo-500 hover:text-white'
                     key={i}
                   >
                     {v.label}
