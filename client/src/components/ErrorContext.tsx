@@ -5,6 +5,7 @@ export interface IErrorContext {
     showError: (m: string | undefined) => void;
 }
 
+/** Context for error messages */
 export const ErrorContext = createContext<IErrorContext>(
     {
         msg: undefined,
@@ -16,6 +17,7 @@ export interface IErrorProvider {
     children?: React.ReactNode;
 }
 
+/** Provider for error message context */
 function ErrorProvider(props: IErrorProvider): JSX.Element {
     const [msg, setMsg] = useState<string>();
 

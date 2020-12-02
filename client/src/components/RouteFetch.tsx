@@ -23,9 +23,10 @@ export interface IRouteRequest {
 }
 
 function RouteFetch(): JSX.Element {
-    const [req, setReq] = useState<IRouteRequest>();
-    const [dateTime, setDateTime] = useState<Date | null>(new Date());
-    const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
+    const [req, setReq] = useState<IRouteRequest>();                            // Update to trigger API calls
+    const [dateTime, setDateTime] = useState<Date | null>(new Date());          // Selected date and time
+    const [modeOptions, setModeOptions] = useState(
+        [...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
     const [queryModes, setQueryModes] = useState<{ mode: TransitMode }[]>([]);
     const { setRaw } = useContext(ResponseContext);
     const { showError } = useContext(ErrorContext);

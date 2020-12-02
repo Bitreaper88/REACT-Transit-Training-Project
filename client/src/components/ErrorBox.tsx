@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { ErrorContext } from './ErrorContext';
 import L from 'leaflet';
 
+/** Component for showing error messages */
 function ErrorBox(): JSX.Element | null {
 
-    const { msg, showError: clear } = useContext(ErrorContext);
+    const { msg, showError } = useContext(ErrorContext);
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -23,7 +24,7 @@ function ErrorBox(): JSX.Element | null {
                     {msg}
                 </div>
                 <button className='text-sm hover:underline text-red-700 p-3'
-                    onClick={() => clear(undefined)}>
+                    onClick={() => showError(undefined)}>
                     CLOSE MESSAGE
                 </button>
             </div> : null
