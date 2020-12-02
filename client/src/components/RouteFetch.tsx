@@ -9,6 +9,7 @@ import { ResponseContext } from './ResponseContext';
 import TransportModes, { Selectable } from './TransportModes';
 import { TransitMode } from './TransitTypes';
 import DateTime from './TimeDate';
+import { ErrorContext } from './ErrorContext';
 
 export interface ICoordinates {
     lat: number;
@@ -22,11 +23,13 @@ export interface IRouteRequest {
 }
 
 function RouteFetch(): JSX.Element {
-    const [req, setReq] = useState<IRouteRequest>();
-    const [dateTime, setDateTime] = useState<Date | null>(new Date());
-    const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
+    const [req, setReq] = useState<IRouteRequest>();                            // Update to trigger API calls
+    const [dateTime, setDateTime] = useState<Date | null>(new Date());          // Selected date and time
+    const [modeOptions, setModeOptions] = useState(
+        [...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
     const [queryModes, setQueryModes] = useState<{ mode: TransitMode }[]>([]);
     const { setRaw } = useContext(ResponseContext);
+    const { showError } = useContext(ErrorContext);
 
     useEffect(() => {
         const modes = modeOptions.map(mode => {
@@ -37,7 +40,7 @@ function RouteFetch(): JSX.Element {
 
     // When new request object is set
     useEffect(() => {
-        if (! req || !req.from || !req.to) return;
+        if (!req || !req.from || !req.to) return;
 
         // If there are no waypoints in the middle
         if (!req.waypoints || req.waypoints.length === 0) {
@@ -77,11 +80,11 @@ function RouteFetch(): JSX.Element {
                             const carResp = [resp[1].data as Types.ICarRouteAPI];
 
                             if (!carResp[0].routes.length) {
-                                alert('Could not find a car route from or to your destination.');
+                                showError('Could not find a car route from or to your destination.');
                                 return;
                             }
                             else if (publicResp[0].plan.itineraries.length === 0) {
-                                alert('Could not find a public route from or to your destination.');
+                                showError('Could not find a public route from or to your destination.');
                                 return;
                             }
 
@@ -92,14 +95,14 @@ function RouteFetch(): JSX.Element {
                             });
                         })
                         .catch(err => {
-                            alert('Error! Could not connect to API.');
+                            showError('Error! Could not connect to API.');
                             console.log(err);
                             return;
                         });
 
                 }
                 catch (err) {
-                    alert('Error connecting to APIs!');
+                    showError('Error connecting to APIs!');
                     console.log(err);
                     return;
                 }
@@ -109,7 +112,7 @@ function RouteFetch(): JSX.Element {
 
     return (
         <div>
-            <DateTime dt={{dateTime, setDateTime}} />
+            <DateTime dt={{ dateTime, setDateTime }} />
             <TransportModes onChange={(selected) => setModeOptions(selected)} />
 
             {/* Dev Button */}

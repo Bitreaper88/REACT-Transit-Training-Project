@@ -5,6 +5,9 @@ import L from 'leaflet';
 import { ResponseContext } from '../components/ResponseContext';
 import MapMarker from '../components/MapMarker';
 import MapMarkerDraggable from '../components/MapMarkerDraggable';
+import LocationMarker, { LocationHandler } from './DragTest';
+import ErrorBox from '../components/ErrorBox';
+import { ErrorContext } from '../components/ErrorContext';
 
 interface ITestProps {
     cursor?: () => void;
@@ -16,6 +19,8 @@ function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
     const { parsed, currentPubItin, setCurrentPubItin } = useContext(ResponseContext);
+    const [pos, setPos] = useState<[number, number] | undefined>();
+    const { showError } = useContext(ErrorContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +32,7 @@ function Test(props: ITestProps): JSX.Element {
         if (parsed) {
             console.log('Public route duration from the context: ');
             console.log(parsed.pubItins[currentPubItin].duration);
-            
+
 
             console.log('Car route duration from the context: ');
             console.log(parsed.carRoute.duration);
@@ -69,10 +74,10 @@ function Test(props: ITestProps): JSX.Element {
     }
 
     function typeTesting() {
-        const asdf: number[] = [1,2];
+        const asdf: number[] = [1, 2];
         const fdsa: number[] = new Array(asdf.length);
         fdsa[10];
- 
+
     }
 
     return (
@@ -88,11 +93,11 @@ function Test(props: ITestProps): JSX.Element {
                 paddingLeft: '10px',
                 paddingRight: '10px',
             }}>
-            ZoomLevel:&nbsp;{zoomLevel}
+            {/* ZoomLevel:&nbsp;{zoomLevel}
             &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
             {props.cursor && <span>
                 &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
-            </span>}
+            </span>} */}
             {/* <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' >
                 <Tooltip>
                     Hello,
@@ -111,6 +116,9 @@ function Test(props: ITestProps): JSX.Element {
                     else setCurrentPubItin(0);
                 }}
             >Change Itinerary</button>
+            &nbsp;|&nbsp;<LocationHandler />
+            <ErrorBox />
+            &nbsp;|&nbsp;<button onClick={() => showError('a really really long error message from a programmer who wants to be very specific about the error and give a dump to the user for some reason')}>Error</button>
         </div>
     );
 
