@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Polyline, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from './ResponseContext';
-import { TransitMode, ModeColor, ModeHover } from './TransitTypes';
+import { TransitMode, ModeColorCSS as ModeColor, ModeHover } from './TransitTypes';
 
 // eslint-disable-next-line
 const PL = require('google-polyline');

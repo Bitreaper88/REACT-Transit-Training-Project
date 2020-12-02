@@ -50,6 +50,22 @@ export enum ModeColor {
     'WALK' = 'brown'
 }
 
+/** Color key for each mode. */
+export enum ModeColorCSS {
+    'AIRPLANE' = 'blue',
+    'BICYCLE' = 'red',
+    'BUS' = '#e1425f',
+    'CABLE_CAR' = '#ace142',
+    'CAR' = '#4299e1',
+    'FERRY' = 'black',
+    'FUNICULAR' = 'white',
+    'GONDOLA' = 'purple',
+    'RAIL' = '#42e1c9',
+    'SUBWAY' = '#e142ce',
+    'TRAM' = 'pink',
+    'WALK' = 'brown'
+}
+
 /** Mouseover hover text for each mode. */
 export enum ModeHover {
     'AIRPLANE' = 'Airplane',

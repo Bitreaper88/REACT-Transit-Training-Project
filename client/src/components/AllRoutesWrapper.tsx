@@ -37,15 +37,15 @@ const RoutesWrapper: React.FC = () => {
       let agency = '';
       if (legs.agency?.name) agency = legs.agency?.name;
        const startTime = new Date(legs.startTime);
-       legsArray.push(<DateIconLoc time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
-       legsArray.push(<Leg time={startTime.toLocaleTimeString('en-US', options).toString()} agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
+       legsArray.push(<DateIconLoc key={legs.startTime} time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
+       legsArray.push(<Leg key={legs.endTime-1} time={startTime.toLocaleTimeString('en-US', options).toString()} agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
     });
 
     return (
       <>    
-        <StartEnd time={startTime.toLocaleTimeString('en-US', options).toString()} place={current.pubDf.legs[0].from.name} />
+        <StartEnd key='from' time={startTime.toLocaleTimeString('en-US', options).toString()} place={current.pubDf.legs[0].from.name} />
         {legsArray}
-        <StartEnd time={endTime.toLocaleTimeString('en-US', options).toString()} place={current.pubDf.legs[current.pubDf.legs.length-1].from.name} />
+        <StartEnd key='to' time={endTime.toLocaleTimeString('en-US', options).toString()} place={current.pubDf.legs[current.pubDf.legs.length-1].from.name} />
       </>
     );
   }else {

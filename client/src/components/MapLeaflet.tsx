@@ -67,7 +67,7 @@ function MapLeaflet(props: IMapProps): JSX.Element {
             <ZoomControl position='bottomright' />
 
             {/* Devtools */}
-            <Test cursor={changeCursor} />
+            {/* <Test cursor={changeCursor} /> */}
         </MapContainer>
     );
 }
