@@ -25,7 +25,7 @@ const Location = (props: IProps): JSX.Element => {
 
   useEffect(() => {
     if (!search) {
-      setAddress('');
+      setOptions([]);
       return;
     }
 
@@ -65,13 +65,13 @@ const Location = (props: IProps): JSX.Element => {
         className='border-2 focus:outline-none, focus:border-blue ml-4'
         type='text'
         onFocus={() => setDisplay(true)}
-        onBlur={() => setDisplay(false)}
+        // onBlur={() => console.log('foo')}
         placeholder='Type to Search Origin'
         onChange={(event) => setSearch(event.target.value)}
         value={search}
       ></input>
       {display && (
-        <div className='absolute left-0 mt-1 py-1 rounded-sm bg-white'>
+        <div className='absolute z-10 left-0 mt-1 py-1 rounded-sm bg-white'>
           {options
             .filter(
               ({ label }) =>
