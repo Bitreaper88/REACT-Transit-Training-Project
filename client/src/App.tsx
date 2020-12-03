@@ -4,6 +4,7 @@ import MainNav from './components/MainNav';
 import ResponseProvider from './components/ResponseProvider';
 import ErrorProvider from './components/ErrorContext';
 import ErrorBox from './components/ErrorBox';
+import Loader from './components/Loader';
 
 function App(): JSX.Element {
   return (
@@ -12,6 +13,7 @@ function App(): JSX.Element {
         <ResponseProvider>
           <MapLeaflet>
             <ErrorBox />
+            <Loader />
             <MainNav />
           </MapLeaflet>
         </ResponseProvider>
