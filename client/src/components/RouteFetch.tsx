@@ -81,11 +81,11 @@ function RouteFetch(): JSX.Element {
               const carResp = [resp[1].data as Types.ICarRouteAPI];
 
               if (!carResp[0].routes.length) {
-                showError('Could not find a car route from or to your destination.');
+                showError('Could not find a car route to your destination.');
                 return;
               }
               else if (publicResp[0].plan.itineraries.length === 0) {
-                showError('Could not find a public route from or to your destination.');
+                showError('Could not find a public transit route with selected methods to your destination.');
                 return;
               }
 
@@ -96,14 +96,14 @@ function RouteFetch(): JSX.Element {
               });
             })
             .catch(err => {
-              showError('Error! Could not connect to API.');
+              showError('Error! Could not connect to API. The service may be down. Please try again later.');
               console.log(err);
               return;
             });
 
         }
         catch (err) {
-          showError('Error connecting to APIs!');
+          showError('Error connecting to APIs! The service may be down. Please try again later.');
           console.log(err);
           return;
         }
