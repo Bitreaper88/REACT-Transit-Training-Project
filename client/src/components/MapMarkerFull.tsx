@@ -11,7 +11,7 @@ interface ILMProps {
     /** LatLng position */
     position: L.LatLngExpression | undefined;
     /** For lifting position state up */
-    setPosition: React.Dispatch<React.SetStateAction<L.LatLng | L.LatLngLiteral | L.LatLngTuple | undefined>>;
+    setPosition: (pos: L.LatLng | L.LatLngLiteral | undefined) => void;
 }
 
 function MapMarkerFull(props: ILMProps): JSX.Element {
@@ -186,9 +186,17 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
                         );
                     }}
                 </MapConsumer>}
-            {(isBeingDragged || props.position) && <div className='material-icons select-none'>
-                place
-            </div>}
+            {isBeingDragged &&
+                <div className='material-icons select-none'>
+                    place
+                </div>
+            }
+            {props.position &&
+                <div className='material-icons select-none'
+                    style={{ color: props.color }}>
+                    place
+                </div>
+            }
         </span>
     );
 }

@@ -4,7 +4,7 @@ import L from 'leaflet';
 import { MapConsumer } from 'react-leaflet';
 
 export interface IDraggableProps extends IMapMarkerProps {
-    setPos?: React.Dispatch<React.SetStateAction<L.LatLng | L.LatLngLiteral | L.LatLngTuple | undefined>>;
+    setPos?: (pos: L.LatLng | L.LatLngLiteral | undefined) => void;
 }
 
 function MapMarkerDraggable(props: IDraggableProps): JSX.Element {
