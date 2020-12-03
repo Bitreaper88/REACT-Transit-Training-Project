@@ -34,7 +34,7 @@ const Location = (props: IProps): JSX.Element => {
     const location: IAddress[] = [];
     async function getLocation() {
       const response = await axios.get(
-        `https://api.digitransit.fi/geocoding/v1/autocomplete?text=${search}&layers=address`
+        `https://api.digitransit.fi/geocoding/v1/autocomplete?text=${search}&layers=localadmin,address`
       );
       const body = await response.data.features;
       // eslint-disable-next-line
@@ -58,6 +58,7 @@ const Location = (props: IProps): JSX.Element => {
     setDisplay(false);
   };
 
+  /** When marker position is changed by dragging it on map */
   const newMarkerPosition = (pos: L.LatLng | L.LatLngLiteral | undefined) => {
     if (!pos) return;
     setSearch('');
@@ -65,6 +66,7 @@ const Location = (props: IProps): JSX.Element => {
     const lat = pos.lat;
     const lon = pos.lng;
 
+    // Find nearby locations and make them selectable in options list
     let nearbyAddresses: IAddress[] = [];
 
     (async () => {
@@ -85,6 +87,7 @@ const Location = (props: IProps): JSX.Element => {
       else return;
     })();
 
+    // Send position upstream
     props.coordinates.setPosition({ lat: pos.lat, lon: pos.lng });
   };
 
@@ -115,10 +118,10 @@ const Location = (props: IProps): JSX.Element => {
       {display && (
         <div className='absolute z-10 left-0 mt-1 py-1 rounded-sm bg-white select-none'>
           {options
-            .filter(
-              ({ label }) =>
-                label.toLowerCase().indexOf(search.toLowerCase()) > -1
-            )
+            // .filter(
+            //   ({ label }) =>
+            //     label.toLowerCase().indexOf(search.toLowerCase()) > -1
+            // )
             .map((v, i) => {
               return (
                 <div
