@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import L from 'leaflet';
 import { MapConsumer } from 'react-leaflet';
 import MapMarkerDraggable from './MapMarkerDraggable';
@@ -9,7 +9,7 @@ interface IMMFProps {
     /** Marker color */
     color?: string;
     /** LatLng position */
-    position: L.LatLngExpression | undefined;
+    position: L.LatLng | L.LatLngLiteral | undefined;
     /** For lifting position state up */
     setPosition: (pos: L.LatLng | L.LatLngLiteral | undefined) => void;
 }
@@ -17,17 +17,23 @@ interface IMMFProps {
 function MapMarkerFull(props: IMMFProps): JSX.Element {
 
     const [isBeingDragged, setIsBeingDragged] = useState<boolean>(false);
-
+    
     /** Rep to the map */
     const mapRef = useRef<L.Map>();
     /** Ref to the marker being dragged */
     const divRef = useRef<HTMLDivElement>(null);
+    
+    // Only update if position changes
+    const position = useMemo(() => {
+        return props.position;
+    }, [props.position?.lat, props.position?.lng]);
 
+    // Pan to marker when position is changed
     useEffect(() => {
-        if (mapRef.current && props.position) {
-            mapRef.current.panTo(props.position);
+        if (position && mapRef.current) {
+            mapRef.current.panTo(position);
         }
-    }, [props.position]);
+    }, [position]);
 
     // For asserting event types
     function isReactMouseEvent(e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent<HTMLDivElement>):
@@ -172,13 +178,13 @@ function MapMarkerFull(props: IMMFProps): JSX.Element {
 
     return (
         <span>
-            {props.position &&
+            {position &&
                 <MapMarkerDraggable
-                    position={props.position}
+                    position={position}
                     setPos={props.setPosition}
                     color={props.color} />}
 
-            {(!props.position) &&
+            {(!position) &&
                 <MapConsumer>
                     {map => {
                         mapRef.current = map;
@@ -199,12 +205,12 @@ function MapMarkerFull(props: IMMFProps): JSX.Element {
                     place
                 </div>
             }
-            {props.position &&
+            {position &&
                 <MapConsumer>
                     {map => {
                         return (<div className='material-icons cursor-pointer select-none float-right transform translate -translate-x-4 -translate-y-0.5'
                             style={{ color: props.color }}
-                            onClick={() => { if (props.position) map.panTo(props.position); }}>
+                            onClick={() => { if (position) map.panTo(position); }}>
                             place
                         </div>);
                     }}

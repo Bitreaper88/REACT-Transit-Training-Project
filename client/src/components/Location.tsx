@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import { ICoordinates } from './RouteFetch';
 import MapMarkerFull from './MapMarkerFull';
@@ -31,6 +31,11 @@ const Location = (props: IProps): JSX.Element => {
   const [options, setOptions] = useState<IAddress[]>([]);
   const [display, setDisplay] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Only update if position changes
+  const position = useMemo(() => {
+    return props.coordinates.position;
+  }, [props.coordinates.position?.lat, props.coordinates.position?.lon]);
 
   // When user input changes
   useEffect(() => {
@@ -97,7 +102,7 @@ const Location = (props: IProps): JSX.Element => {
   };
 
   return (
-    <form action='' className='w-full'>
+    <form onSubmit={(e) => { e.preventDefault(); }} action='' className='w-full'>
       <div className=' inline-block text-left, text-blue-700 text-base ml-0 '>
         {props.fieldName}
       </div>
@@ -116,9 +121,9 @@ const Location = (props: IProps): JSX.Element => {
 
         <MapMarkerFull key={props.fieldName} id={props.fieldName}
           color={props.fieldName === 'Origin' ? '#e53e3e' : '#38a169'} // These color values must be kept in sync with rest of the App
-          position={props.coordinates.position ? {
-            lat: props.coordinates.position.lat,
-            lng: props.coordinates.position.lon
+          position={position ? {
+            lat: position.lat,
+            lng: position.lon
           } : undefined}
           setPosition={newMarkerPosition} />
       </div>
