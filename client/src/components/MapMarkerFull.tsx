@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import { MapConsumer } from 'react-leaflet';
 import MapMarkerDraggable from './MapMarkerDraggable';
 
-interface ILMProps {
+interface IMMFProps {
     /** ID string to keep track of markers */
     id: string;
     /** Marker color */
@@ -14,7 +14,7 @@ interface ILMProps {
     setPosition: (pos: L.LatLng | L.LatLngLiteral | undefined) => void;
 }
 
-function MapMarkerFull(props: ILMProps): JSX.Element {
+function MapMarkerFull(props: IMMFProps): JSX.Element {
 
     const [isBeingDragged, setIsBeingDragged] = useState<boolean>(false);
 
@@ -22,6 +22,12 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
     const mapRef = useRef<L.Map>();
     /** Ref to the marker being dragged */
     const divRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (mapRef.current && props.position) {
+            mapRef.current.panTo(props.position);
+        }
+    }, [props.position]);
 
     // For asserting event types
     function isReactMouseEvent(e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent<HTMLDivElement>):
