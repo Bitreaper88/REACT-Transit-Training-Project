@@ -51,7 +51,7 @@ const Location = (props: IProps): JSX.Element => {
         return ({
           label: a.properties.label,
           coordinates: a.geometry.coordinates,
-        });
+        } as IAddress);
       });
 
       setOptions(location);
@@ -62,7 +62,7 @@ const Location = (props: IProps): JSX.Element => {
   /** When an autocompleted location name is selected */
   const setAddressLabel = (label: string, coordinates: [number, number]) => {
     setSearch(label);
-    props.coordinates.setPosition({ lat: coordinates[1], lon: coordinates[0] });
+    props.coordinates.setPosition({ lat: coordinates[1], lon: coordinates[0] } as ICoordinates);
     setDisplay(false);
   };
 
@@ -88,38 +88,40 @@ const Location = (props: IProps): JSX.Element => {
         });
 
         setOptions(nearbyAddresses);
-        if (inputRef.current) inputRef.current.focus();
       }
       else return;
     })();
 
     // Send position upstream
-    props.coordinates.setPosition({ lat: pos.lat, lon: pos.lng });
+    props.coordinates.setPosition({ lat: pos.lat, lon: pos.lng } as ICoordinates);
   };
 
   return (
     <form action='' className='w-full'>
-      <span className=' inline-block text-left, text-blue-700 text-base  w-20 ml-0 mb-2 '>
+      <div className=' inline-block text-left, text-blue-700 text-base ml-0 '>
         {props.fieldName}
-      </span>
-      <input
-        ref={inputRef}
-        onFocus={() => setDisplay(true)}
-        onBlur={() => setDisplay(false)}
-        className='border-2 focus:outline-none, focus:border-blue ml-4'
-        type='text'
-        placeholder='Type to Search Origin'
-        onChange={(event) => setSearch(event.target.value)}
-        value={search}
-      ></input>
+      </div>
 
-      <MapMarkerFull key={props.fieldName} id={props.fieldName}
-        color={props.fieldName === 'Origin' ? '#e53e3e' : '#38a169'} // These color values must be kept in sync with rest of the App
-        position={props.coordinates.position ? {
-          lat: props.coordinates.position.lat,
-          lng: props.coordinates.position.lon
-        } : undefined}
-        setPosition={newMarkerPosition} />
+      <div>
+        <input
+          ref={inputRef}
+          onFocus={() => setDisplay(true)}
+          onBlur={() => setDisplay(false)}
+          className='border-2 focus:outline-none w-48 focus:border-blue ml-0'
+          type='text'
+          placeholder='Type to Search Origin'
+          onChange={(event) => setSearch(event.target.value)}
+          value={search}
+        ></input>
+
+        <MapMarkerFull key={props.fieldName} id={props.fieldName}
+          color={props.fieldName === 'Origin' ? '#e53e3e' : '#38a169'} // These color values must be kept in sync with rest of the App
+          position={props.coordinates.position ? {
+            lat: props.coordinates.position.lat,
+            lng: props.coordinates.position.lon
+          } : undefined}
+          setPosition={newMarkerPosition} />
+      </div>
 
       {display && (
         <div className='absolute z-10 left-0 mt-1 py-1 rounded-sm bg-white select-none'>

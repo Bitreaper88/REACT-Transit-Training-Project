@@ -53,6 +53,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
         // Set styles
         e.currentTarget.style.cursor = 'grabbing';
         e.currentTarget.classList.add('md-36');
+        e.currentTarget.classList.remove('transform');
 
         if (isReactMouseEvent(e)) {
 
@@ -100,6 +101,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
             divRef.current.style.zIndex = '';
             divRef.current.style.cursor = 'pointer';
             divRef.current.classList.remove('md-36');
+            divRef.current.classList.add('transform');
 
             divRef.current.removeEventListener('mouseup', onStop);
         }
@@ -142,6 +144,7 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
             this.style.zIndex = '';
             this.style.cursor = 'pointer';
             this.classList.remove('md-36');
+            this.classList.add('transform');
             setIsBeingDragged(false);
         }
 
@@ -169,13 +172,13 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
                     setPos={props.setPosition}
                     color={props.color} />}
 
-            {!props.position &&
+            {(!props.position) &&
                 <MapConsumer>
                     {map => {
                         mapRef.current = map;
 
                         return (
-                            <div key={props.id} className='material-icons select-none theMarker'
+                            <div key={props.id} className='material-icons select-none float-right transform translate -translate-x-4 -translate-y-0.5'
                                 ref={divRef}
                                 onMouseDownCapture={(e) => onStart(e)}
                                 onTouchStartCapture={(e) => onStart(e)}
@@ -186,12 +189,12 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
                     }}
                 </MapConsumer>}
             {isBeingDragged &&
-                <div className='material-icons select-none'>
+                <div className='material-icons select-none float-right transform translate -translate-x-4 -translate-y-0.5'>
                     place
                 </div>
             }
             {props.position &&
-                <div className='material-icons select-none'
+                <div className='material-icons select-none float-right transform translate -translate-x-4 -translate-y-0.5'
                     style={{ color: props.color }}>
                     place
                 </div>
