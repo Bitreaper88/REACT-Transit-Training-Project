@@ -95,7 +95,6 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
 
     /** Reset marker if mouse is dragged outside current window */
     function onOut(this: Document) {
-        console.log('foo');
         if (divRef.current) {
             divRef.current.style.position = '';
             divRef.current.style.zIndex = '';
