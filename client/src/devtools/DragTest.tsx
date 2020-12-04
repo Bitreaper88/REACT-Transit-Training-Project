@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
 import { MapConsumer } from 'react-leaflet';
 import MapMarkerDraggable from '../components/MapMarkerDraggable';
-import MapMarkerFull from '../components/MapMarkerFull';
+// import MapMarkerFull from '../components/MapMarkerFull';
 
 interface ILMProps {
     /** ID string to keep track of markers */
@@ -59,7 +59,7 @@ export function LocationHandler(): JSX.Element {
     return (
         <span>
             <button onClick={() => setPos({ lat: 60.45169, lng: 22.26686 })}>Pos</button>
-            &nbsp;|&nbsp;<MapMarkerFull key='asdf' id='origin' position={pos} setPosition={setPos} color='green' />
+            {/* &nbsp;|&nbsp;<MapMarkerFull key='asdf' id='origin' position={pos} setPosition={setPos} color='green' /> */}
         </span>
     );
 }
