@@ -194,10 +194,15 @@ function MapMarkerFull(props: ILMProps): JSX.Element {
                 </div>
             }
             {props.position &&
-                <div className='material-icons select-none float-right transform translate -translate-x-4 -translate-y-0.5'
-                    style={{ color: props.color }}>
-                    place
-                </div>
+                <MapConsumer>
+                    {map => {
+                        return (<div className='material-icons cursor-pointer select-none float-right transform translate -translate-x-4 -translate-y-0.5'
+                            style={{ color: props.color }}
+                            onClick={() => { if (props.position) map.panTo(props.position); }}>
+                            place
+                        </div>);
+                    }}
+                </MapConsumer>
             }
         </span>
     );
