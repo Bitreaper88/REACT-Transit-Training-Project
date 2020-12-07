@@ -59,8 +59,8 @@ const MainNav: React.FC = () => {
   }
 
   const [carSetupStatus, setcarSetupStatus] = useState(false);
-  const [fuelEco, setFuelEco]     = useState<number>(0);
-  const [tankSize, setTankSize]   = useState<number>(0);
+  const [fuelEco, setFuelEco] = useState<number>(0);
+  const [tankSize, setTankSize] = useState<number>(0);
   const [fuelPrice, setfuelPrice] = useState<number>(0);
 
   useEffect(() => {
@@ -68,9 +68,9 @@ const MainNav: React.FC = () => {
   }, [fuelEco, tankSize, fuelPrice]);
 
   function carSetupIcon() {
-      if ( fuelEco > 0 && tankSize > 0 && fuelPrice > 0)  {
-        setcarSetupStatus(true);
-      }else setcarSetupStatus(false);
+    if (fuelEco > 0 && tankSize > 0 && fuelPrice > 0) {
+      setcarSetupStatus(true);
+    } else setcarSetupStatus(false);
   }
 
   return (
@@ -160,7 +160,11 @@ const MainNav: React.FC = () => {
         {/* drawer */}
         <div className={comparisonStyle}>
           <div className='md:h-58 shadow bg-white  md:mx-auto md:rounded-none h-40 md:w-96 w-full rounded-b pointer-events-auto text-center'>
-            <Comparison  fuelEco={[fuelEco, setFuelEco]} tank={[tankSize, setTankSize]} fuelPrice={[fuelPrice, setfuelPrice]}/> 
+            <Comparison
+              fuelEco={[fuelEco, setFuelEco]}
+              tank={[tankSize, setTankSize]}
+              fuelPrice={[fuelPrice, setfuelPrice]}
+            />
           </div>
         </div>
       </div>
@@ -172,7 +176,11 @@ const MainNav: React.FC = () => {
         {/* drawer */}
         <div className={carStyle}>
           <div className='md:h-58 shadow bg-white w-56 md:ml-10 md:mr-auto md:relative absolute right-0 mr-16 md:rounded-none h-40 rounded-b pointer-events-auto'>
-           <CarSetup fuelEco={[fuelEco, setFuelEco]} tank={[tankSize, setTankSize]} fuelPrice={[fuelPrice, setfuelPrice]}/>
+            <CarSetup
+              fuelEco={[fuelEco, setFuelEco]}
+              tank={[tankSize, setTankSize]}
+              fuelPrice={[fuelPrice, setfuelPrice]}
+            />
           </div>
         </div>
       </div>
