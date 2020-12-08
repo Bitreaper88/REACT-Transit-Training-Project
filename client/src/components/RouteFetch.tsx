@@ -32,15 +32,22 @@ function RouteFetch(): JSX.Element {
   const { setRaw } = useContext(ResponseContext);
   const { showError } = useContext(ErrorContext);
 
+  const [askUser, setAskUser] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(0);
+
+  // Format list of modes in preparation of API call
   useEffect(() => {
     const modes = modeOptions.map(mode => {
       return { mode: mode };
     });
     setQueryModes(modes);
+    if (req) setAskUser(true);
   }, [modeOptions]);
 
   // When new request object is set
   useEffect(() => {
+    setAskUser(false);
+
     if (!req || !req.from || !req.to) return;
 
     // If there are no waypoints in the middle
@@ -109,7 +116,7 @@ function RouteFetch(): JSX.Element {
         }
       })();
     }
-  }, [req]);
+  }, [req, forceUpdate]);
 
   return (
     <div>
@@ -117,20 +124,14 @@ function RouteFetch(): JSX.Element {
       <DateTime dt={{ dateTime, setDateTime }} />
       <TransportModes onChange={(selected) => setModeOptions(selected)} />
 
-      {/* Dev Button */}
-      <button style={{ fontSize: '24px' }} onClick={() => setReq({
-        ...req,
-        from: {
-          lat: 60.45169,
-          lon: 22.26686
-        },
-        to: {
-          lat: 61.49774,
-          lon: 23.76129
-        }
-      })}>
-        devFetch
-            </button>
+      {/* WIP: Needs to be styled correctly */}
+      {askUser &&
+          <div className='absolute z-10 bg-white left-6 p-2'>
+            <button className='text-lg text-white p-1 rounded-sm bg-indigo-500' onClick={() => {
+              setForceUpdate(forceUpdate + 1);
+            }}>REFRESH ROUTE</button>
+          </div>}
+
     </div>
   );
 }
