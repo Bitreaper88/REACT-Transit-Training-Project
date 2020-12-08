@@ -8,6 +8,7 @@ import MapMarkerDraggable from '../components/MapMarkerDraggable';
 import LocationMarker, { LocationHandler } from './DragTest';
 import ErrorBox from '../components/ErrorBox';
 import { ErrorContext } from '../components/ErrorContext';
+import { prices, price, endPrice } from '../Pricing';
 
 interface ITestProps {
     cursor?: () => void;
@@ -18,11 +19,20 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
-    const { parsed, currentPubItin, setCurrentPubItin } = useContext(ResponseContext);
+    const { parsed, current, currentPubItin, setCurrentPubItin } = useContext(ResponseContext);
     const [pos, setPos] = useState<[number, number] | undefined>();
     const { showError } = useContext(ErrorContext);
 
     const divRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        (async () => {
+            if (current) {
+                console.log(await prices(current.pubDf.legs));
+                console.log(await endPrice(current.pubDf));
+            }
+        })();
+    }, [current]);
 
     useEffect(() => {
         if (divRef.current) L.DomEvent.disableClickPropagation(divRef.current);
@@ -94,18 +104,18 @@ function Test(props: ITestProps): JSX.Element {
                 paddingRight: '10px',
             }}>
             {/* ZoomLevel:&nbsp;{zoomLevel}
-            &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
-            {props.cursor && <span>
-                &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
-            </span>} */}
             {/* <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='red' >
                 <Tooltip>
-                    Hello,
+                Hello,
                 </Tooltip>
                 <Popup>
-                    World!
+                World!
                 </Popup>
             </MapMarker> */}
+            {/* &nbsp;{`| Coords: ${coords[0].toFixed(5)},${coords[1].toFixed(5)}`}
+            {props.cursor && <span>
+                &nbsp;|&nbsp;<button onClick={toggleCursor}>Toggle Cursor</button>
+            </span>}
             <MapMarkerDraggable position={{ lat: 60.45169, lng: 22.26686 }} color='red' />
             <MapMarker position={{ lat: 60.45169, lng: 22.26686 }} color='blue' />
             &nbsp;|&nbsp;<button
@@ -118,7 +128,7 @@ function Test(props: ITestProps): JSX.Element {
             >Change Itinerary</button>
             &nbsp;|&nbsp;<LocationHandler />
             <ErrorBox />
-            &nbsp;|&nbsp;<button onClick={() => showError('a really really long error message from a programmer who wants to be very specific about the error and give a dump to the user for some reason')}>Error</button>
+            &nbsp;|&nbsp;<button onClick={() => showError('a really really long error message from a programmer who wants to be very specific about the error and give a dump to the user for some reason')}>Error</button> */}
         </div>
     );
 
