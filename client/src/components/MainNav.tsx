@@ -1,4 +1,4 @@
-import RoutesWrapper from './AllRoutesWrapper';
+import RoutesSelector from './AllRoutesWrapper';
 import React, { useEffect, useRef, useState } from 'react';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 import CarSetup from './CarSetup';
@@ -95,7 +95,7 @@ const MainNav: React.FC = () => {
 
         <div className='p-2 bg-white text-gray-800 pointer-events-auto overflow-auto h-full md:pb-0 pb-48'>
           <RouteFetch />
-          <RoutesWrapper />
+          <RoutesSelector />
         </div>
       </div>
 

@@ -19,12 +19,3 @@
 .w-160{
     width: 40rem;
 }
-/* junk test code */
-.rotate-90{
-    transform: rotate(90deg);
-}
-
-.random-test{
-    background-color: red;
-    font-size: xx-large;
-}
