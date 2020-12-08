@@ -41,7 +41,7 @@ export async function price(leg: ILeg): Promise<IPrice> {
         case 'BUS':
             return {
                 estimate: true,
-                price: 100
+                price: (leg.distance / 1000 * 0.07) <= 3 ? 3 : (leg.distance / 1000 * 0.07) // Estimated average
             };
 
         // if (leg.agency?.gtfsId === 'HSL:HSL') {
@@ -89,10 +89,10 @@ export async function price(leg: ILeg): Promise<IPrice> {
                 price: 2.8      // Standard HSL fare
             };
 
-        case 'FERRY':       // Placeholder
+        case 'FERRY':
             return {
                 estimate: true,
-                price: 100
+                price: 0        // Very marginal, ignored
             };
 
         case 'FUNICULAR':
@@ -104,7 +104,7 @@ export async function price(leg: ILeg): Promise<IPrice> {
         case 'RAIL':
             return {
                 estimate: true,
-                price: leg.distance * 0.12      // Actually pretty good estimate
+                price: leg.distance / 1000 * 0.12      // Actually pretty good estimate
             };
 
         case 'SUBWAY':
