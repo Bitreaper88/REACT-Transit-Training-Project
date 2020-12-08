@@ -1,12 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ResponseContext } from './ResponseContext';
 import { ICarSetup } from './CarSetup';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
+import { endPrice } from '../Pricing';
 
 const Comparison: React.FC<ICarSetup> = (props) => {
   const { current } = useContext(ResponseContext);
   // eslint-disable-next-line
   const {fuelEco, tank, fuelPrice} = props;
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      if (current) {
+        setPrice((await endPrice(current.pubDf)).price);
+      }
+      })();
+  }, [current]);
 
   let fuelCost = 0;
   let carDistance = 0;
@@ -82,7 +92,8 @@ const Comparison: React.FC<ICarSetup> = (props) => {
             Time: {timeConvert(pubDuration)}
           </p>
           <p>
-            Ticket cost: we don´t have €
+            {/* Ticket cost: we don´t have € */}
+            {price}
           </p>
           <p>
             Transfers: {transfers}
