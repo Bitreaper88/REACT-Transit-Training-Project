@@ -53,14 +53,15 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
  
   if (!parsed) return (<></>);
   const currentLegs = parsed.pubItins[props.index].legs;
-  let showRouteDef = true;
-  let showRouteCSSDef = 'h-0 ';
-  let selectedDef = ' bg-blue-500 ';
-  if (props.index <= 0){
-    showRouteDef = false;
-    showRouteCSSDef = 'h-auto';
-    selectedDef = ' bg-purple-500 ';
-  }
+  const showRouteDef = true;
+  const showRouteCSSDef = 'h-0 ';
+  const selectedDef = ' bg-blue-500 ';
+  // This will set the first route expandeded on load but IMO its better to just leave all closed
+  // if (props.index <= 0){
+  //   showRouteDef = false;
+  //   showRouteCSSDef = 'h-auto';
+  //   selectedDef = ' bg-blue-700 ';
+  // }
   const [showRoute, setShowRoute] = useState(showRouteDef);
   const [showRouteCSS, setShowRouteCSS] = useState(showRouteCSSDef);
 
@@ -72,11 +73,14 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
     else setShowRouteCSS(' h-0 ');
 
     setShowRoute(!showRoute);
+  }
+
+  function routeSelect() {    
     setCurrentPubItin(props.index);
   }
 
   useEffect(() => {
-    if (currentPubItin === props.index) setSelected(' bg-purple-500 ');
+    if (currentPubItin === props.index) setSelected(' bg-blue-700 ');
     else  setSelected(' bg-blue-500 '); 
   });
 
@@ -96,11 +100,20 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
   
 
     return (
-      <div className='border-b-2 border-gray-800 mb-2'>
-        <div onClick={routeToggle} className= {selected + 'flex w-full mt-1 transition duration-500 ease-in-out h-6 hover:bg-purple-700'}>
-        {selected === ' bg-purple-500 ' ?  
-          <div className='m-auto text-white font-bold transition duration-500 ease-in-out'>Selected</div>
-        : <></>} 
+      <div className='border-b-2 mb-2 cursor-default'>
+        <div  className= {selected + 'flex w-full mt-1 transition duration-500 ease-in-out h-8 '}>
+        {selected === ' bg-blue-700 ' ?  
+          <div onClick={routeSelect} className='p-1 text-white font-bold transition duration-500 ease-in-out material-icons md-24'>radio_button_checked</div>
+        : <div onClick={routeSelect} className='p-1 text-white font-bold transition duration-500 ease-in-out material-icons md-24'>radio_button_unchecked</div>}
+
+    <div className='p-1 m-auto text-lg text-white font-semibold'>Legs: {currentLegs.length}</div>
+        
+        {showRoute ?  
+          <div onClick={routeToggle}
+          className='ml-auto p-1 text-white material-icons md-24 border-l-2 border-blue-800 hover:bg-blue-700' >keyboard_arrow_down</div>
+        : <div onClick={routeToggle}
+          className='ml-auto p-1 text-white material-icons md-24 border-l-2 border-blue-800 hover:bg-blue-700' >keyboard_arrow_up</div>}
+         
         </div> 
         
         <div className={showRouteCSS + 'overflow-hidden transition duration-500 ease-in-out'}> 
