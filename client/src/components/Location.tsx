@@ -129,7 +129,7 @@ const Location = (props: IProps): JSX.Element => {
       </div>
 
       {display && (
-        <div className='absolute z-10 left-0 mt-1 py-1 rounded-sm bg-white select-none'>
+        <div className='absolute z-20 left-0 mt-1 py-1 rounded-sm bg-white select-none'>
           {options.map((v, i) => {
             return (
               <div
