@@ -24,20 +24,24 @@ export interface IRouteRequest {
 }
 
 function RouteFetch(): JSX.Element {
-  const [req, setReq] = useState<IRouteRequest>();                            // Update to trigger API calls
-  const [dateTime, setDateTime] = useState<Date | null>(new Date());          // Selected date and time
-  const [modeOptions, setModeOptions] = useState(
-    [...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
+  const [req, setReq] = useState<IRouteRequest>(); // Update to trigger API calls
+  const [dateTime, setDateTime] = useState<Date | null>(new Date()); // Selected date and time
+  const [modeOptions, setModeOptions] = useState([
+    ...Selectable,
+    'WALK',
+    'CABLE_CAR',
+    'FUNICULAR',
+  ] as TransitMode[]);
   const [queryModes, setQueryModes] = useState<{ mode: TransitMode }[]>([]);
   const { setRaw } = useContext(ResponseContext);
-  const { showError } = useContext(ErrorContext);
+  const { showError, showLoader } = useContext(ErrorContext);
 
   const [askUser, setAskUser] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(0);
 
   // Format list of modes in preparation of API call
   useEffect(() => {
-    const modes = modeOptions.map(mode => {
+    const modes = modeOptions.map((mode) => {
       return { mode: mode };
     });
     setQueryModes(modes);
@@ -53,16 +57,15 @@ function RouteFetch(): JSX.Element {
     // If there are no waypoints in the middle
     if (!req.waypoints || req.waypoints.length === 0) {
       (async () => {
-
+        showLoader(true);
         // Call APIs
         try {
-
           // Public transit API
           const reqVariables = {
             ...(({ from, to }) => ({ from, to }))(req),
             modes: queryModes,
             date: moment(dateTime).format('YYYY-MM-DD'),
-            time: moment(dateTime).format('hh:mm:ss')
+            time: moment(dateTime).format('hh:mm:ss'),
           };
 
           const publicPromise = axios(Constants.URL_API, {
@@ -72,45 +75,55 @@ function RouteFetch(): JSX.Element {
             },
             data: JSON.stringify({
               query: graphQLRequest,
-              variables: reqVariables
-            })
+              variables: reqVariables,
+            }),
           });
 
           // Car route API
           const carFrom = `${req.from?.lon},${req.from?.lat}`;
           const carTo = `${req.to?.lon},${req.to?.lat}`;
-          const carPromise = carAPIcall(`/driving/${carFrom};${carTo}?alternatives=true&geometries=polyline&steps=true&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`);
+          const carPromise = carAPIcall(
+            `/driving/${carFrom};${carTo}?alternatives=true&geometries=polyline&steps=true&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`
+          );
 
           // Handle responses
           Promise.all([publicPromise, carPromise])
-            .then(resp => {
+            .then((resp) => {
               const publicResp = [resp[0].data.data as Types.IData];
               const carResp = [resp[1].data as Types.ICarRouteAPI];
 
               if (!carResp[0].routes.length) {
+                showLoader(false);
                 showError('Could not find a car route to your destination.');
                 return;
-              }
-              else if (publicResp[0].plan.itineraries.length === 0) {
-                showError('Could not find a public transit route with selected methods to your destination.');
+              } else if (publicResp[0].plan.itineraries.length === 0) {
+                showLoader(false);
+                showError(
+                  'Could not find a public transit route with selected methods to your destination.'
+                );
                 return;
               }
 
               // Push to context
               setRaw({
                 public: publicResp,
-                car: carResp
+                car: carResp,
               });
+              showLoader(false);
             })
-            .catch(err => {
-              showError('Error! Could not connect to API. The service may be down. Please try again later.');
+            .catch((err) => {
+              showLoader(false);
+              showError(
+                'Error! Could not connect to API. The service may be down. Please try again later.'
+              );
               console.log(err);
               return;
             });
-
-        }
-        catch (err) {
-          showError('Error connecting to APIs! The service may be down. Please try again later.');
+        } catch (err) {
+          showLoader(false);
+          showError(
+            'Error connecting to APIs! The service may be down. Please try again later.'
+          );
           console.log(err);
           return;
         }
