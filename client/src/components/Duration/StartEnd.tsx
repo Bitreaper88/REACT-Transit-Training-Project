@@ -19,7 +19,7 @@ const Start: React.FC<IItinerary> = (props: IItinerary) => {
   return (
     <div className="flex my-1">
 
-      <div className="w-2/6">
+      <div className="w-1/6">
         <h4 className="w-full font-bold">{time}</h4>
       </div>
       

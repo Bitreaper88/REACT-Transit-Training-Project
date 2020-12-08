@@ -12,13 +12,21 @@ module.exports = {
     },
     //This completely overwrites the standard colors
     colors: {
+      
+      AIRPLANE:   '#EE2F38',
+      BICYCLE:    '#8CC63E',
+      BUS:        '#1FCB67',
+      CABLE_CAR:  '#F15A25',
+      CAR:        '#4299e1',
+      FERRY:      '#29AAE3',
+      FUNICULAR:  '#00A89D',
+      GONDOLA:    '#FAAF3C',
+      RAIL:       '#9161B7',
+      SUBWAY:     '#5F3713',
+      TRAM:       '#FBC36E',
+      WALK:       '#999999',
+  
 
-      car_blue:     "#4299e1",
-      plain_red:    "#e14242",
-      buss_magenta:  "#e1425f",
-      cableCar_green:"#ace142",
-      train_teal:   "#42e1c9",
-      subway_purple: "#e142ce",
 
       transparent: 'transparent',
       current: 'currentColor',

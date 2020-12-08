@@ -90,11 +90,11 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
     const endTime = new Date(currentLegs[currentLegs.length-1].endTime);
 
     const legsArray: JSX.Element[] = [];
-    currentLegs.forEach(legs => {
+    currentLegs.forEach((legs, index) => {
       let agency = '';
       if (legs.agency?.name) agency = legs.agency?.name;
        const startTime = new Date(legs.startTime);
-       legsArray.push(<DateIconLoc key={legs.startTime} time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
+       if (index > 0) legsArray.push(<DateIconLoc key={legs.startTime} time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
        legsArray.push(<Leg key={legs.endTime-1} time={startTime.toLocaleTimeString('en-US', options).toString()} agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
     });
   
