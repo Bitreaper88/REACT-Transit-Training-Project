@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IItinerary, IRawResponse, IRoutes } from './RouteFetch.types';
 import { ResponseContext } from './ResponseContext';
+import * as P from '../Pricing';
 
 interface IProviderProps {
     children?: React.ReactNode;
@@ -25,6 +26,8 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
     const [parsed, setParsed] = useState<IParsedResponse>();
     const [current, setCurrent] = useState<ICurrent>();
     const [currentPubItin, setCurrentPubItin] = useState<number>(0);
+    const [prices, setPrices] = useState<P.IPrice[][]>([]);
+    const [currentPrice, setCurrentPrice] = useState<P.IPrice>();
 
     useEffect(() => {
         if (!raw) return;
@@ -53,8 +56,60 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
         });
     }, [currentPubItin, parsed]);
 
+    useEffect(() => {
+        if (!parsed) return;
+
+        (async () => {
+            const newPricePromises = parsed.pubItins.map(itin => {
+                return P.prices(itin.legs);
+            });
+
+            Promise.all(newPricePromises).then(results => {
+                setPrices(results);
+            });
+        })();
+    }, [parsed]);
+
+    useEffect(() => {
+        if (prices.length === 0) {
+            setCurrentPrice({ estimate: false, price: 0 });
+            return;
+        }
+
+        const currentFullPrice = prices[currentPubItin].reduce((acc, val) => {
+            return {
+                estimate: acc.estimate || val.estimate,
+                price: acc.price + val.price
+            };
+        });
+
+        setCurrentPrice(currentFullPrice);
+    }, [prices]);
+
+    function updatePrice(itin: number, leg: number, price: number): void {
+        const newPrices = prices.map(price => {
+            return [...price];
+        });
+
+        newPrices[itin][leg] = {
+            estimate: false,
+            price: price
+        };
+
+        setPrices(newPrices);
+    }
+
     return (
-        <ResponseContext.Provider value={{ raw, setRaw, parsed, currentPubItin, setCurrentPubItin, current }}>
+        <ResponseContext.Provider
+            value={{
+                raw, setRaw,
+                parsed,
+                current,
+                currentPubItin, setCurrentPubItin,
+                currentPrice,
+                prices,
+                updatePrice
+            }}>
             {props.children}
         </ResponseContext.Provider>
     );
