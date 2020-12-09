@@ -59,6 +59,7 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
     useEffect(() => {
         if (!parsed) return;
 
+        // Initialize prices array with values from response
         (async () => {
             const newPricePromises = parsed.pubItins.map(itin => {
                 return P.prices(itin.legs);
@@ -71,6 +72,8 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
     }, [parsed]);
 
     useEffect(() => {
+
+        // Initialize currentPrice and update it when necessary
         if (prices.length === 0) {
             setCurrentPrice({ estimate: false, price: 0 });
             return;
@@ -84,8 +87,13 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
         });
 
         setCurrentPrice(currentFullPrice);
-    }, [prices]);
+    }, [prices, currentPubItin]);
 
+    /** Update a single price in prices array 
+     * @param itin Valid array index of the itinerary to be updated
+     * @param leg Valid array index of the leg to be updated
+     * @param price New price
+    */
     function updatePrice(itin: number, leg: number, price: number): void {
         const newPrices = prices.map(price => {
             return [...price];
