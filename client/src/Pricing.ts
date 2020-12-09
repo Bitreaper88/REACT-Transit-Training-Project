@@ -104,7 +104,7 @@ export async function price(leg: ILeg): Promise<IPrice> {
         case 'RAIL':
             return {
                 estimate: true,
-                price: leg.distance / 1000 * 0.12      // Actually pretty good estimate
+                price: leg.distance / 1000 * 0.12 <= 3 ? 3 : leg.distance / 1000 * 0.12    // Actually pretty good estimate
             };
 
         case 'SUBWAY':
