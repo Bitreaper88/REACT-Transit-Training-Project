@@ -8,7 +8,7 @@ import MapMarkerDraggable from '../components/MapMarkerDraggable';
 import LocationMarker, { LocationHandler } from './DragTest';
 import ErrorBox from '../components/ErrorBox';
 import { ErrorContext } from '../components/ErrorContext';
-import { prices, price, endPrice } from '../Pricing';
+// import { prices, price, endPrice } from '../Pricing';
 
 interface ITestProps {
     cursor?: () => void;
@@ -19,20 +19,18 @@ interface ITestProps {
 function Test(props: ITestProps): JSX.Element {
     const [zoomLevel, setZoomLevel] = useState(13);
     const [coords, setCoords] = useState([0, 0]);
-    const { parsed, current, currentPubItin, setCurrentPubItin } = useContext(ResponseContext);
+    const { parsed, current, currentPubItin, setCurrentPubItin, updatePrice, prices, currentPrice } = useContext(ResponseContext);
     const [pos, setPos] = useState<[number, number] | undefined>();
     const { showError } = useContext(ErrorContext);
 
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        (async () => {
-            if (current) {
-                console.log(await prices(current.pubDf.legs));
-                console.log(await endPrice(current.pubDf));
-            }
-        })();
-    }, [current]);
+        prices.forEach(price => {
+            console.log(price);
+        })
+        console.log('Current price: ' + currentPrice?.estimate + ' ' + currentPrice?.price);
+    }, [prices]);
 
     useEffect(() => {
         if (divRef.current) L.DomEvent.disableClickPropagation(divRef.current);
@@ -129,6 +127,9 @@ function Test(props: ITestProps): JSX.Element {
             &nbsp;|&nbsp;<LocationHandler />
             <ErrorBox />
             &nbsp;|&nbsp;<button onClick={() => showError('a really really long error message from a programmer who wants to be very specific about the error and give a dump to the user for some reason')}>Error</button> */}
+            <button onClick={() => {
+                updatePrice(currentPubItin, 0, 1000);
+            }}>ChangePrice</button>
         </div>
     );
 
