@@ -21,7 +21,7 @@ interface ILegs {
 interface IPolylines {
     pub: JSX.Element[],
     lowcar: JSX.Element,
-    hicar: JSX.Element[]
+    hicar: JSX.Element[][]
 }
 
 interface IPLCProps {
@@ -75,14 +75,19 @@ function PolylineControl(props: IPLCProps): JSX.Element {
         });
 
         const newLowResCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedLowResCarLine} />;
-        const newHiResCarLine = decodedHiResCarLine.map(((line, ind) => {
-            return (
-                <Polyline
-                    key={ind}
-                    color={ModeColor['CAR']}
-                    positions={line} >
-                </Polyline>
-            );
+        const newHiResCarLine = decodedHiResCarLine.map(((line) => {
+            return line.map((shortLine) => {
+                return (
+                    <Polyline
+                        key={shortLine[0][0]}
+                        color={ModeColor['CAR']}
+                        positions={line} >
+                        <Tooltip>
+                            {ModeHover['CAR']}
+                        </Tooltip>
+                    </Polyline>
+                );
+            });
         }));
 
         const newPubLines = decodedPubLines.map((line, ind) => {
