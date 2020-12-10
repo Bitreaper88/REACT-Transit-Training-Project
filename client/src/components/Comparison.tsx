@@ -3,7 +3,7 @@ import { ResponseContext } from './ResponseContext';
 import { ICarSetup } from './CarSetup';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
-export function timeConvert(n: number) {
+export function timeConvert(n: number): string {
   const num = n;
   const hours = (num / 60);
   const rhours = Math.floor(hours);
