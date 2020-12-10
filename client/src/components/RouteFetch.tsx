@@ -129,7 +129,7 @@ function RouteFetch(): JSX.Element {
         }
       })();
     }
-  }, [req, forceUpdate]);
+  }, [req, dateTime, forceUpdate]);
 
   return (
     <div>
