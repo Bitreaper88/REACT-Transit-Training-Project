@@ -190,7 +190,7 @@ function MapMarkerFull(props: IMMFProps): JSX.Element {
                         mapRef.current = map;
 
                         return (
-                            <div key={props.id} className='material-icons select-none float-right transform translate -translate-x-4 -translate-y-0.5'
+                            <div key={props.id} className='material-icons select-none float-right transform translate -translate-x-1/3 -translate-y-0.5'
                                 ref={divRef}
                                 onMouseDownCapture={(e) => onStart(e)}
                                 onTouchStartCapture={(e) => onStart(e)}
@@ -201,14 +201,14 @@ function MapMarkerFull(props: IMMFProps): JSX.Element {
                     }}
                 </MapConsumer>}
             {isBeingDragged &&
-                <div className='material-icons select-none float-right transform translate -translate-x-4 -translate-y-0.5'>
+                <div className='material-icons select-none float-right transform translate -translate-x-1/3 -translate-y-0.5'>
                     place
                 </div>
             }
             {position &&
                 <MapConsumer>
                     {map => {
-                        return (<div className='material-icons cursor-pointer select-none float-right transform translate -translate-x-4 -translate-y-0.5'
+                        return (<div className='material-icons cursor-pointer select-none float-right transform translate -translate-x-1/3 -translate-y-0.5'
                             style={{ color: props.color }}
                             onClick={() => { if (position) map.panTo(position); }}>
                             place

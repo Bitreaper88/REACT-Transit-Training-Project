@@ -112,7 +112,7 @@ const Location = (props: IProps): JSX.Element => {
           ref={inputRef}
           onFocus={() => setDisplay(true)}
           onBlur={() => setDisplay(false)}
-          className='border-2 focus:outline-none w-48 focus:border-blue ml-0'
+          className='border-2 focus:outline-none w-5/6 focus:border-blue ml-0'
           type='text'
           placeholder='Type to Search Origin'
           onChange={(event) => setSearch(event.target.value)}
