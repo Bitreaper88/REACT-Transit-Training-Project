@@ -38,12 +38,12 @@ function MapLeaflet(props: IMapProps): JSX.Element {
       style={mapStyle}
       center={{ lat: 60.44994, lng: 22.26637 }}
       zoom={13}
+      maxBounds={[[74.75275, -24.60938], [52.33911, 66.12639]]}
       doubleClickZoom={false}
       zoomControl={false}
     >
       <TileLayer
         url='https://cdn.digitransit.fi/map/v1/hsl-map/{z}/{x}/{y}.png'
-        attribution='???'
         maxZoom={18}
         minZoom={8}
         tileSize={512}
