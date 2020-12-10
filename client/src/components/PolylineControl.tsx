@@ -76,10 +76,10 @@ function PolylineControl(props: IPLCProps): JSX.Element {
 
         const newLowResCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedLowResCarLine} />;
         const newHiResCarLine = decodedHiResCarLine.map(((line) => {
-            return line.map((shortLine) => {
+            return line.map((shortLine, ind) => {
                 return (
                     <Polyline
-                        key={shortLine[0][0]}
+                        key={shortLine[0][0].toString() + shortLine[0][1].toString() + ind}
                         color={ModeColor['CAR']}
                         positions={line} >
                         <Tooltip>
