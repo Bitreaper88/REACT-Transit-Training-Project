@@ -16,8 +16,8 @@ const DateIconLoc: React.FC<IItinerary> = (props: IItinerary) => {
         <div className="self-center rounded-full bg-white w-4 h-4 border-solid border-4 border-gray-400"></div>
       </div>
 
-      <div   data-tip data-for={palceTooltipID} className="w-3/6">
-       <div className="w-20 truncate">{place}</div>
+      <div   data-tip data-for={palceTooltipID} className="w-4/6">
+       <div className="truncate">{place}</div>
        <ReactTooltip id={palceTooltipID} place="right" type="light" effect="solid">
               <div className="font-semibold">{place}</div>
         </ReactTooltip>
