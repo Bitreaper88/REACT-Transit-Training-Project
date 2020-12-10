@@ -33,11 +33,19 @@ const Leg: React.FC<ILeg> = (props: ILeg) => {
           <div className={'self-center w-2 h-48 transform scale-x-75 bg-'+color}></div>
         </div>}
 
-      <div  data-tip data-for={TooltipID} className="w-3/6 flex items-stretch">
+      <div  data-tip data-for={TooltipID} className="flex items-stretch w-4/6">
         <div  className="self-center w-full">
           {agency ? 
             <>
-             <div className="truncate border-rounded p-1 m-1 text-xs text-CAR shadow-sm">{agency}</div>
+             <div className="flex border-rounded p-1 m-1 text-xs text-CAR shadow-sm">
+             <div className="truncate w-2/3">{agency}</div>
+                 {/* onChange={(event) => setfuelPrice(parseFloat(event.target.value))} value={fuelPrice} */}
+            <input  
+            className=' appearance-none border-b-2 border-blue-500 w-1/3 text-center mr-1
+            text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500'
+            placeholder="0.0" step=".1" type='number'  min="0"/>€
+             
+             </div>
              <ReactTooltip id={TooltipID} place="right" type="light" effect="solid">
                 <div className="font-semibold">{agency}</div>
             </ReactTooltip>
@@ -48,9 +56,9 @@ const Leg: React.FC<ILeg> = (props: ILeg) => {
      
          
           {mode == 'WALK' ? 
-            <div className="font-bold text-xs">Walk {distance.toFixed(2)}km</div>
+            <div className="font-bold text-xs p-1">Walk {distance.toFixed(2)}km</div>
           :
-            <div className="font-bold text-xs">Travel {distance.toFixed(2)}km</div>
+            <div className="font-bold text-xs p-1">Travel {distance.toFixed(2)}km</div>
           }
   
         </div>

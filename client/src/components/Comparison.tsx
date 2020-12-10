@@ -3,6 +3,15 @@ import { ResponseContext } from './ResponseContext';
 import { ICarSetup } from './CarSetup';
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
+export function timeConvert(n: number) {
+  const num = n;
+  const hours = (num / 60);
+  const rhours = Math.floor(hours);
+  const minutes = (hours - rhours) * 60;
+  const rminutes = Math.round(minutes);
+  return rhours + ' hours ' + rminutes + ' minutes';
+}
+
 const Comparison: React.FC<ICarSetup> = (props) => {
   const { current, currentPrice } = useContext(ResponseContext);
   // eslint-disable-next-line
@@ -43,14 +52,7 @@ const Comparison: React.FC<ICarSetup> = (props) => {
     transfers = current.pubDf.legs.length - 2;
   }
 
-  function timeConvert(n: number) {
-    const num = n;
-    const hours = (num / 60);
-    const rhours = Math.floor(hours);
-    const minutes = (hours - rhours) * 60;
-    const rminutes = Math.round(minutes);
-    return rhours + ' hours ' + rminutes + ' minutes';
-  }
+
 
   return (
     <div className='flex pt-3 h-full p-1 font-semibold'>

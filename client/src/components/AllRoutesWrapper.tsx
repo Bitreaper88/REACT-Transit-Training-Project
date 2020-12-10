@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import Leg from './LegRoutes/Leg';
 import StartEnd from './Duration/StartEnd';
 import DateIconLoc from './Duration/DateIconLoc';
+import WaitTime from './Duration/WaitTime';
 import { TransitMode} from './TransitTypes';
 import { ResponseContext } from './ResponseContext';
+import { timeConvert } from './Comparison';
+
 import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 export interface IItinerary {
@@ -91,11 +94,30 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
 
     const legsArray: JSX.Element[] = [];
     currentLegs.forEach((legs, index) => {
+
       let agency = '';
       if (legs.agency?.name) agency = legs.agency?.name;
-       const startTime = new Date(legs.startTime);
-       if (index > 0) legsArray.push(<DateIconLoc key={legs.mode + legs.startTime} time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
-       legsArray.push(<Leg key={legs.mode + (legs.endTime-1)} time={startTime.toLocaleTimeString('en-US', options).toString()} agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
+      const startTime = new Date(legs.startTime);
+     
+      if (index > 0) {       
+        legsArray.push(<DateIconLoc key={legs.mode + legs.startTime}
+        time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
+        legsArray.push(<Leg key={legs.mode + (legs.endTime-1)} time={startTime.toLocaleTimeString('en-US', options).toString()}
+        agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
+
+
+        if (index < currentLegs.length-1) {     
+          const oldEndTime = new Date(currentLegs[index].endTime);
+          const newStartTime = new Date(currentLegs[index+1].startTime);
+          const legWaitTime: number = Math.abs(oldEndTime.getTime() - newStartTime.getTime());
+          if (index < currentLegs.length-1 && (legWaitTime/60000) > 15) { 
+            // legsArray.push(<div> {oldEndTime.toLocaleTimeString('en-US', options).toString()} </div>);
+            // legsArray.push(<div> {newStartTime.toLocaleTimeString('en-US', options).toString()} {legWaitTime/60000} </div>);
+             legsArray.push(<WaitTime key={legs.mode + legs.startTime + 'waitTime' + legs.endTime}
+              time={timeConvert(legWaitTime/60000)} place={'no name'} />);
+          }
+        }
+      }
     });
   
 
