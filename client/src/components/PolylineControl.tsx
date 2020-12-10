@@ -81,7 +81,7 @@ function PolylineControl(props: IPLCProps): JSX.Element {
                     <Polyline
                         key={shortLine[0][0].toString() + shortLine[0][1].toString() + ind}
                         color={ModeColor['CAR']}
-                        positions={line} >
+                        positions={shortLine} >
                         <Tooltip>
                             {ModeHover['CAR']}
                         </Tooltip>
