@@ -58,10 +58,7 @@ const Leg: React.FC<ILeg> = (props: ILeg) => {
           {mode == 'WALK' ? 
             <div className="font-bold text-xs p-1">Walk {distance.toFixed(2)}km</div>
           :
-            <>
-        
             <div className="font-bold text-xs p-1">Travel {distance.toFixed(2)}km</div>
-            </>
           }
   
         </div>
