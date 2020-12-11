@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { ModeIcon, ModeColor } from '../TransitTypes';
 import { ILeg } from '../AllRoutesWrapper';
 import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
+import { ResponseContext } from '../ResponseContext';
 
 
 const Leg: React.FC<ILeg> = (props: ILeg) => { 
+  const { prices, updatePrice } = useContext(ResponseContext);
 
   const dots = 5;
   const dotsArray = [];
@@ -39,8 +41,9 @@ const Leg: React.FC<ILeg> = (props: ILeg) => {
             <>
              <div className="flex border-rounded p-1 m-1 text-xs text-CAR shadow-sm">
              <div className="truncate w-2/3">{agency}</div>
-                 {/* onChange={(event) => setfuelPrice(parseFloat(event.target.value))} value={fuelPrice} */}
-            <input  
+            <input 
+            value={prices[props.id.itin][props.id.leg].price}
+            onChange={(event) => updatePrice(props.id.itin, props.id.leg, Number(event.target.value))}
             className=' appearance-none border-b-2 border-blue-500 w-1/3 text-center mr-1
             text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500'
             placeholder="0.0" step=".1" type='number'  min="0"/>€

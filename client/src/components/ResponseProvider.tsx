@@ -36,6 +36,17 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
         const pubItineraries = raw.public[0].plan.itineraries;
         const defaultCarRoute = raw.car[0].routes[0];
 
+        // Init prices array with correct length
+        const dummyPrice = pubItineraries.map(itin => {
+            return itin.legs.map(() => {
+                return {
+                    estimate: true,
+                    price: 0
+                };
+            });
+        });
+
+        setPrices(dummyPrice);
         setParsed({
             pubItins: pubItineraries,
             carRoute: defaultCarRoute,
@@ -59,7 +70,7 @@ function RepsonseProvider(props: IProviderProps): JSX.Element {
     useEffect(() => {
         if (!parsed) return;
 
-        // Initialize prices array with values from response
+        // Async set correct prices
         (async () => {
             const newPricePromises = parsed.pubItins.map(itin => {
                 return P.prices(itin.legs);

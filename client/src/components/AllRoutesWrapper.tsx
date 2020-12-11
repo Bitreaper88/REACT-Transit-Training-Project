@@ -19,6 +19,10 @@ export interface ILeg {
   agency: string,
   distance: number,
   mode: TransitMode,
+  id: {
+    itin: number, 
+    leg: number
+  }
 }
 
 const options = {
@@ -102,7 +106,7 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
       if (index > 0) {       
         legsArray.push(<DateIconLoc key={legs.mode + legs.startTime}
         time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
-        legsArray.push(<Leg key={legs.mode + (legs.endTime-1)} time={startTime.toLocaleTimeString('en-US', options).toString()}
+        legsArray.push(<Leg key={legs.mode + (legs.endTime-1)} id={{itin: props.index, leg: index}} time={startTime.toLocaleTimeString('en-US', options).toString()}
         agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
 
 
