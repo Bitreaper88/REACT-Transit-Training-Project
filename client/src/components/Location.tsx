@@ -111,12 +111,7 @@ const Location = (props: IProps): JSX.Element => {
         <input
           ref={inputRef}
           onFocus={() => setDisplay(true)}
-          onBlur={() => {
-            if (options.length) {
-              setAddressLabel(options[0].label, options[0].coordinates);
-            }
-            else setDisplay(false);
-          }}
+          onBlur={() => setDisplay(false)}
           className='border-2 focus:outline-none w-5/6 focus:border-blue ml-0'
           type='text'
           placeholder='Type to Search Origin'
