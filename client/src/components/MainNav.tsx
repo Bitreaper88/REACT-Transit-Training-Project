@@ -101,18 +101,23 @@ const MainNav: React.FC = () => {
 
       <div className='w-full'>
         <div
-          className='md:z-30 h-12 shadow absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between 
+          className='md:z-30 h-12 absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between 
                               md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2 cursor-auto pointer-events-auto'
         >
-          <div className='md:mt-1 mt-2'>
-            <button
+          {/* <div className='md:mt-1 mt-2'>
+             <button
               className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
                               rounded w-fit
                               material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'
             >
               menu
-            </button>
-          </div>
+
+            </button> 
+          </div> */}
+
+          {/* this is here to space out the area where the menu goes normally */}
+          <span></span>
+
 
           <div className='md:mt-1 mt-2'>
             <button
@@ -154,12 +159,12 @@ const MainNav: React.FC = () => {
       </div>
 
       {/* full width aligment container */}
-      <div className='md:absolute z-20 md:mt-12 md:pl-9 md:bottom-auto w-full fixed bottom-0  pointer-events-none cursor-auto'>
+      <div className='md:absolute z-20 md:mt-12 md:pl-16 md:bottom-auto w-full fixed bottom-0 pointer-events-none cursor-auto'>
         {' '}
         {/* pointer-events-none very importatn as this container covers part of the side bar*/}
         {/* drawer */}
         <div className={comparisonStyle}>
-          <div className='md:h-58 shadow bg-white  md:mx-auto md:rounded-none h-40 md:w-96 w-full rounded-b pointer-events-auto text-center'>
+          <div className='md:h-58 shadow bg-white md:mx-auto md:rounded-none h-40 md:w-96 w-full rounded-b pointer-events-auto text-center'>
             <Comparison
               fuelEco={[fuelEco, setFuelEco]}
               tank={[tankSize, setTankSize]}
