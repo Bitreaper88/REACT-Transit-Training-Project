@@ -56,7 +56,7 @@ interface IRoutesWrapper {
 const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
    // Currently selected routes, updates any time a new itinerary is selected.
   
-  const { currentPubItin, parsed, setCurrentPubItin} = useContext(ResponseContext);
+  const { currentPubItin, parsed, setCurrentPubItin, prices } = useContext(ResponseContext);
  
   if (!parsed) return (<></>);
   const currentLegs = parsed.pubItins[props.index].legs;
@@ -132,7 +132,9 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
           <div onClick={routeSelect} className='p-1 text-white font-bold transition duration-500 ease-in-out material-icons md-24'>radio_button_checked</div>
         : <div onClick={routeSelect} className='p-1 text-white font-bold transition duration-500 ease-in-out material-icons md-24'>radio_button_unchecked</div>}
 
-    <div className='p-1 m-auto text-lg text-white font-semibold'>Legs: {currentLegs.length}</div>
+    <div className='p-1 m-auto text-lg text-white font-semibold'>
+      Route {props.index + 1}: {prices[props.index].reduce((acc, val) => {return acc+val.price;}, 0).toFixed(2).toString().replace('.', ',')}€
+    </div>
         
         {showRoute ?  
           <div onClick={routeToggle}
