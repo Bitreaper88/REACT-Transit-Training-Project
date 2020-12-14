@@ -78,8 +78,8 @@ const MainNav: React.FC = () => {
       className='grid h-screen w-screen absolute z-1000 pointer-events-none'
       ref={uiRef}
     >
-      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white cursor-auto pointer-events-auto'>
-        <img className='object-contain h-8' src='../magenta_logo.png' />
+      <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white cursor-auto select-none pointer-events-auto'>
+        <img className='object-contain h-8' draggable='false' src='../magenta_logo.png' />
       </div>
       <div className={sideBarStyle}>
         <div className='absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
