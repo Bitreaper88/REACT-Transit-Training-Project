@@ -139,8 +139,8 @@ function RouteFetch(): JSX.Element {
 
       {/* WIP: Needs to be styled correctly */}
       {askUser &&
-          <div className='absolute z-10 bg-white left-6 p-2'>
-            <button className='text-lg text-white p-1 rounded-sm bg-indigo-500' onClick={() => {
+          <div className='absolute z-10 bg-white left-6 p-1 rounded-sm'>
+            <button className='text-lg text-white p-1 rounded-sm bg-blue-500 hover:bg-indigo-500' onClick={() => {
               setForceUpdate(forceUpdate + 1);
             }}>REFRESH ROUTE</button>
           </div>}
