@@ -41,11 +41,12 @@ const Leg: React.FC<ILeg> = (props: ILeg) => {
             <>
              <div className="border-rounded p-1 m-1 text-xs text-CAR shadow-sm">
              <div className="truncate w-full">{agency}</div>
-            <input 
+            <input
             value={prices[props.id.itin][props.id.leg].price.toFixed(2)}
             onChange={(event) => updatePrice(props.id.itin, props.id.leg, Number(event.target.value))}
-            className=' appearance-none border-b-2 border-blue-500 w-3/5 text-center mr-1
-            text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500'
+            className={` appearance-none border-b-2 border-blue-500 w-3/5 text-center mr-1
+            ${prices[props.id.itin][props.id.leg].estimate ? 'text-orange-600' : 'text-blue-500'} 
+            font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500`}
             placeholder="0.00" step=".1" type='number'  min="0"/>€
              
              </div>
