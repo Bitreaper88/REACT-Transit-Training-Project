@@ -136,7 +136,7 @@ const Location = (props: IProps): JSX.Element => {
           }}
           className='border-2 focus:outline-none w-5/6 focus:border-blue ml-0'
           type='text'
-          placeholder='Type to Search Origin'
+          placeholder='Type to Search'
           onChange={(event) => setSearch(event.target.value)}
           value={search}
         ></input>
