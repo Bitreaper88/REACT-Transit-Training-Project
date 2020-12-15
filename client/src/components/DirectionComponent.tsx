@@ -18,7 +18,7 @@ const DirectionCoordinates: React.FC<IDirectionProps> = (
   }, [origin, destination]);
 
   return (
-    <div>
+    <div className='mb-3'>
       <Location
         key='origin'
         fieldName='Origin'

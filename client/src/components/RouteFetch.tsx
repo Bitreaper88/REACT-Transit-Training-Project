@@ -139,10 +139,10 @@ function RouteFetch(): JSX.Element {
 
       {/* WIP: Needs to be styled correctly */}
       {askUser &&
-          <div className='absolute z-10 bg-white left-6 p-1 rounded-sm'>
-            <button className='text-lg text-white p-1 rounded-sm bg-blue-500 hover:bg-indigo-500' onClick={() => {
+          <div className='flex justify-evenly p-0 z-10 bg-white mx-auto rounded-sm mb-2'>
+            <button className='flex items-center pl-4 font-semibold text-base w-full text-white p-1 rounded-sm bg-blue-500 hover:bg-indigo-500' onClick={() => {
               setForceUpdate(forceUpdate + 1);
-            }}>REFRESH ROUTES</button>
+            }}>Refresh routes <span className='material-icons ml-auto pr-1 md-18'>refresh</span></button>
           </div>}
 
     </div>
