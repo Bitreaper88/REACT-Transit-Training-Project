@@ -4,15 +4,15 @@ import '../../node_modules/material-design-icons/iconfont/material-icons.css';
 
 
 export interface ICarSetup {
-  fuel:       [string, React.Dispatch<React.SetStateAction<string>>]
-  tank:       [string, React.Dispatch<React.SetStateAction<string>>]
-  fuelPrice:  [string, React.Dispatch<React.SetStateAction<string>>]
+  fuelEco:    [number, React.Dispatch<React.SetStateAction<number>>]
+  tank:       [number, React.Dispatch<React.SetStateAction<number>>]
+  fuelPrice:  [number, React.Dispatch<React.SetStateAction<number>>]
 }
 
 
 const CarSetup: React.FC<ICarSetup> = (props: ICarSetup) => {
 
-  const [fuelEco, setFuelEco]     = props.fuel;
+  const [fuelEco, setFuelEco]     = props.fuelEco;
   const [tankSize, setTankSize]   = props.tank;
   const [fuelPrice, setfuelPrice] = props.fuelPrice;
 
@@ -31,7 +31,7 @@ const CarSetup: React.FC<ICarSetup> = (props: ICarSetup) => {
                       <label className='bloc'>Fuel economy</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setFuelEco(event.target.value)} value={fuelEco}
+                      <input onChange={(event) => setFuelEco(parseFloat(event.target.value))} value={fuelEco}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>
@@ -44,7 +44,7 @@ const CarSetup: React.FC<ICarSetup> = (props: ICarSetup) => {
                       <label className='block'>Fuel tank size</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setTankSize(event.target.value)} value={tankSize}
+                      <input onChange={(event) => setTankSize(parseFloat(event.target.value))} value={tankSize}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0" step="1" type='number'  min="0"/>
                     </div>
                     <div className=''>
@@ -57,7 +57,7 @@ const CarSetup: React.FC<ICarSetup> = (props: ICarSetup) => {
                       <label className='block'>Fuel price</label>
                     </div>
                     <div className='w-1/5 mx-1'>
-                      <input onChange={(event) => setfuelPrice(event.target.value)} value={fuelPrice}
+                      <input onChange={(event) => setfuelPrice(parseFloat(event.target.value))} value={fuelPrice}
                       className='bg-gray-200 appearance-none border-b-2 border-blue-500 w-full text-center text-purple-500 font-bold leading-tight focus:outline-none focus:bg-white focus:border-purple-500' placeholder="0.0" step=".1" type='number'  min="0"/>
                     </div>
                     <div className=''>

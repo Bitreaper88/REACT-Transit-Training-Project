@@ -77,7 +77,7 @@ export function TransportButton(props: IButtonProps): JSX.Element {
     // Toggle selected/unselected
     useEffect(() => {
         if (props.selected) {
-            setMutableStyles('text-blue-500');
+            setMutableStyles(`text-${props.mode}`);
         }
         else setMutableStyles('text-gray-500');
     }, [props.selected]);

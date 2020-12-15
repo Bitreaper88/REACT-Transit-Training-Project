@@ -9,125 +9,144 @@ import { ResponseContext } from './ResponseContext';
 import TransportModes, { Selectable } from './TransportModes';
 import { TransitMode } from './TransitTypes';
 import DateTime from './TimeDate';
+import { ErrorContext } from './ErrorContext';
+import DiretionComponent from './DirectionComponent';
 
 export interface ICoordinates {
-    lat: number;
-    lon: number;
+  lat: number;
+  lon: number;
 }
 
 export interface IRouteRequest {
-    from?: ICoordinates;
-    to?: ICoordinates;
-    waypoints?: ICoordinates[];
+  from?: ICoordinates;
+  to?: ICoordinates;
+  waypoints?: ICoordinates[];
 }
 
 function RouteFetch(): JSX.Element {
-    const [req, setReq] = useState<IRouteRequest>();
-    const [dateTime, setDateTime] = useState<Date | null>(new Date());
-    const [modeOptions, setModeOptions] = useState([...Selectable, 'WALK', 'CABLE_CAR', 'FUNICULAR'] as TransitMode[]);
-    const [queryModes, setQueryModes] = useState<{ mode: TransitMode }[]>([]);
-    const { setRaw } = useContext(ResponseContext);
+  const [req, setReq] = useState<IRouteRequest>(); // Update to trigger API calls
+  const [dateTime, setDateTime] = useState<Date | null>(new Date()); // Selected date and time
+  const [modeOptions, setModeOptions] = useState([
+    ...Selectable,
+    'WALK',
+    'CABLE_CAR',
+    'FUNICULAR',
+  ] as TransitMode[]);
+  const [queryModes, setQueryModes] = useState<{ mode: TransitMode }[]>([]);
+  const { setRaw } = useContext(ResponseContext);
+  const { showError, showLoader } = useContext(ErrorContext);
 
-    useEffect(() => {
-        const modes = modeOptions.map(mode => {
-            return { mode: mode };
-        });
-        setQueryModes(modes);
-    }, [modeOptions]);
+  const [askUser, setAskUser] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(0);
 
-    // When new request object is set
-    useEffect(() => {
-        if (! req || !req.from || !req.to) return;
+  // Format list of modes in preparation of API call
+  useEffect(() => {
+    const modes = modeOptions.map((mode) => {
+      return { mode: mode };
+    });
+    setQueryModes(modes);
+    if (req) setAskUser(true);
+  }, [modeOptions]);
 
-        // If there are no waypoints in the middle
-        if (!req.waypoints || req.waypoints.length === 0) {
-            (async () => {
+  // When new request object is set
+  useEffect(() => {
+    setAskUser(false);
 
-                // Call APIs
-                try {
+    if (!req || !req.from || !req.to) return;
 
-                    // Public transit API
-                    const reqVariables = {
-                        ...(({ from, to }) => ({ from, to }))(req),
-                        modes: queryModes,
-                        date: moment(dateTime).format('YYYY-MM-DD'),
-                        time: moment(dateTime).format('hh:mm:ss')
-                    };
+    // If there are no waypoints in the middle
+    if (!req.waypoints || req.waypoints.length === 0) {
+      (async () => {
+        showLoader(true);
+        // Call APIs
+        try {
+          // Public transit API
+          const reqVariables = {
+            ...(({ from, to }) => ({ from, to }))(req),
+            modes: queryModes,
+            date: moment(dateTime).format('YYYY-MM-DD'),
+            time: moment(dateTime).format('hh:mm:ss'),
+          };
 
-                    const publicPromise = axios(Constants.URL_API, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        data: JSON.stringify({
-                            query: graphQLRequest,
-                            variables: reqVariables
-                        })
-                    });
+          const publicPromise = axios(Constants.URL_API, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            data: JSON.stringify({
+              query: graphQLRequest,
+              variables: reqVariables,
+            }),
+          });
 
-                    // Car route API
-                    const carFrom = `${req.from?.lon},${req.from?.lat}`;
-                    const carTo = `${req.to?.lon},${req.to?.lat}`;
-                    const carPromise = carAPIcall(`/driving/${carFrom};${carTo}?alternatives=true&geometries=polyline&steps=true&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`);
+          // Car route API
+          const carFrom = `${req.from?.lon},${req.from?.lat}`;
+          const carTo = `${req.to?.lon},${req.to?.lat}`;
+          const carPromise = carAPIcall(
+            `/driving/${carFrom};${carTo}?alternatives=true&geometries=polyline&steps=true&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`
+          );
 
-                    // Handle responses
-                    Promise.all([publicPromise, carPromise])
-                        .then(resp => {
-                            const publicResp = [resp[0].data.data as Types.IData];
-                            const carResp = [resp[1].data as Types.ICarRouteAPI];
+          // Handle responses
+          Promise.all([publicPromise, carPromise])
+            .then((resp) => {
+              const publicResp = [resp[0].data.data as Types.IData];
+              const carResp = [resp[1].data as Types.ICarRouteAPI];
 
-                            if (!carResp[0].routes.length) {
-                                alert('Could not find a car route from or to your destination.');
-                                return;
-                            }
-                            else if (publicResp[0].plan.itineraries.length === 0) {
-                                alert('Could not find a public route from or to your destination.');
-                                return;
-                            }
+              if (!carResp[0].routes.length) {
+                showLoader(false);
+                showError('Could not find a car route to your destination.');
+                return;
+              } else if (publicResp[0].plan.itineraries.length === 0) {
+                showLoader(false);
+                showError(
+                  'Could not find a public transit route with selected methods to your destination.'
+                );
+                return;
+              }
 
-                            // Push to context
-                            setRaw({
-                                public: publicResp,
-                                car: carResp
-                            });
-                        })
-                        .catch(err => {
-                            alert('Error! Could not connect to API.');
-                            console.log(err);
-                            return;
-                        });
-
-                }
-                catch (err) {
-                    alert('Error connecting to APIs!');
-                    console.log(err);
-                    return;
-                }
-            })();
+              // Push to context
+              setRaw({
+                public: publicResp,
+                car: carResp,
+              });
+              showLoader(false);
+            })
+            .catch((err) => {
+              showLoader(false);
+              showError(
+                'Error! Could not connect to API. The service may be down. Please try again later.'
+              );
+              console.log(err);
+              return;
+            });
+        } catch (err) {
+          showLoader(false);
+          showError(
+            'Error connecting to APIs! The service may be down. Please try again later.'
+          );
+          console.log(err);
+          return;
         }
-    }, [req]);
+      })();
+    }
+  }, [req, dateTime, forceUpdate]);
 
-    return (
-        <div>
-            <DateTime dt={{dateTime, setDateTime}} />
-            <TransportModes onChange={(selected) => setModeOptions(selected)} />
+  return (
+    <div>
+      <DiretionComponent {...{ setReq }} />
+      <DateTime dt={{ dateTime, setDateTime }} />
+      <TransportModes onChange={(selected) => setModeOptions(selected)} />
 
-            {/* Dev Button */}
-            <button style={{ fontSize: '24px' }} onClick={() => setReq({
-                ...req,
-                from: {
-                    lat: 60.45169,
-                    lon: 22.26686
-                },
-                to: {
-                    lat: 61.49774,
-                    lon: 23.76129
-                }
-            })}>
-                devFetch
-            </button>
-        </div>
-    );
+      {/* WIP: Needs to be styled correctly */}
+      {askUser &&
+          <div className='flex justify-evenly p-0 z-10 bg-white mx-auto rounded-sm mb-2'>
+            <button className='flex items-center pl-4 font-semibold text-base w-full text-white p-1 rounded-sm bg-blue-500 hover:bg-indigo-500' onClick={() => {
+              setForceUpdate(forceUpdate + 1);
+            }}>Refresh routes <span className='material-icons ml-auto pr-1 md-18'>refresh</span></button>
+          </div>}
+
+    </div>
+  );
 }
 
 export default RouteFetch;

@@ -11,7 +11,7 @@ function ZoomToNewLayer(props: IZoomBounds): JSX.Element {
     return (
         <MapConsumer>
             {map => {
-                if (props.bounds) map.fitBounds(props.bounds);
+                if (props.bounds) map.fitBounds(props.bounds, { padding: [75, 75] });
                 return null;
             }}
         </MapConsumer>

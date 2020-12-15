@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Polyline, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import { ResponseContext } from './ResponseContext';
-import { TransitMode, ModeColor, ModeHover } from './TransitTypes';
+import { TransitMode, ModeColorCSS as ModeColor, ModeHover } from './TransitTypes';
 
 // eslint-disable-next-line
 const PL = require('google-polyline');
@@ -21,7 +21,7 @@ interface ILegs {
 interface IPolylines {
     pub: JSX.Element[],
     lowcar: JSX.Element,
-    hicar: JSX.Element[]
+    hicar: JSX.Element[][]
 }
 
 interface IPLCProps {
@@ -29,26 +29,26 @@ interface IPLCProps {
 }
 
 function PolylineControl(props: IPLCProps): JSX.Element {
-    const { parsed } = useContext(ResponseContext);
+    const { current } = useContext(ResponseContext);
     const [polylines, setPolylines] = useState<IPolylines>();
 
     // When new data is fetched from APIs.
     useEffect(() => {
 
         // Return if no data is found.
-        if (!parsed || !parsed.pubDf || !parsed.carDf) return;
+        if (!current) return;
 
         // Further parse the API responses.
-        const pubGoogleLines = parsed.pubDf.legs.map(leg => {
+        const pubGoogleLines = current.pubDf.legs.map(leg => {
             return leg.legGeometry.points;
         });
 
-        const pubModes = parsed.pubDf.legs.map(leg => {
+        const pubModes = current.pubDf.legs.map(leg => {
             return leg.mode;
         });
 
-        const carLowResLine = parsed.carDf.geometry;
-        const carHiResLine = parsed.carDf.legs.map((leg) => {
+        const carLowResLine = current.carDf.geometry;
+        const carHiResLine = current.carDf.legs.map((leg) => {
             return leg.steps.map((step) => (step.geometry));
         });
 
@@ -75,14 +75,19 @@ function PolylineControl(props: IPLCProps): JSX.Element {
         });
 
         const newLowResCarLine = <Polyline key={'carLine'} color={ModeColor['CAR']} positions={decodedLowResCarLine} />;
-        const newHiResCarLine = decodedHiResCarLine.map(((line, ind) => {
-            return (
-                <Polyline
-                    key={ind}
-                    color={ModeColor['CAR']}
-                    positions={line} >
-                </Polyline>
-            );
+        const newHiResCarLine = decodedHiResCarLine.map(((line) => {
+            return line.map((shortLine, ind) => {
+                return (
+                    <Polyline
+                        key={shortLine[0][0].toString() + shortLine[0][1].toString() + ind}
+                        color={ModeColor['CAR']}
+                        positions={shortLine} >
+                        <Tooltip>
+                            {ModeHover['CAR']}
+                        </Tooltip>
+                    </Polyline>
+                );
+            });
         }));
 
         const newPubLines = decodedPubLines.map((line, ind) => {
@@ -113,7 +118,7 @@ function PolylineControl(props: IPLCProps): JSX.Element {
             props.zoomBounds(polylineBounds);
         }
 
-    }, [parsed]);
+    }, [current]);
 
     return (
         <div>

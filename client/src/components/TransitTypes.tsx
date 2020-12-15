@@ -34,20 +34,36 @@ export enum ModeIcon {
     'WALK' = 'directions_walk'
 }
 
-/** Color key for each mode. */
+/** Color key for each mode. This is not really needed anymore*/
 export enum ModeColor {
-    'AIRPLANE' = 'blue',
-    'BICYCLE' = 'red',
-    'BUS' = 'yellow',
-    'CABLE_CAR' = 'orange',
-    'CAR' = 'green',
-    'FERRY' = 'black',
-    'FUNICULAR' = 'white',
-    'GONDOLA' = 'purple',
-    'RAIL' = 'teal',
-    'SUBWAY' = 'gray',
-    'TRAM' = 'pink',
-    'WALK' = 'brown'
+    'AIRPLANE' = 'AIRPLANE',
+    'BICYCLE' = 'BICYCLE',
+    'BUS' = 'BUS',
+    'CABLE_CAR' = 'CABLE_CAR',
+    'CAR' = 'CAR',
+    'FERRY' = 'FERRY',
+    'FUNICULAR' = 'FUNICULAR',
+    'GONDOLA' = 'GONDOLA',
+    'RAIL' = 'RAIL',
+    'SUBWAY' = 'SUBWAY',
+    'TRAM' = 'TRAM',
+    'WALK' = 'WALK'
+}
+
+/** Color key for each mode. */
+export enum ModeColorCSS {
+    'AIRPLANE'  = '#EE2F38',
+    'BICYCLE'   = '#8CC63E',
+    'BUS'       = '#1FCB67',
+    'CABLE_CAR' = '#F15A25',
+    'CAR'       = '#4299e1',
+    'FERRY'     = '#29AAE3',
+    'FUNICULAR' = '#00A89D',
+    'GONDOLA'   = '#FAAF3C',
+    'RAIL'      = '#9161B7',
+    'SUBWAY'    = '#5F3713',
+    'TRAM'      = '#FBC36E',
+    'WALK'      = '#999999'
 }
 
 /** Mouseover hover text for each mode. */
