@@ -9,7 +9,23 @@ export function timeConvert(n: number): string {
   const rhours = Math.floor(hours);
   const minutes = (hours - rhours) * 60;
   const rminutes = Math.round(minutes);
-  return rhours + ' hours ' + rminutes + ' minutes';
+
+  let hourTex = '';
+  let minuteTex = '';
+
+  if (rhours == 1) {
+    hourTex = rhours + ' hour ';
+  } else if (rhours > 1) {
+    hourTex =  rhours +' hours ';
+  }
+
+  if (rminutes == 1) {
+    minuteTex = ' minute ';
+  } else if (rminutes > 1) {
+    minuteTex =  ' minutes ';
+  }
+
+  return  hourTex + rminutes + minuteTex;
 }
 
 const Comparison: React.FC<ICarSetup> = (props: ICarSetup) => {

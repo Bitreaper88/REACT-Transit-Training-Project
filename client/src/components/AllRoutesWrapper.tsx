@@ -102,26 +102,22 @@ const RoutesWrapper: React.FC<IRoutesWrapper>  = (props: IRoutesWrapper ) => {
       let agency = '';
       if (legs.agency?.name) agency = legs.agency?.name;
       const startTime = new Date(legs.startTime);
-     
-      if (index > 0) {       
+
+      legsArray.push(<Leg key={legs.mode + (legs.endTime-1)} id={{itin: props.index, leg: index}} time={startTime.toLocaleTimeString('en-US', options).toString()}
+      agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
+           
+      if (index < currentLegs.length-1) {     
         legsArray.push(<DateIconLoc key={legs.mode + legs.startTime}
-        time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
-        legsArray.push(<Leg key={legs.mode + (legs.endTime-1)} id={{itin: props.index, leg: index}} time={startTime.toLocaleTimeString('en-US', options).toString()}
-        agency={agency} distance={legs.distance / 1000} mode={legs.mode}/>);
-
-
-        if (index < currentLegs.length-1) {     
-          const oldEndTime = new Date(currentLegs[index].endTime);
-          const newStartTime = new Date(currentLegs[index+1].startTime);
-          const legWaitTime: number = Math.abs(oldEndTime.getTime() - newStartTime.getTime());
-          if (index < currentLegs.length-1 && (legWaitTime/60000) > 15) { 
-            // legsArray.push(<div> {oldEndTime.toLocaleTimeString('en-US', options).toString()} </div>);
-            // legsArray.push(<div> {newStartTime.toLocaleTimeString('en-US', options).toString()} {legWaitTime/60000} </div>);
-             legsArray.push(<WaitTime key={legs.mode + legs.startTime + 'waitTime' + legs.endTime}
-              time={timeConvert(legWaitTime/60000)} place={'no name'} />);
-          }
+          time={startTime.toLocaleTimeString('en-US', options).toString()} place={legs.from.name} />);
+        const oldEndTime = new Date(currentLegs[index].endTime);
+        const newStartTime = new Date(currentLegs[index+1].startTime);
+        const legWaitTime: number = Math.abs(oldEndTime.getTime() - newStartTime.getTime());
+        if (index < currentLegs.length-1 && (legWaitTime/60000) > 15) { 
+            legsArray.push(<WaitTime key={legs.mode + legs.startTime + 'waitTime' + legs.endTime}
+            time={timeConvert(legWaitTime/60000)} place={'no name'} />);
         }
       }
+      
     });
   
 
