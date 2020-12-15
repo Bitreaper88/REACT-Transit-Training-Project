@@ -17,20 +17,23 @@ npm run build-css
 
 # Current State of the Project
 List of currently implemented features:
-- Select origin/destination
-- Select time of departure
-- Select transit methods
+- Select origin/destination, time of departure and transit methods
 - Setup car information
 - Display comparison between car and public transit
 - Display route information on the map & trip details
+- The pricing information currently consists mostly of hardcoded crude estimates, only HSL prices come from a proper API call
+- Estimated prices are displayed in orange and actual prices are in blue 
 
 # Future Features
-- Implement car fuel economy database
 - More accurate ticket prices
+- Implement car fuel economy database
 - Waypoints
 - Two-way trips
 - User profiles
 - GPS geolocation
+
+# Known Issues
+- The version of Date-Time picker used is still using findDOMNode which is deprecated in React StrictMode. This will occasionally throw errors in console which can be ignored.
 
 # Used Technologies/Resources
 - [Leaflet](https://leafletjs.com/)
