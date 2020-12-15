@@ -10,7 +10,7 @@ import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 type overridesNameToClassKey = {
   [P in keyof MuiPickersOverrides]: keyof MuiPickersOverrides[P];
 };
- /* eslint-disable */
+/* eslint-disable */
 declare module '@material-ui/core/styles/overrides' {
   export interface ComponentNameToClassKey extends overridesNameToClassKey {}
 }
@@ -25,10 +25,9 @@ const blue_800 = '#2c5282';
 const blue_900 = '#2a4365';
 
 const materialTheme = createMuiTheme({
-
   palette: {
     primary: {
-      light:blue_500, //#bee3f8
+      light: blue_500, //#bee3f8
       main: blue_700, //#4299e1
       dark: blue_900, //#2a4365
       contrastText: '#fff',
@@ -52,8 +51,8 @@ const materialTheme = createMuiTheme({
     },
     MuiPickersCalendarHeader: {
       switchHeader: {
-          // backgroundColor: blue_200,
-          // color: 'white',
+        // backgroundColor: blue_200,
+        // color: 'white',
       },
     },
     MuiPickersDay: {
@@ -82,7 +81,7 @@ interface IDateTime {
   dt: {
     dateTime: Date | null;
     setDateTime: React.Dispatch<React.SetStateAction<Date | null>>;
-  }
+  };
 }
 
 //https://material-ui-pickers.dev/getting-started/installation
@@ -93,22 +92,22 @@ const DateTime: React.FC<IDateTime> = (props: IDateTime) => {
 
   return (
     <>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <ThemeProvider theme={materialTheme}>
-            <DateTimePicker
-              label='Time of departure'
-              value={selectedDate}
-              onChange={newDate => handleDateChange(newDate)}
-              ampm={false}
-              disablePast={true}
-              fullWidth={true}
-              //format='string'  
-             // dateRangeIcon={React.createElement('span', {className:'material-icons'}, 'schedule')}
-              />
-            </ThemeProvider>
-        </MuiPickersUtilsProvider>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <ThemeProvider theme={materialTheme}>
+          <DateTimePicker
+            label='Time of departure'
+            value={selectedDate}
+            onChange={(newDate) => handleDateChange(newDate)}
+            ampm={false}
+            disablePast={true}
+            fullWidth={true}
+            //format='string'
+            // dateRangeIcon={React.createElement('span', {className:'material-icons'}, 'schedule')}
+          />
+        </ThemeProvider>
+      </MuiPickersUtilsProvider>
     </>
-  )
-}
+  );
+};
 
 export default DateTime;

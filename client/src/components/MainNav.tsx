@@ -77,9 +77,14 @@ const MainNav: React.FC = () => {
     <div
       className='grid h-screen w-screen absolute z-1000 pointer-events-none'
       ref={uiRef}
+      draggable='false'
     >
       <div className='bg-blue-500 rounded-br-lg h-12 md:z-50 z-10 w-64 absolute top-0 left-0 font-bold p-2 text-white cursor-auto select-none pointer-events-auto'>
-        <img className='object-contain h-8' draggable='false' src='../magenta_logo.png' />
+        <img
+          className='object-contain h-8'
+          draggable='false'
+          src='../magenta_logo.png'
+        />
       </div>
       <div className={sideBarStyle}>
         <div className='absolute pt-10 inset-y-0 left-0 h-full transform translate-x-64 flex items-stretch'>
@@ -104,20 +109,8 @@ const MainNav: React.FC = () => {
           className='md:z-30 h-12 absolute md:bg-blue-500 md:flex md:flex-row-reverse md:justify-between 
                               md:pl-64 md:w-screen right-0 md:p-0 md:px-3 p-2 cursor-auto pointer-events-auto'
         >
-          {/* <div className='md:mt-1 mt-2'>
-             <button
-              className='bg-blue-500 focus:outline-none transition duration-500 ease-in-out
-                              rounded w-fit
-                              material-icons text-white hover:text-blue-300 transform hover:scale-90 md-36'
-            >
-              menu
-
-            </button> 
-          </div> */}
-
           {/* this is here to space out the area where the menu goes normally */}
           <span></span>
-
 
           <div className='md:mt-1 mt-2'>
             <button
