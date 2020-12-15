@@ -1,32 +1,46 @@
-# Liscence information 
-
-The API used in our platforms is dual-licensed under the RUPL v1.2 and AGPLv3 licenses. 
-Our source code can be used under the GNU license. 
-
 # Intended Use 
-
-The platform is desisgned as a  exercise project of our course and is upto the minumum requirements of the course. Besides the actual API call data, all other required datas are estimated values acheived by calculations. The calculations are based on reference to the actual data that varies over the period of time. 
-(Disclaimer: Many calues are estimated values and could be incorrect to actual values)
-
+The app was designed to allow the user to compare public transit fares with the cost of travel by personal vehicle for a single trip. It was created as an exercise project for a Typescript course and is up to the requirements of that course.
 
 # Project Initialization
-
-Download the code and navigate to root folder, create .env file. Inside the env file add a varriable with your mapbox API key 
+To make the MapBox API work, create a .env file inside the client-folder and in the .env file add the following: 
 ```
-REACT_APP_MAPBOX_TOKEN= " your mapbox API KEY"
+REACT_APP_MAPBOX_TOKEN=<your mapbox API KEY>
 ```
-TODO: make code block for all commands, re-word the following 
-Navigate to Client folder, run the application with  
+To run the App, run the following command inside the client-folder:
 ```
 npm start
 ```
- on command line. The platform will open on local host
- 
-The platform is styled with tailwind css, if you make any changes to the tailwind, the tailwind needs to be recompiled. 
+The platform is styled with Tailwind CSS, and if you make any changes to the Tailwind config, it needs to be recompiled by running:
+```
+npm run build-css
+```
 
+# Current State of the Project
+List of currently implemented features:
+- Select origin/destination
+- Select time of departure
+- Select transit methods
+- Setup car information
+- Display comparison between car and public transit
+- Display route information on the map & trip details
 
-# Current state of Project 
-The Project is working as intended. 
+# Future Features
+- Implement car fuel economy database
+- More accurate ticket prices
+- Waypoints
+- Two-way trips
+- User profiles
+- GPS geolocation
 
+# Used Technologies/Resources
+- [Leaflet](https://leafletjs.com/)
+- [React Leaflet](https://react-leaflet.js.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Material Design Icons](https://material.io/resources/icons/?style=baseline)
+- [Material-UI Pickers](https://material-ui-pickers.dev/)
+- [Digitransit](https://digitransit.fi/en/developers/)
+- [MapBox](https://docs.mapbox.com/api/navigation/)
 
-
+# Licensing Information
+The API used in our platforms is dual-licensed under the RUPL v1.2 and AGPLv3 licenses.
+Our source code can be used under the GNU license.
