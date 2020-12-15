@@ -1,33 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MapMarker, { IMapMarkerProps } from './MapMarker';
+import L from 'leaflet';
+import { MapConsumer } from 'react-leaflet';
 
-enum OnTop {
-    true = 1,
-    false = 0
+export interface IDraggableProps extends IMapMarkerProps {
+    setPos?: (pos: L.LatLng | L.LatLngLiteral | undefined) => void;
 }
 
-function MapMarkerDraggable(props: IMapMarkerProps): JSX.Element {
-    // eslint-disable-next-line
-    const [onTop, setOnTop] = useState<number>(OnTop.true);
-    const [pos, setPos] = useState<L.LatLngExpression>(props.position);
+function MapMarkerDraggable(props: IDraggableProps): JSX.Element {
 
     return (
-        <MapMarker
-            {...props}
-            position={pos}
-            autoPan={true}
-            draggable={true}
-            zIndexOffset={1}
-            eventHandlers={{
-                baselayerchange: () => {
-                    console.log('foo');
-                },
-                moveend: (event) => {
-                    setPos(event.sourceTarget._latlng as L.LatLngLiteral);
-                }
-            }}>
-            {props.children}
-        </MapMarker>
+        <MapConsumer>
+            {map => {
+                return (
+                    <MapMarker
+                        {...props}
+                        autoPan={true}
+                        autoPanPadding={L.point(50, 75)}
+                        draggable={true}
+                        eventHandlers={{
+                            moveend: (event) => {
+                                const latlng = event.sourceTarget._latlng as L.LatLngLiteral;
+                                if (props.setPos) props.setPos(latlng);
+                                if (!map.getBounds().contains(latlng)) {
+                                    map.panTo(event.sourceTarget._latlng as L.LatLngLiteral);
+                                }
+                            }
+                        }}>
+                        {props.children}
+                    </MapMarker>
+                );
+            }}
+        </MapConsumer>
     );
 }
 
